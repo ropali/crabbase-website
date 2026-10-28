@@ -6,7 +6,7 @@
     <title>Collections &amp; Records — Crabbase Documentation</title>
     <meta name="description" content="Collections are the heart of Crabbase. A collection is a real PostgreSQL table that you define at runtime — and the moment it exists, a full REST CRUD surface is generated for it at /api/collections/{name}/records. This is how you build a backend without writing any API code." />
     <meta name="theme-color" content="#fff8f6" />
-    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -23,9 +23,7 @@
             <span class="material-symbols-outlined text-[22px]" aria-hidden="true">menu</span>
           </button>
           <a class="group flex items-center gap-2.5 text-on-surface hover:text-primary transition-colors shrink-0" href="./index.html" aria-label="Crabbase home">
-            <div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shadow-sm group-hover:scale-105 group-hover:bg-primary transition-all duration-300" title="Crab mascot!">
-              <span class="material-symbols-outlined text-[18px]" aria-hidden="true">terminal</span>
-            </div>
+            <img src="./assets/images/logo.png" alt="" width="32" height="32" class="w-8 h-8 object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-300" />
             <div class="flex items-center gap-2">
               <span class="font-headline-md text-headline-md tracking-tight leading-none">Crabbase</span>
               <span class="hidden sm:inline font-code-md text-label-xs bg-surface-container-high text-primary px-2 py-0.5 rounded border border-outline-variant font-medium">v0.14.2</span>
@@ -45,21 +43,19 @@
             <span class="hidden sm:inline text-body-sm font-body-sm truncate">Search docs...</span>
             <kbd class="ml-auto hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface border border-outline-variant font-code-md text-label-xs text-tertiary">⌘K</kbd>
           </button>
-          <a class="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface text-body-sm font-body-sm transition-colors" href="https://crates.io/crates/crabbase" rel="noopener noreferrer" target="_blank">
-            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">inventory_2</span>
-            <span class="font-code-md text-label-xs">crates.io</span>
-          </a>
-          <a class="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface text-body-sm font-body-sm transition-colors" href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank">
-            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">star</span>
-            <span class="font-code-md text-label-xs">14.8k</span>
+          <a class="hidden md:flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface transition-colors" href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank" aria-label="View the Crabbase repository on GitHub">
+            <svg viewBox="0 0 16 16" class="h-4 w-4 fill-current" aria-hidden="true">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+            </svg>
+            <span class="flex items-center gap-1 font-code-md text-label-xs">
+              <span class="material-symbols-outlined text-[14px]" aria-hidden="true">star</span>
+              <span data-github-stars>Star</span>
+            </span>
           </a>
           <a class="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-body-sm text-body-sm font-medium transition-colors shadow-sm whitespace-nowrap" href="./index.html#admin">
             <span class="material-symbols-outlined text-[16px]" aria-hidden="true">terminal</span>
-            <span class="hidden md:inline">Launch Admin</span>
+            <span class="hidden md:inline">Launch Demo</span>
           </a>
-          <div class="hidden sm:flex w-8 h-8 rounded-full bg-primary items-center justify-center shrink-0">
-            <span class="material-symbols-outlined text-on-primary text-[18px]" aria-hidden="true">person</span>
-          </div>
         </div>
       </div>
     </header>
@@ -90,6 +86,7 @@
         <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs-collections.html#endpoints"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">code</span><span>API Reference</span></a>
         <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs.html#makefile-reference"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">terminal</span><span>Makefile Reference</span></a>
         <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs.html#troubleshooting"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">build</span><span>Troubleshooting</span></a>
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 16 16" class="h-4 w-4 fill-current" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" /></svg><span>GitHub Repository</span></a>
         <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="https://github.com/ropali/crabbase/discussions" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">forum</span><span>Community &amp; Support</span></a>
       </nav>
     </aside>
@@ -962,6 +959,7 @@ title ~ @request.query.search
       </div>
     </div>
 
+    <script src="./assets/js/github-stars.js" defer></script>
     <script src="./assets/js/docs-search-index.js" defer></script>
     <script src="./assets/js/docs.js" defer></script>
   </body>

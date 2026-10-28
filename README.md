@@ -6,7 +6,7 @@ Static site for Crabbase, implemented from the Stitch design. It is plain HTML, 
 
 - HTML in `index.html`, `docs.html`, and the generated `docs-*.html` pages
 - Tailwind CSS 3 with the Crabbase design tokens in `tailwind.config.js`
-- Vanilla JavaScript in `assets/js/main.js` and `assets/js/docs.js`
+- Vanilla JavaScript in `assets/js/main.js`, `assets/js/docs.js`, and `assets/js/github-stars.js`
 - `marked` (dev dependency) to generate the reference docs from Markdown
 - No runtime dependencies or framework
 
@@ -95,8 +95,9 @@ If your default branch is not `main`, update the branch name in the workflow. Yo
 - **Reference docs:** `docs-src/*.md`
 - **Animations and custom component styles:** `src/input.css`
 - **Interactions:** `assets/js/main.js` and `assets/js/docs.js`
+- **GitHub star count:** `assets/js/github-stars.js`
 
-GitHub links point to `https://github.com/ropali/crabbase` (including the docs edit, issue, security, and release links). Update them if the repository is renamed or forked.
+GitHub links point to `https://github.com/ropali/crabbase` (including the docs edit, issue, security, and release links). Update them if the repository is renamed or forked. The navbar star count is fetched from the public GitHub API and cached in `localStorage` for one hour; if the API is unavailable or rate-limited, the fallback `Star` label remains.
 
 These links are still placeholders from the design and should be replaced with real project URLs:
 
@@ -118,9 +119,11 @@ The install command text is also defined in `assets/js/main.js` (`installCommand
 ├── docs-src/
 ├── assets/
 │   ├── css/styles.css
+│   ├── images/logo.png
 │   └── js/
 │       ├── main.js
 │       ├── docs.js
+│       ├── github-stars.js
 │       └── docs-search-index.js
 ├── src/input.css
 ├── tailwind.config.js
@@ -128,7 +131,7 @@ The install command text is also defined in `assets/js/main.js` (`installCommand
 │   ├── build.mjs
 │   ├── build-docs.mjs
 │   └── serve.mjs
-├── favicon.svg
+├── favicon.png
 ├── robots.txt
 └── .github/workflows/deploy.yml
 ```

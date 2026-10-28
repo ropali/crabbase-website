@@ -1,7 +1,7 @@
 import { cp, mkdir, readdir, rm, writeFile } from "node:fs/promises";
 
 const outDir = "dist";
-const entries = ["index.html", "docs.html", "assets", "favicon.svg", "robots.txt"];
+const entries = ["index.html", "docs.html", "assets", "favicon.png", "robots.txt"];
 
 for (const file of await readdir(".")) {
   if (/^docs-.*\.html$/.test(file)) entries.push(file);
