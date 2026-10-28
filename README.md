@@ -96,6 +96,7 @@ If your default branch is not `main`, update the branch name in the workflow. Yo
 - **Animations and custom component styles:** `src/input.css`
 - **Interactions:** `assets/js/main.js` and `assets/js/docs.js`
 - **GitHub star count:** `assets/js/github-stars.js`
+- **Admin preview:** `assets/images/admin_ui.png` (replace with a new screenshot to update the landing hero)
 
 GitHub links point to `https://github.com/ropali/crabbase` (including the docs edit, issue, security, and release links). Update them if the repository is renamed or forked. The navbar star count is fetched from the public GitHub API and cached in `localStorage` for one hour; if the API is unavailable or rate-limited, the fallback `Star` label remains.
 
@@ -120,6 +121,7 @@ The install command text is also defined in `assets/js/main.js` (`installCommand
 ├── assets/
 │   ├── css/styles.css
 │   ├── images/logo.png
+│   ├── images/admin_ui.png
 │   └── js/
 │       ├── main.js
 │       ├── docs.js
