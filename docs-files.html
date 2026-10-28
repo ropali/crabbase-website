@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Files &amp; Uploads — Crabbase Documentation</title>
+    <meta name="description" content="Crabbase has built-in file storage. A File column stores a reference to an uploaded object; the bytes live on local disk or in S3, and downloads are served through Crabbase so the collection's view_rule is always enforced." />
+    <meta name="theme-color" content="#fff8f6" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+  </head>
+  <body class="bg-surface font-body-md text-on-surface antialiased" data-page="files">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header id="docs-header" class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl border-b border-outline-variant">
+      <div class="h-16 w-full px-4 sm:px-6 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3 xl:gap-6 min-w-0">
+          <button id="docs-menu-toggle" type="button" class="lg:hidden inline-flex items-center justify-center w-9 h-9 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors shrink-0" aria-expanded="false" aria-controls="docs-sidebar" aria-label="Open documentation menu">
+            <span class="material-symbols-outlined text-[22px]" aria-hidden="true">menu</span>
+          </button>
+          <a class="group flex items-center gap-2.5 text-on-surface hover:text-primary transition-colors shrink-0" href="./index.html" aria-label="Crabbase home">
+            <div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shadow-sm group-hover:scale-105 group-hover:bg-primary transition-all duration-300" title="Crab mascot!">
+              <span class="material-symbols-outlined text-[18px]" aria-hidden="true">terminal</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="font-headline-md text-headline-md tracking-tight leading-none">Crabbase</span>
+              <span class="hidden sm:inline font-code-md text-label-xs bg-surface-container-high text-primary px-2 py-0.5 rounded border border-outline-variant font-medium">v0.14.2</span>
+            </div>
+          </a>
+          <nav class="hidden xl:flex items-center gap-6" aria-label="Primary navigation">
+            <a class="text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors py-5" href="./index.html">Landing</a>
+            <a class="transition-colors py-5 text-primary font-semibold border-b-2 border-primary font-body-sm text-body-sm" href="./docs.html" aria-current="page">Docs</a>
+            <a class="text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors py-5" href="./index.html#architecture">Architecture</a>
+            <a class="text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors py-5" href="./docs-collections.html#endpoints">API Reference</a>
+            <a class="text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors py-5" href="./index.html#benchmarks">Benchmarks</a>
+          </nav>
+        </div>
+        <div class="flex items-center gap-2 sm:gap-3 flex-1 max-w-md justify-end">
+          <button id="docs-search-open" type="button" class="group flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-surface-container-low border border-outline-variant text-on-surface-variant hover:border-outline hover:bg-surface-container text-left transition-colors w-full max-w-[13rem] sm:max-w-xs" aria-label="Search documentation">
+            <span class="material-symbols-outlined text-[18px] text-tertiary" aria-hidden="true">search</span>
+            <span class="hidden sm:inline text-body-sm font-body-sm truncate">Search docs...</span>
+            <kbd class="ml-auto hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface border border-outline-variant font-code-md text-label-xs text-tertiary">⌘K</kbd>
+          </button>
+          <a class="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface text-body-sm font-body-sm transition-colors" href="https://crates.io/crates/crabbase" rel="noopener noreferrer" target="_blank">
+            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">inventory_2</span>
+            <span class="font-code-md text-label-xs">crates.io</span>
+          </a>
+          <a class="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface text-body-sm font-body-sm transition-colors" href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank">
+            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">star</span>
+            <span class="font-code-md text-label-xs">14.8k</span>
+          </a>
+          <a class="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-body-sm text-body-sm font-medium transition-colors shadow-sm whitespace-nowrap" href="./index.html#admin">
+            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">terminal</span>
+            <span class="hidden md:inline">Launch Admin</span>
+          </a>
+          <div class="hidden sm:flex w-8 h-8 rounded-full bg-primary items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-on-primary text-[18px]" aria-hidden="true">person</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div id="docs-sidebar-overlay" class="fixed inset-0 top-16 bg-on-surface/30 backdrop-blur-[1px] z-30 hidden lg:hidden" aria-hidden="true"></div>
+
+    <aside id="docs-sidebar" class="fixed left-0 top-16 bottom-0 w-64 bg-surface-container-lowest border-r border-outline-variant overflow-y-auto p-4 z-40 -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-out" aria-label="Documentation navigation">
+      <div class="lg:hidden mb-6">
+        <div class="font-label-xs text-label-xs uppercase tracking-wider text-outline px-3 mb-2 font-semibold">Navigation</div>
+        <nav class="space-y-1">
+          <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./index.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">home</span><span>Landing</span></a>
+          <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./index.html#architecture"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">account_tree</span><span>Architecture</span></a>
+          <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./index.html#benchmarks"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">speed</span><span>Benchmarks</span></a>
+        </nav>
+      </div>
+
+      <div class="font-label-xs text-label-xs uppercase tracking-wider text-outline px-3 mb-2 font-semibold">Documentation</div>
+      <nav class="space-y-1 mb-6" aria-label="Documentation">
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">play_arrow</span><span>Getting Started</span></a>
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs-collections.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">table_rows</span><span>Collections &amp; Records</span></a>
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs-authentication.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">shield</span><span>Authentication</span></a>
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg transition-colors bg-surface-container-high text-primary font-semibold border-l-2 border-primary font-body-sm text-body-sm" href="./docs-files.html" aria-current="page"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">cloud_upload</span><span>Files &amp; Uploads</span></a>
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs-settings.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">settings</span><span>Settings &amp; Email</span></a>
+      </nav>
+
+      <div class="font-label-xs text-label-xs uppercase tracking-wider text-outline px-3 mb-2 font-semibold">References</div>
+      <nav class="space-y-1" aria-label="References">
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs-collections.html#endpoints"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">code</span><span>API Reference</span></a>
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs.html#makefile-reference"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">terminal</span><span>Makefile Reference</span></a>
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs.html#troubleshooting"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">build</span><span>Troubleshooting</span></a>
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="https://github.com/ropali/crabbase/discussions" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">forum</span><span>Community &amp; Support</span></a>
+      </nav>
+    </aside>
+
+    <div class="lg:pl-64">
+      <main id="main" class="pt-16 min-h-screen bg-surface w-full">
+        <div class="w-full flex">
+          <div class="flex-1 min-w-0 px-5 sm:px-8 py-8 lg:px-12 max-w-4xl mx-auto">
+            <div class="flex flex-col w-full">
+              <nav class="flex flex-wrap items-center gap-2 mb-6 text-on-surface-variant font-label-xs text-label-xs" aria-label="Breadcrumb">
+                <a class="hover:text-primary transition-colors" href="./docs.html">Documentation</a>
+                <span class="material-symbols-outlined text-[14px] text-tertiary" aria-hidden="true">chevron_right</span>
+                <span class="hover:text-primary transition-colors">Files &amp; Uploads</span>
+                <span class="material-symbols-outlined text-[14px] text-tertiary" aria-hidden="true">chevron_right</span>
+                <span class="text-primary font-semibold px-2 py-0.5 rounded-full bg-surface-container-high">v0.14.2</span>
+              </nav>
+
+              <div class="space-y-4 mb-8">
+                <div class="flex flex-wrap items-center gap-3">
+                  <span class="px-2.5 py-1 rounded bg-surface-container text-primary font-code-md text-label-xs font-semibold uppercase tracking-wider">Reference</span>
+                  <span class="text-tertiary font-code-md text-label-xs">Estimated read: 12 mins</span>
+                </div>
+                <h1 class="font-headline-lg text-headline-lg sm:text-4xl text-on-surface tracking-tight">Files &amp; Uploads</h1>
+                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed max-w-3xl">Crabbase has built-in file storage. A <code>File</code> column stores a reference to an
+uploaded object; the bytes live on local disk or in S3, and downloads are served
+through Crabbase so the collection&#39;s <code>view_rule</code> is always enforced.</p>
+              </div>
+
+              <div class="doc-prose"><p>Typical workflow:</p>
+<ol>
+<li>Define one or more <code>File</code> columns on a collection.</li>
+<li>Upload the bytes with a multipart request.</li>
+<li>Save the returned file <code>id</code> in a record.</li>
+<li>Render or download the file from its URL, adding a file token when the
+collection is not public.</li>
+</ol>
+<p>The admin dashboard supports this end to end: create a <code>File</code> column, then use
+the upload control in the create/edit record drawer.</p>
+<hr>
+<h2 id="quick-start">Quick start</h2>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-1"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-1"># 1. Create a collection with a public cover image column
+curl -X POST http://localhost:8989/api/collections \
+  -H &quot;Authorization: Bearer $ADMIN_TOKEN&quot; \
+  -H &#39;Content-Type: application/json&#39; \
+  -d &#39;{
+    &quot;name&quot;: &quot;articles&quot;,
+    &quot;collection_type&quot;: &quot;base&quot;,
+    &quot;columns&quot;: [
+      { &quot;name&quot;: &quot;title&quot;, &quot;data_type&quot;: &quot;PlainText&quot;, &quot;required&quot;: true },
+      { &quot;name&quot;: &quot;cover&quot;, &quot;data_type&quot;: &quot;File&quot;, &quot;max_size&quot;: 5242880, &quot;mime_types&quot;: [&quot;image/*&quot;] }
+    ],
+    &quot;list_rule&quot;: &quot;&quot;,
+    &quot;view_rule&quot;: &quot;&quot;,
+    &quot;create_rule&quot;: &quot;&quot;
+  }&#39;
+
+# 2. Upload a file (public because create_rule is &quot;&quot;)
+curl -X POST http://localhost:8989/api/collections/articles/records/upload \
+  -F &#39;cover=@cover.png;type=image/png&#39;
+
+# Response:
+# {&quot;files&quot;:[{&quot;id&quot;:&quot;e97669ba-...&quot;,&quot;key&quot;:&quot;uploads/.../cover.png&quot;, ...}]}
+
+# 3. Attach the returned id to a record
+curl -X POST http://localhost:8989/api/collections/articles/records \
+  -H &#39;Content-Type: application/json&#39; \
+  -d &#39;{&quot;data&quot;:{&quot;title&quot;:&quot;Hello&quot;,&quot;cover&quot;:&quot;e97669ba-...&quot;}}&#39;
+
+# 4. Fetch the file (public view_rule)
+curl http://localhost:8989/api/files/e97669ba-...
+</code></pre></div>
+<p>If <code>view_rule</code> is not empty, step 4 also needs authenticated access: a Bearer
+token for server-side requests, or a file token for browser media tags. See
+<a href="#protected-files">Protected files</a>.</p>
+<hr>
+<h2 id="defining-file-columns">Defining file columns</h2>
+<p>Add a column with <code>&quot;data_type&quot;: &quot;File&quot;</code> when creating or updating a collection:</p>
+<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-2"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-2">{
+  &quot;name&quot;: &quot;articles&quot;,
+  &quot;collection_type&quot;: &quot;base&quot;,
+  &quot;columns&quot;: [
+    { &quot;name&quot;: &quot;title&quot;, &quot;data_type&quot;: &quot;PlainText&quot;, &quot;required&quot;: true },
+    {
+      &quot;name&quot;: &quot;cover&quot;,
+      &quot;data_type&quot;: &quot;File&quot;,
+      &quot;max_size&quot;: 5242880,
+      &quot;mime_types&quot;: [&quot;image/png&quot;, &quot;image/jpeg&quot;, &quot;image/webp&quot;]
+    },
+    {
+      &quot;name&quot;: &quot;attachments&quot;,
+      &quot;data_type&quot;: &quot;File&quot;,
+      &quot;min&quot;: 1,
+      &quot;max&quot;: 10
+    }
+  ]
+}
+</code></pre></div>
+<p><code>cover</code> accepts one file. <code>attachments</code> accepts an array of 1–10 files because
+<code>max &gt; 1</code> (or <code>min &gt; 1</code>) marks a file column as multi-file.</p>
+<h3 id="file-column-options">File column options</h3>
+<div class="doc-table-wrap"><table class="docs-table">
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>required</code></td>
+<td>The record must contain a file reference.</td>
+</tr>
+<tr>
+<td><code>min</code> / <code>max</code></td>
+<td>Number of files for this field, not character length. <code>max &gt; 1</code> or <code>min &gt; 1</code> makes the column multi-file.</td>
+</tr>
+<tr>
+<td><code>max_size</code></td>
+<td>Maximum size in <strong>bytes</strong> per file.</td>
+</tr>
+<tr>
+<td><code>mime_types</code></td>
+<td>Allowed content types. Supports exact values and prefixes such as <code>image/*</code>; <code>*</code> or <code>*/*</code> allows anything.</td>
+</tr>
+<tr>
+<td><code>pattern</code></td>
+<td>Regular expression matched against the uploaded file name, e.g. <code>\.(png|jpe?g)$</code>.</td>
+</tr>
+<tr>
+<td><code>index</code>, <code>hidden</code></td>
+<td>Normal collection-column options; not file-specific.</td>
+</tr>
+</tbody></table></div>
+<p>Constraints are applied at <strong>upload time</strong> only when the multipart part name
+matches a file column. <code>min</code> is checked when the record is created or updated,
+because a single upload request cannot know how many files the finished record
+will contain.</p>
+<p>There is no storage quota. The per-column <code>max_size</code> and the request size limit
+(100 MB) are the controls.</p>
+<hr>
+<h2 id="uploading-files">Uploading files</h2>
+<div class="doc-table-wrap"><table class="docs-table">
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>POST</code></td>
+<td><code>/api/collections/{name}/records/upload</code></td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/collection/{name}/record/upload</code> (legacy alias)</td>
+</tr>
+</tbody></table></div>
+<p>The request must be <code>multipart/form-data</code>. Authentication is governed by the
+collection&#39;s <code>create_rule</code>:</p>
+<div class="doc-table-wrap"><table class="docs-table">
+<thead>
+<tr>
+<th><code>create_rule</code></th>
+<th>Who can upload</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>null</code> (not set)</td>
+<td>Superusers only</td>
+</tr>
+<tr>
+<td><code>&quot;&quot;</code> (empty string)</td>
+<td>Anyone, no authentication required</td>
+</tr>
+<tr>
+<td>expression</td>
+<td>Callers that satisfy the rule; send a Bearer token</td>
+</tr>
+</tbody></table></div>
+<p>See <a href="docs-collections.html#api-rules">API rules</a> for the rule language and
+<a href="docs-authentication.html">Authentication</a> for obtaining a Bearer token.</p>
+<h3 id="basic-upload">Basic upload</h3>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-3"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-3">curl -X POST http://localhost:8989/api/collections/articles/records/upload \
+  -H &quot;Authorization: Bearer $TOKEN&quot; \
+  -F &#39;cover=@photo.png;type=image/png&#39;
+</code></pre></div>
+<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-4"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-4">{
+  &quot;files&quot;: [
+    {
+      &quot;id&quot;: &quot;e97669ba-2a3c-4c47-9d0e-1f2a3b4c5d6e&quot;,
+      &quot;key&quot;: &quot;uploads/4f8c.../photo.png&quot;,
+      &quot;backend&quot;: &quot;local&quot;,
+      &quot;container&quot;: &quot;./uploads&quot;,
+      &quot;originalName&quot;: &quot;photo.png&quot;,
+      &quot;contentType&quot;: &quot;image/png&quot;,
+      &quot;sizeBytes&quot;: 10240,
+      &quot;checksum&quot;: &quot;9f86d081884c7d65...&quot;,
+      &quot;collectionName&quot;: &quot;articles&quot;,
+      &quot;created&quot;: &quot;2026-10-18T15:42:32.888198Z&quot;,
+      &quot;updated&quot;: &quot;2026-10-18T15:42:32.888198Z&quot;
+    }
+  ]
+}
+</code></pre></div>
+<p>Use the returned <code>id</code> when linking the file to a record. The <code>key</code> also works as
+a reference, but <code>id</code> is the canonical choice.</p>
+<h3 id="field-names-matter">Field names matter</h3>
+<p>Name each multipart part after a <code>File</code> column to apply that column&#39;s
+constraints:</p>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-5"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-5"># cover&#39;s max_size, mime_types, and pattern are enforced
+-F &#39;cover=@photo.png;type=image/png&#39;
+
+# unknown part name: stored, but no column constraints are applied
+-F &#39;file=@photo.png;type=image/png&#39;
+</code></pre></div>
+<ul>
+<li><strong>Single-file column</strong> (<code>max</code> unset, or <code>max: 1</code>): one part with that name.</li>
+<li><strong>Multi-file column</strong> (<code>max &gt; 1</code> or <code>min &gt; 1</code>): up to <code>max</code> parts; if <code>max</code> is
+unset, the number of parts is unlimited.</li>
+<li><strong>Multiple columns in one request</strong>: the response is a flat <code>files</code> array and
+does not identify which part or column each file came from. Upload one column
+per request, or preserve the multipart order yourself.</li>
+</ul>
+<p>Uploading does <strong>not</strong> attach files to a record. It only stores the bytes and
+returns metadata; saving the record is a separate step.</p>
+<h3 id="multiple-files">Multiple files</h3>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-6"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-6">curl -X POST http://localhost:8989/api/collections/articles/records/upload \
+  -H &quot;Authorization: Bearer $TOKEN&quot; \
+  -F &#39;attachments=@one.pdf;type=application/pdf&#39; \
+  -F &#39;attachments=@two.pdf;type=application/pdf&#39;
+</code></pre></div>
+<p>The response contains one entry per part, in order.</p>
+<h3 id="upload-limits">Upload limits</h3>
+<ul>
+<li>The entire request body is capped at <strong>100 MB</strong>, including all parts.</li>
+<li>A part named after a file column must satisfy that column&#39;s <code>max_size</code>,
+<code>mime_types</code>, and <code>pattern</code>; otherwise the request fails with <code>400</code>.</li>
+<li>A part with no file name is stored as <code>unnamed</code>.</li>
+<li>File names are sanitized to a single path component before storage.</li>
+</ul>
+<hr>
+<h2 id="attaching-files-to-records">Attaching files to records</h2>
+<p>Single-file columns take a string:</p>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-7"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-7">curl -X POST http://localhost:8989/api/collections/articles/records \
+  -H &#39;Content-Type: application/json&#39; \
+  -d &#39;{&quot;data&quot;:{&quot;title&quot;:&quot;My Article&quot;,&quot;cover&quot;:&quot;e97669ba-...&quot;}}&#39;
+</code></pre></div>
+<p>Multi-file columns take an array:</p>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-8"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-8">curl -X POST http://localhost:8989/api/collections/articles/records \
+  -H &#39;Content-Type: application/json&#39; \
+  -d &#39;{&quot;data&quot;:{&quot;title&quot;:&quot;Gallery&quot;,&quot;attachments&quot;:[&quot;e97669ba-...&quot;,&quot;f1284abc-...&quot;]}}&#39;
+</code></pre></div>
+<p>When a record is read back, file references are replaced with their metadata
+objects (<code>id</code>, <code>key</code>, <code>originalName</code>, <code>contentType</code>, <code>sizeBytes</code>, ...):</p>
+<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-9"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-9">{
+  &quot;id&quot;: &quot;record-id&quot;,
+  &quot;data&quot;: {
+    &quot;title&quot;: &quot;My Article&quot;,
+    &quot;cover&quot;: {
+      &quot;id&quot;: &quot;e97669ba-...&quot;,
+      &quot;key&quot;: &quot;uploads/.../photo.png&quot;,
+      &quot;originalName&quot;: &quot;photo.png&quot;,
+      &quot;contentType&quot;: &quot;image/png&quot;,
+      &quot;sizeBytes&quot;: 10240
+    }
+  }
+}
+</code></pre></div>
+<p>A multi-file field returns an array of such objects.</p>
+<h3 id="lifecycle-and-cleanup">Lifecycle and cleanup</h3>
+<ul>
+<li>Replacing a file, removing an item from a multi-file array, or clearing the
+field deletes the old bytes and its <code>_files</code> metadata row.</li>
+<li>Deleting a record deletes every file referenced by its file fields.</li>
+<li>Uploads that were never attached to a record are <strong>not</strong> cleaned up
+automatically. They remain available in the collection&#39;s file list until an
+admin deletes them.</li>
+<li>Truncating a collection deletes records without running per-record file
+cleanup. Delete records individually if you need their files removed.</li>
+<li>Deleting a stored file directly is an admin operation:
+<code>DELETE /api/files/{id_or_key}</code>.</li>
+</ul>
+<hr>
+<h2 id="listing-and-downloading-files">Listing and downloading files</h2>
+<h3 id="download-urls">Download URLs</h3>
+<p>A file can be fetched by <code>id</code> or storage <code>key</code> from two equivalent places:</p>
+<div class="doc-table-wrap"><table class="docs-table">
+<thead>
+<tr>
+<th>URL</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>GET /api/files/{id_or_key}</code></td>
+<td>Uses the file&#39;s own collection for access checks.</td>
+</tr>
+<tr>
+<td><code>GET /api/collections/{name}/files/{id_or_key}</code></td>
+<td>Also requires the file to belong to <code>{name}</code>; otherwise <code>404</code>.</td>
+</tr>
+</tbody></table></div>
+<p>Downloads default to <code>Content-Disposition: inline</code>. Add <code>?download=1</code> to force
+an attachment (useful for &quot;Save as...&quot; links). Accepted truthy values are <code>1</code>,
+<code>true</code>, <code>TRUE</code>, and <code>yes</code>.</p>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-10"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-10"># Inline
+curl http://localhost:8989/api/files/e97669ba-...
+
+# Force download
+curl &#39;http://localhost:8989/api/files/e97669ba-...?download=1&#39;
+</code></pre></div>
+<p>The response keeps the stored content type. Files are served whole — Range
+requests, thumbnails, and on-the-fly transformations are not supported.</p>
+<h3 id="listing-a-collection-s-files">Listing a collection&#39;s files</h3>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-11"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-11">curl http://localhost:8989/api/collections/articles/files
+</code></pre></div>
+<p>Governed by the collection&#39;s <code>list_rule</code>. The response includes every file
+uploaded for the collection, including files not yet attached to a record:</p>
+<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-12"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-12">{
+  &quot;items&quot;: [
+    {
+      &quot;id&quot;: &quot;e97669ba-...&quot;,
+      &quot;key&quot;: &quot;uploads/.../photo.png&quot;,
+      &quot;name&quot;: &quot;photo.png&quot;,
+      &quot;size&quot;: 10240,
+      &quot;contentType&quot;: &quot;image/png&quot;,
+      &quot;collectionName&quot;: &quot;articles&quot;,
+      &quot;created&quot;: &quot;2026-10-18T15:42:32Z&quot;,
+      &quot;updated&quot;: &quot;2026-10-18T15:42:32Z&quot;,
+      &quot;path&quot;: &quot;/api/collections/articles/files/e97669ba-...&quot;
+    }
+  ],
+  &quot;totalItems&quot;: 1
+}
+</code></pre></div>
+<p><code>path</code> is ready to use as a download URL. This endpoint is not paginated.</p>
+<hr>
+<h2 id="protected-files">Protected files</h2>
+<p>File access is decided by the owning collection&#39;s <code>view_rule</code>:</p>
+<div class="doc-table-wrap"><table class="docs-table">
+<thead>
+<tr>
+<th><code>view_rule</code></th>
+<th>Download access</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&quot;&quot;</code> (empty string)</td>
+<td>Public; no token needed.</td>
+</tr>
+<tr>
+<td><code>null</code> (not set)</td>
+<td>Superusers only.</td>
+</tr>
+<tr>
+<td>expression</td>
+<td>Evaluated using the caller&#39;s authenticated user.</td>
+</tr>
+</tbody></table></div>
+<p>Because downloads are checked against the <strong>collection</strong> (there is no per-file
+ACL), write rules that only depend on the authenticated user. A rule such as
+<code>@request.auth.id != &quot;&quot;</code> works; a record-dependent rule such as
+<code>owner = @request.auth.id</code> cannot be evaluated for a file download and will
+deny non-admins.</p>
+<p>A normal <code>Authorization: Bearer</code> header also works for downloads. File tokens
+exist for browser elements that cannot set headers.</p>
+<h3 id="file-tokens">File tokens</h3>
+<p>Browsers cannot attach an <code>Authorization</code> header to <code>&lt;img&gt;</code>, <code>&lt;video&gt;</code>, or
+<code>&lt;a download&gt;</code> requests. For protected files, exchange the normal Bearer token
+for a short-lived <strong>file token</strong> and pass it in the query string.</p>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-13"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-13">curl -X POST http://localhost:8989/api/files/token \
+  -H &quot;Authorization: Bearer $TOKEN&quot;
+</code></pre></div>
+<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-14"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-14">{
+  &quot;token&quot;: &quot;eyJhbGciOi...&quot;,
+  &quot;expiresIn&quot;: 180
+}
+</code></pre></div>
+<p>Then append it to any file URL:</p>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-15"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-15">curl &quot;http://localhost:8989/api/files/e97669ba-...?token=$FILE_TOKEN&quot;
+
+# Combine with download
+curl &quot;http://localhost:8989/api/files/e97669ba-...?download=1&amp;token=$FILE_TOKEN&quot;
+</code></pre></div>
+<p>The same token works on both download URL forms and for every file the user is
+allowed to view. It is an identity token, not a per-file capability.</p>
+<ul>
+<li>Default lifetime: <strong>180 seconds</strong>.</li>
+<li>Reuse it until it expires; request a new one when a download returns <code>401</code>.</li>
+<li>Changing the user&#39;s <code>token_key</code> (or resetting the password, which rotates it) invalidates outstanding file tokens.</li>
+<li>A file token only authenticates file downloads. It cannot call records,
+settings, or admin endpoints.</li>
+<li>An expired or invalid token returns <code>401</code>; a valid token whose user fails the
+collection <code>view_rule</code> returns <code>403</code>.</li>
+<li>For public files, do not send a stale <code>Authorization</code> header — an invalid
+header returns <code>401</code> even when the file itself is public.</li>
+</ul>
+<h3 id="javascript-example">JavaScript example</h3>
+<div class="docs-code"><div class="docs-code-head"><span>TS</span><button class="docs-copy" type="button" data-copy-target="doc-code-16"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-16">let cached: { token: string; expiresAt: number } | null = null;
+
+async function getFileToken(authToken: string): Promise&lt;string&gt; {
+  if (cached &amp;&amp; Date.now() &lt; cached.expiresAt) return cached.token;
+
+  const res = await fetch(&quot;/api/files/token&quot;, {
+    method: &quot;POST&quot;,
+    headers: { Authorization: `Bearer ${authToken}` },
+  });
+  if (!res.ok) throw new Error(`file token failed: ${res.status}`);
+
+  const body = await res.json();
+  cached = {
+    token: body.token,
+    // refresh a little early
+    expiresAt: Date.now() + (body.expiresIn - 15) * 1000,
+  };
+  return cached.token;
+}
+
+function fileUrl(path: string, token?: string): string {
+  if (!token) return path;
+  const separator = path.includes(&quot;?&quot;) ? &quot;&amp;&quot; : &quot;?&quot;;
+  return `${path}${separator}token=${encodeURIComponent(token)}`;
+}
+
+// &lt;img src={fileUrl(`/api/files/${file.id}`, await getFileToken(authToken))} /&gt;
+</code></pre></div>
+<p>The admin dashboard performs this exchange automatically for file previews and
+download links.</p>
+<hr>
+<h2 id="storage-configuration">Storage configuration</h2>
+<p>New uploads go to the storage configured in <strong>Settings → File storage</strong> in the
+admin dashboard, or through the admin-only settings API.</p>
+<div class="doc-table-wrap"><table class="docs-table">
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>GET</code></td>
+<td><code>/api/settings/storage</code></td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/settings/storage</code></td>
+</tr>
+</tbody></table></div>
+<p>Both require a superuser Bearer token. <code>GET</code> returns <code>404</code> until storage
+settings have been saved; when unset, Crabbase defaults to local storage under
+<code>./uploads</code>.</p>
+<h3 id="local-disk">Local disk</h3>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-17"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-17">curl -X POST http://localhost:8989/api/settings/storage \
+  -H &quot;Authorization: Bearer $ADMIN_TOKEN&quot; \
+  -H &#39;Content-Type: application/json&#39; \
+  -d &#39;{
+    &quot;storageType&quot;: &quot;local&quot;,
+    &quot;local&quot;: { &quot;basePath&quot;: &quot;$HOME/crabbase/files/&quot; }
+  }&#39;
+</code></pre></div>
+<p><code>basePath</code> is relative to the server&#39;s working directory unless absolute.
+A leading <code>$HOME</code> is expanded at runtime. The directory must be writable by the
+Crabbase process. (<code>local_path</code> is also accepted as an alias for <code>basePath</code>.)</p>
+<h3 id="s3-compatible-storage">S3-compatible storage</h3>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-18"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-18">curl -X POST http://localhost:8989/api/settings/storage \
+  -H &quot;Authorization: Bearer $ADMIN_TOKEN&quot; \
+  -H &#39;Content-Type: application/json&#39; \
+  -d &#39;{
+    &quot;storageType&quot;: &quot;s3&quot;,
+    &quot;local&quot;: { &quot;basePath&quot;: &quot;./uploads&quot; },
+    &quot;s3&quot;: {
+      &quot;bucket&quot;: &quot;my-crabbase-files&quot;,
+      &quot;region&quot;: &quot;us-east-1&quot;,
+      &quot;accessKey&quot;: &quot;AKIA...&quot;,
+      &quot;secret&quot;: &quot;...&quot;,
+      &quot;endpoint&quot;: &quot;&quot;,
+      &quot;forcePathStyle&quot;: false
+    }
+  }&#39;
+</code></pre></div>
+<div class="doc-table-wrap"><table class="docs-table">
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>storageType</code></td>
+<td><code>&quot;local&quot;</code> or <code>&quot;s3&quot;</code>. Defaults to local.</td>
+</tr>
+<tr>
+<td><code>local.basePath</code></td>
+<td>Local upload directory.</td>
+</tr>
+<tr>
+<td><code>s3.bucket</code></td>
+<td>Existing bucket name. The bucket is not created automatically.</td>
+</tr>
+<tr>
+<td><code>s3.region</code></td>
+<td>AWS region.</td>
+</tr>
+<tr>
+<td><code>s3.accessKey</code> / <code>s3.secret</code></td>
+<td>Credentials with PutObject, GetObject, and DeleteObject permission.</td>
+</tr>
+<tr>
+<td><code>s3.endpoint</code></td>
+<td>Optional custom endpoint for MinIO, Cloudflare R2, etc. Empty means AWS.</td>
+</tr>
+<tr>
+<td><code>s3.forcePathStyle</code></td>
+<td>Enable for MinIO and other path-style S3 services.</td>
+</tr>
+</tbody></table></div>
+<p>Existing files are not migrated when the storage setting changes. Each file&#39;s
+<code>_files</code> row records its backend and container, so old files stay readable as
+long as the corresponding local path or S3 credentials are still available.
+Uploads made after the change use the new backend.</p>
+<p>Credentials are stored in the settings table; protect admin access accordingly.</p>
+<hr>
+<h2 id="limits-and-caveats">Limits and caveats</h2>
+<ul>
+<li>Upload requests are capped at <strong>100 MB</strong>.</li>
+<li>Per-file size limits come from <code>max_size</code> on the column, in bytes.</li>
+<li>There is no per-file permission model; access is collection-wide via
+<code>view_rule</code>.</li>
+<li>No image resizing, thumbnails, transcoding, Range requests, or resumable
+uploads.</li>
+<li>File URLs are always proxied through Crabbase; S3 objects are not exposed
+directly.</li>
+<li>Unattached uploads and files left behind by collection truncation are not
+garbage-collected automatically.</li>
+<li>The collection file list is unpaginated and includes unattached files.</li>
+</ul>
+<hr>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<div class="doc-table-wrap"><table class="docs-table">
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>401</code> on a file URL</td>
+<td>Expired or invalid file token; or a stale <code>Authorization</code> header on a public request.</td>
+</tr>
+<tr>
+<td><code>403</code> on upload</td>
+<td><code>create_rule</code> is <code>null</code> (admin only) or the caller does not satisfy it.</td>
+</tr>
+<tr>
+<td><code>403</code> on download</td>
+<td>No token/Bearer sent for a protected file, <code>view_rule</code> is <code>null</code>, the caller does not satisfy it, or the rule depends on record fields.</td>
+</tr>
+<tr>
+<td><code>404</code> on a collection file URL</td>
+<td>The file ID/key does not exist or belongs to a different collection.</td>
+</tr>
+<tr>
+<td><code>400: No file was uploaded</code></td>
+<td>The multipart request contained no parts.</td>
+</tr>
+<tr>
+<td><code>400: field &#39;x&#39; accepts a single file</code></td>
+<td>More than one part was sent for a single-file column.</td>
+</tr>
+<tr>
+<td><code>400: unsupported MIME type</code></td>
+<td>The part&#39;s <code>Content-Type</code> does not match <code>mime_types</code>.</td>
+</tr>
+<tr>
+<td><code>400: exceeds maximum allowed size</code></td>
+<td>The file is larger than the column&#39;s <code>max_size</code>.</td>
+</tr>
+<tr>
+<td><code>400: must be an array of file keys or ids</code></td>
+<td>A multi-file column was given a string, or vice versa.</td>
+</tr>
+<tr>
+<td><code>500</code> on upload/download</td>
+<td>Storage is misconfigured, S3 credentials are missing, or the local directory is not writable.</td>
+</tr>
+<tr>
+<td>Upload succeeds but the record is unchanged</td>
+<td>Uploading only stores bytes; attach the returned <code>id</code> with a create/update request.</td>
+</tr>
+<tr>
+<td>Image shows <code>403</code> in a browser</td>
+<td>Protected collection; append a file token to the <code>src</code> URL.</td>
+</tr>
+</tbody></table></div>
+</div>
+
+              <div class="mt-12 pt-8 border-t border-surface-variant flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+                  <span class="material-symbols-outlined text-[18px] text-tertiary" aria-hidden="true">help_outline</span>
+                  <span>Stuck? Reach our community on <a class="text-primary hover:underline font-medium" href="https://github.com/ropali/crabbase/discussions" rel="noopener noreferrer" target="_blank">GitHub Discussions</a>.</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-3"><a class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container text-primary font-body-sm text-body-sm font-semibold transition-colors group" href="./docs-authentication.html"><span class="material-symbols-outlined text-[18px] group-hover:-translate-x-0.5 transition-transform" aria-hidden="true">arrow_back</span><span>Previous: Authentication</span></a><a class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container text-primary font-body-sm text-body-sm font-semibold transition-colors group" href="./docs-settings.html"><span>Next: Settings &amp; Email</span><span class="material-symbols-outlined text-[18px] group-hover:translate-x-0.5 transition-transform" aria-hidden="true">arrow_forward</span></a></div>
+              </div>
+
+              <div class="mt-10 pt-6 border-t border-outline-variant/40 flex flex-col sm:flex-row items-center justify-between gap-2 font-body-sm text-label-xs text-on-surface-variant">
+                <span>Dual-licensed under MIT and Apache 2.0. Built for the Rust community.</span>
+                <span>© <span data-year>2026</span> Crabbase Engine Maintainers.</span>
+              </div>
+            </div>
+          </div>
+
+          <aside class="hidden 2xl:block w-72 shrink-0 py-8 pr-8" aria-label="On this page">
+            <div class="sticky top-24 space-y-6">
+              <div class="border-l border-outline-variant pl-4 space-y-3">
+                <div class="font-label-xs text-label-xs uppercase tracking-wider text-outline font-semibold">On this page</div>
+                <nav class="space-y-2 text-body-sm font-body-sm text-on-surface-variant" id="docs-toc">
+                  <a class="block transition-colors hover:text-primary" data-toc href="#quick-start">Quick start</a>
+                  <a class="block transition-colors hover:text-primary" data-toc href="#defining-file-columns">Defining file columns</a>
+                  <a class="block transition-colors hover:text-primary" data-toc href="#uploading-files">Uploading files</a>
+                  <a class="block transition-colors hover:text-primary" data-toc href="#attaching-files-to-records">Attaching files to records</a>
+                  <a class="block transition-colors hover:text-primary" data-toc href="#listing-and-downloading-files">Listing and downloading files</a>
+                  <a class="block transition-colors hover:text-primary" data-toc href="#protected-files">Protected files</a>
+                  <a class="block transition-colors hover:text-primary" data-toc href="#storage-configuration">Storage configuration</a>
+                  <a class="block transition-colors hover:text-primary" data-toc href="#limits-and-caveats">Limits and caveats</a>
+                  <a class="block transition-colors hover:text-primary" data-toc href="#troubleshooting">Troubleshooting</a>
+                </nav>
+              </div>
+              <div class="border-t border-outline-variant pt-4 pl-4 space-y-2 text-body-sm font-body-sm">
+                <a class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors" href="https://github.com/ropali/crabbase/edit/main/docs/files-and-uploads.md" rel="noopener noreferrer" target="_blank">
+                  <span class="material-symbols-outlined text-[16px]" aria-hidden="true">edit_document</span>
+                  <span>Edit this page on GitHub</span>
+                </a>
+                <a class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors" href="https://github.com/ropali/crabbase/issues/new" rel="noopener noreferrer" target="_blank">
+                  <span class="material-symbols-outlined text-[16px]" aria-hidden="true">forum</span>
+                  <span>Submit Feedback</span>
+                </a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
+
+    <div id="docs-search-modal" class="fixed inset-0 z-[60] hidden items-start justify-center bg-on-surface/40 backdrop-blur-sm px-4 pt-[12vh]" role="dialog" aria-modal="true" aria-labelledby="docs-search-title">
+      <div class="w-full max-w-xl rounded-xl bg-surface-container-lowest shadow-2xl border border-outline-variant overflow-hidden">
+        <h2 id="docs-search-title" class="sr-only">Search documentation</h2>
+        <div class="flex items-center gap-3 px-4 py-3 border-b border-outline-variant">
+          <span class="material-symbols-outlined text-[20px] text-tertiary" aria-hidden="true">search</span>
+          <input id="docs-search-input" type="search" class="w-full bg-transparent font-body-md text-body-md text-on-surface placeholder:text-tertiary focus:outline-none" placeholder="Search docs, crates, APIs..." autocomplete="off" />
+          <button id="docs-search-close" type="button" class="inline-flex items-center justify-center w-7 h-7 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" aria-label="Close search">
+            <span class="material-symbols-outlined text-[18px]" aria-hidden="true">close</span>
+          </button>
+        </div>
+        <div id="docs-search-results" class="max-h-[55vh] overflow-y-auto p-2"></div>
+        <div class="flex items-center justify-between gap-3 border-t border-outline-variant px-4 py-2 font-code-md text-label-xs text-tertiary">
+          <span>Type to filter documentation</span>
+          <span>Esc to close</span>
+        </div>
+      </div>
+    </div>
+
+    <script src="./assets/js/docs-search-index.js" defer></script>
+    <script src="./assets/js/docs.js" defer></script>
+  </body>
+</html>

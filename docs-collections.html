@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collections &amp; Records — Crabbase Documentation</title>
+    <meta name="description" content="Collections are the heart of Crabbase. A collection is a real PostgreSQL table that you define at runtime — and the moment it exists, a full REST CRUD surface is generated for it at /api/collections/{name}/records. This is how you build a backend without writing any API code." />
+    <meta name="theme-color" content="#fff8f6" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+  </head>
+  <body class="bg-surface font-body-md text-on-surface antialiased" data-page="collections">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header id="docs-header" class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl border-b border-outline-variant">
+      <div class="h-16 w-full px-4 sm:px-6 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3 xl:gap-6 min-w-0">
+          <button id="docs-menu-toggle" type="button" class="lg:hidden inline-flex items-center justify-center w-9 h-9 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors shrink-0" aria-expanded="false" aria-controls="docs-sidebar" aria-label="Open documentation menu">
+            <span class="material-symbols-outlined text-[22px]" aria-hidden="true">menu</span>
+          </button>
+          <a class="group flex items-center gap-2.5 text-on-surface hover:text-primary transition-colors shrink-0" href="./index.html" aria-label="Crabbase home">
+            <div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shadow-sm group-hover:scale-105 group-hover:bg-primary transition-all duration-300" title="Crab mascot!">
+              <span class="material-symbols-outlined text-[18px]" aria-hidden="true">terminal</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="font-headline-md text-headline-md tracking-tight leading-none">Crabbase</span>
+              <span class="hidden sm:inline font-code-md text-label-xs bg-surface-container-high text-primary px-2 py-0.5 rounded border border-outline-variant font-medium">v0.14.2</span>
+            </div>
+          </a>
+          <nav class="hidden xl:flex items-center gap-6" aria-label="Primary navigation">
+            <a class="text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors py-5" href="./index.html">Landing</a>
+            <a class="transition-colors py-5 text-primary font-semibold border-b-2 border-primary font-body-sm text-body-sm" href="./docs.html" aria-current="page">Docs</a>
+            <a class="text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors py-5" href="./index.html#architecture">Architecture</a>
+            <a class="text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors py-5" href="./docs-collections.html#endpoints">API Reference</a>
+            <a class="text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors py-5" href="./index.html#benchmarks">Benchmarks</a>
+          </nav>
+        </div>
+        <div class="flex items-center gap-2 sm:gap-3 flex-1 max-w-md justify-end">
+          <button id="docs-search-open" type="button" class="group flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-surface-container-low border border-outline-variant text-on-surface-variant hover:border-outline hover:bg-surface-container text-left transition-colors w-full max-w-[13rem] sm:max-w-xs" aria-label="Search documentation">
+            <span class="material-symbols-outlined text-[18px] text-tertiary" aria-hidden="true">search</span>
+            <span class="hidden sm:inline text-body-sm font-body-sm truncate">Search docs...</span>
+            <kbd class="ml-auto hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface border border-outline-variant font-code-md text-label-xs text-tertiary">⌘K</kbd>
+          </button>
+          <a class="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface text-body-sm font-body-sm transition-colors" href="https://crates.io/crates/crabbase" rel="noopener noreferrer" target="_blank">
+            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">inventory_2</span>
+            <span class="font-code-md text-label-xs">crates.io</span>
+          </a>
+          <a class="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface text-body-sm font-body-sm transition-colors" href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank">
+            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">star</span>
+            <span class="font-code-md text-label-xs">14.8k</span>
+          </a>
+          <a class="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-body-sm text-body-sm font-medium transition-colors shadow-sm whitespace-nowrap" href="./index.html#admin">
+            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">terminal</span>
+            <span class="hidden md:inline">Launch Admin</span>
+          </a>
+          <div class="hidden sm:flex w-8 h-8 rounded-full bg-primary items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-on-primary text-[18px]" aria-hidden="true">person</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div id="docs-sidebar-overlay" class="fixed inset-0 top-16 bg-on-surface/30 backdrop-blur-[1px] z-30 hidden lg:hidden" aria-hidden="true"></div>
+
+    <aside id="docs-sidebar" class="fixed left-0 top-16 bottom-0 w-64 bg-surface-container-lowest border-r border-outline-variant overflow-y-auto p-4 z-40 -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-out" aria-label="Documentation navigation">
+      <div class="lg:hidden mb-6">
+        <div class="font-label-xs text-label-xs uppercase tracking-wider text-outline px-3 mb-2 font-semibold">Navigation</div>
+        <nav class="space-y-1">
+          <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./index.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">home</span><span>Landing</span></a>
+          <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./index.html#architecture"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">account_tree</span><span>Architecture</span></a>
+          <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./index.html#benchmarks"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">speed</span><span>Benchmarks</span></a>
+        </nav>
+      </div>
+
+      <div class="font-label-xs text-label-xs uppercase tracking-wider text-outline px-3 mb-2 font-semibold">Documentation</div>
+      <nav class="space-y-1 mb-6" aria-label="Documentation">
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">play_arrow</span><span>Getting Started</span></a>
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg transition-colors bg-surface-container-high text-primary font-semibold border-l-2 border-primary font-body-sm text-body-sm" href="./docs-collections.html" aria-current="page"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">table_rows</span><span>Collections &amp; Records</span></a>
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs-authentication.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">shield</span><span>Authentication</span></a>
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs-files.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">cloud_upload</span><span>Files &amp; Uploads</span></a>
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs-settings.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">settings</span><span>Settings &amp; Email</span></a>
+      </nav>
+
+      <div class="font-label-xs text-label-xs uppercase tracking-wider text-outline px-3 mb-2 font-semibold">References</div>
+      <nav class="space-y-1" aria-label="References">
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs-collections.html#endpoints"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">code</span><span>API Reference</span></a>
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs.html#makefile-reference"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">terminal</span><span>Makefile Reference</span></a>
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs.html#troubleshooting"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">build</span><span>Troubleshooting</span></a>
+        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="https://github.com/ropali/crabbase/discussions" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">forum</span><span>Community &amp; Support</span></a>
+      </nav>
+    </aside>
+
+    <div class="lg:pl-64">
+      <main id="main" class="pt-16 min-h-screen bg-surface w-full">
+        <div class="w-full flex">
+          <div class="flex-1 min-w-0 px-5 sm:px-8 py-8 lg:px-12 max-w-4xl mx-auto">
+            <div class="flex flex-col w-full">
+              <nav class="flex flex-wrap items-center gap-2 mb-6 text-on-surface-variant font-label-xs text-label-xs" aria-label="Breadcrumb">
+                <a class="hover:text-primary transition-colors" href="./docs.html">Documentation</a>
+                <span class="material-symbols-outlined text-[14px] text-tertiary" aria-hidden="true">chevron_right</span>
+                <span class="hover:text-primary transition-colors">Collections &amp; Records</span>
+                <span class="material-symbols-outlined text-[14px] text-tertiary" aria-hidden="true">chevron_right</span>
+                <span class="text-primary font-semibold px-2 py-0.5 rounded-full bg-surface-container-high">v0.14.2</span>
+              </nav>
+
+              <div class="space-y-4 mb-8">
+                <div class="flex flex-wrap items-center gap-3">
+                  <span class="px-2.5 py-1 rounded bg-surface-container text-primary font-code-md text-label-xs font-semibold uppercase tracking-wider">Reference</span>
+                  <span class="text-tertiary font-code-md text-label-xs">Estimated read: 18 mins</span>
+                </div>
+                <h1 class="font-headline-lg text-headline-lg sm:text-4xl text-on-surface tracking-tight">Collections &amp; Records</h1>
+                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed max-w-3xl">Collections are the heart of Crabbase. A collection is a real PostgreSQL table that you define at runtime — and the moment it exists, a full REST CRUD surface is generated for it at <code>/api/collections/{name}/records</code>. This is how you build a backend without writing any API code.</p>
+              </div>
+
+              <div class="doc-prose"><h2 id="the-easy-way-the-admin-dashboard">The easy way: the admin dashboard</h2>
+<p>Everything in this document can be done from the admin dashboard (<code>crabbase admin</code>, default <code>http://localhost:9898</code>) — no curl required:</p>
+<div class="doc-table-wrap"><table class="docs-table">
+<thead>
+<tr>
+<th>Task</th>
+<th>Where in the UI</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Create a collection (name, type, fields, indexes)</td>
+<td><strong>Create Collection</strong> drawer in the sidebar</td>
+</tr>
+<tr>
+<td>Add/remove/retype fields after creation</td>
+<td>Collection&#39;s <strong>Edit Schema</strong> drawer</td>
+</tr>
+<tr>
+<td>Set API rules</td>
+<td>Same edit drawer (rule fields per operation)</td>
+</tr>
+<tr>
+<td>Browse / create / edit / delete records</td>
+<td>Collection&#39;s data page</td>
+</tr>
+<tr>
+<td>Delete all records</td>
+<td>Data page → truncate</td>
+</tr>
+<tr>
+<td>Delete a collection</td>
+<td>Edit drawer</td>
+</tr>
+</tbody></table></div>
+<p>The dashboard talks to the exact same REST endpoints documented below — use whichever fits your workflow (clicks for day-to-day work, API for automation/CI).</p>
+<p>Collection management requires a <strong>superuser</strong> login (dashboard) or superuser JWT (API). Record access is controlled per operation by API rules: with no rule set, only superusers are allowed. Set list/view to <code>&quot;&quot;</code> (public) after creating a collection if you want unauthenticated reads.</p>
+<h2 id="endpoints">Endpoints</h2>
+<div class="doc-table-wrap"><table class="docs-table">
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Auth</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>GET</code></td>
+<td><code>/api/collections?page=1&amp;per_page=20</code></td>
+<td>superuser</td>
+<td>List collections</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/collections</code></td>
+<td>superuser</td>
+<td>Create collection (creates the table)</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/collections/{name}</code></td>
+<td>superuser</td>
+<td>Get one collection</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td><code>/api/collections/{name}</code></td>
+<td>superuser</td>
+<td>Update schema / rename / set rules</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/collections/{name}</code></td>
+<td>superuser</td>
+<td>Delete collection <strong>and drop its table</strong></td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/collections/{name}/truncate</code></td>
+<td>superuser</td>
+<td>Delete all records</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/collections/{name}/records?page=1&amp;per_page=20&amp;filter=&amp;expand=</code></td>
+<td>rules apply</td>
+<td>List records (with pagination, dynamic filtering, &amp; relation expansion)</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/collections/{name}/records</code></td>
+<td>rules apply*</td>
+<td>Create record</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/collections/{name}/records/{id}?expand=</code></td>
+<td>rules apply*</td>
+<td>Get record (with optional relation expansion; <code>view_rule</code> enforced)</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td><code>/api/collections/{name}/records/{id}</code></td>
+<td>rules apply*</td>
+<td>Update record</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/collections/{name}/records/{id}</code></td>
+<td>rules apply*</td>
+<td>Delete record</td>
+</tr>
+</tbody></table></div>
+<p>* Record endpoints enforce collection rules: <code>list_rule</code> on list, <code>view_rule</code> on single-record fetch and relation expansion, <code>create_rule</code> on create/upload, and <code>delete_rule</code> on delete. <code>update_rule</code> rejects non-admins when it is null, but expressions are not applied to rows yet (an empty string allows all non-admins). See <a href="#api-rules">API rules</a>.</p>
+<h2 id="creating-a-collection">Creating a collection</h2>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-1"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-1">curl -X POST http://localhost:8989/api/collections \
+  -H &quot;Authorization: Bearer $TOKEN&quot; \
+  -H &#39;Content-Type: application/json&#39; \
+  -d &#39;{
+    &quot;name&quot;: &quot;products&quot;,
+    &quot;collection_type&quot;: &quot;base&quot;,
+    &quot;columns&quot;: [
+      { &quot;name&quot;: &quot;title&quot;,   &quot;data_type&quot;: &quot;PlainText&quot;, &quot;index&quot;: true,  &quot;required&quot;: true },
+      { &quot;name&quot;: &quot;body&quot;,    &quot;data_type&quot;: &quot;RichText&quot; },
+      { &quot;name&quot;: &quot;price&quot;,   &quot;data_type&quot;: &quot;Number&quot;,    &quot;min&quot;: 0 },
+      { &quot;name&quot;: &quot;active&quot;,  &quot;data_type&quot;: &quot;Bool&quot; },
+      { &quot;name&quot;: &quot;email&quot;,   &quot;data_type&quot;: &quot;Email&quot; },
+      { &quot;name&quot;: &quot;url&quot;,     &quot;data_type&quot;: &quot;Url&quot; },
+      { &quot;name&quot;: &quot;starts_at&quot;,&quot;data_type&quot;: &quot;Datetime&quot; },
+      { &quot;name&quot;: &quot;published_at&quot;, &quot;data_type&quot;: &quot;autodate&quot; },
+      { &quot;name&quot;: &quot;meta&quot;,    &quot;data_type&quot;: &quot;Json&quot; },
+      { &quot;name&quot;: &quot;status&quot;,  &quot;data_type&quot;: &quot;Select&quot; },
+      { &quot;name&quot;: &quot;category_id&quot;, &quot;data_type&quot;: &quot;Relation&quot;, &quot;related_to&quot;: &quot;categories&quot; }
+    ],
+    &quot;list_rule&quot;: &quot;&quot;,
+    &quot;view_rule&quot;: &quot;&quot;,
+    &quot;create_rule&quot;: &quot;&quot;
+  }&#39;
+</code></pre></div>
+<p>The <code>Relation</code> field requires the <code>categories</code> collection to exist first; create it before running this example, or drop that field.</p>
+<h3 id="field-types-data-type">Field types (<code>data_type</code>)</h3>
+<div class="doc-table-wrap"><table class="docs-table">
+<thead>
+<tr>
+<th>Type</th>
+<th>Postgres type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>PlainText</code></td>
+<td><code>TEXT</code></td>
+<td>Default type</td>
+</tr>
+<tr>
+<td><code>RichText</code></td>
+<td><code>TEXT</code></td>
+<td>Long-form content; rich editor in admin UI</td>
+</tr>
+<tr>
+<td><code>Number</code></td>
+<td><code>BIGINT</code></td>
+<td>Integers</td>
+</tr>
+<tr>
+<td><code>Bool</code></td>
+<td><code>BOOLEAN</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Email</code></td>
+<td><code>TEXT</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Url</code></td>
+<td><code>TEXT</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Datetime</code></td>
+<td><code>TIMESTAMPTZ</code></td>
+<td>Returned as RFC-3339 strings</td>
+</tr>
+<tr>
+<td><code>AutoDatetime</code></td>
+<td><code>TIMESTAMPTZ DEFAULT now()</code></td>
+<td>Set automatically on insert. Pass as the legacy string <code>&quot;autodate&quot;</code> (or <code>&quot;autodatetime&quot;</code>) — the plain variant name is not accepted as a string</td>
+</tr>
+<tr>
+<td><code>File</code></td>
+<td><code>TEXT</code></td>
+<td>Stores the uploaded record ID or storage key from <code>/api/collections/{name}/records/upload</code>. See <a href="docs-files.html">Files &amp; uploads</a></td>
+</tr>
+<tr>
+<td><code>Relation</code></td>
+<td><code>UUID</code> + FK</td>
+<td>Requires <code>&quot;related_to&quot;: &quot;&lt;other-collection-name&gt;&quot;</code>; target must exist first</td>
+</tr>
+<tr>
+<td><code>Select</code></td>
+<td><code>TEXT</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Json</code></td>
+<td><code>TEXT</code></td>
+<td>JSON viewer in admin UI</td>
+</tr>
+<tr>
+<td><code>GeoPoint</code></td>
+<td><code>TEXT</code></td>
+<td>Placeholder — not a real geometry type yet</td>
+</tr>
+</tbody></table></div>
+<p>Legacy aliases are accepted for compatibility: <code>text</code>, <code>richtext</code>/<code>editor</code>, <code>int</code>/<code>integer</code>, <code>bool</code>/<code>boolean</code>, <code>date</code>, <code>autodate</code>, etc. (case-insensitive).</p>
+<h3 id="column-options">Column options</h3>
+<div class="doc-table-wrap"><table class="docs-table">
+<thead>
+<tr>
+<th>Option</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>index</code></td>
+<td><code>false</code></td>
+<td>Create a btree index on the column</td>
+</tr>
+<tr>
+<td><code>hidden</code></td>
+<td><code>false</code></td>
+<td>Mark field hidden</td>
+</tr>
+<tr>
+<td><code>required</code></td>
+<td><code>false</code></td>
+<td>Marked as required</td>
+</tr>
+<tr>
+<td><code>min</code> / <code>max</code></td>
+<td>—</td>
+<td>Size constraints; for <code>File</code>, the number of files (see <a href="docs-files.html#defining-file-columns">Files &amp; uploads</a>)</td>
+</tr>
+<tr>
+<td><code>pattern</code></td>
+<td>—</td>
+<td>Validation pattern; for <code>File</code>, matched against the uploaded file name</td>
+</tr>
+<tr>
+<td><code>max_size</code> / <code>mime_types</code></td>
+<td>—</td>
+<td><code>File</code> only: per-file byte limit and allowed content types</td>
+</tr>
+<tr>
+<td><code>related_to</code></td>
+<td>—</td>
+<td>Target collection name (for <code>Relation</code>)</td>
+</tr>
+</tbody></table></div>
+<h3 id="built-in-columns">Built-in columns</h3>
+<p>Every table automatically gets:</p>
+<ul>
+<li><code>id UUID PRIMARY KEY DEFAULT gen_random_uuid()</code></li>
+<li><code>created TIMESTAMPTZ</code></li>
+<li><code>updated TIMESTAMPTZ</code></li>
+</ul>
+<p>You cannot create columns named <code>id</code>, <code>created</code>, or <code>updated</code>. Collection names must be valid identifiers (<code>[A-Za-z_][A-Za-z0-9_]*</code>), and each collection gets its own random JWT secret generated into <code>options.authToken</code>.</p>
+<h3 id="collection-types">Collection types</h3>
+<ul>
+<li><code>base</code> — regular data collection</li>
+<li><code>auth</code> — records can log in; see <a href="docs-authentication.html">Authentication</a></li>
+<li><code>view</code> — reserved</li>
+</ul>
+<h2 id="updating-schema-live-migration">Updating schema (live migration)</h2>
+<p><code>PATCH /api/collections/{name}</code> performs an online schema change: renames the table if you pass <code>name</code>, adds/drops/retypes columns per the new <code>columns</code> list, rebuilds indexes, and updates API rules.</p>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-2"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-2">curl -X PATCH http://localhost:8989/api/collections/products \
+  -H &quot;Authorization: Bearer $TOKEN&quot; \
+  -H &#39;Content-Type: application/json&#39; \
+  -d &#39;{ &quot;columns&quot;: [ { &quot;name&quot;: &quot;title&quot;, &quot;data_type&quot;: &quot;PlainText&quot; }, { &quot;name&quot;: &quot;sku&quot;, &quot;data_type&quot;: &quot;PlainText&quot;, &quot;index&quot;: true } ] }&#39;
+</code></pre></div>
+<blockquote>
+<p>Schema changes are applied immediately against live data. Dropping a column discards its data.</p>
+</blockquote>
+<h2 id="working-with-records">Working with records</h2>
+<p>Records are addressed through the auto-generated endpoints. Payloads use a <code>data</code> envelope; <code>id</code>, <code>created</code>, and <code>updated</code> are managed by the system and returned on every record.</p>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-3"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-3"># Create
+curl -X POST http://localhost:8989/api/collections/products/records \
+  -H &#39;Content-Type: application/json&#39; \
+  -d &#39;{&quot;data&quot;: {&quot;title&quot;: &quot;Widget&quot;, &quot;price&quot;: 999, &quot;active&quot;: true}}&#39;
+
+# Response
+{
+  &quot;id&quot;: &quot;5f0c...&quot;,
+  &quot;data&quot;: {&quot;title&quot;: &quot;Widget&quot;, &quot;price&quot;: 999, &quot;active&quot;: true},
+  &quot;created&quot;: &quot;2026-08-25T10:00:00Z&quot;,
+  &quot;updated&quot;: &quot;2026-08-25T10:00:00Z&quot;
+}
+
+# List (pagination)
+curl &#39;http://localhost:8989/api/collections/products/records?page=1&amp;per_page=20&#39;
+# -&gt; { &quot;items&quot;: [...], &quot;total&quot;: 42, &quot;page&quot;: 1, &quot;per_page&quot;: 20 }
+
+# List with dynamic filter
+curl -G &#39;http://localhost:8989/api/collections/products/records&#39; \
+  --data-urlencode &quot;filter=active=true &amp;&amp; price &lt; 1500&quot;
+
+# List with expanded relations (no N+1 queries)
+curl &#39;http://localhost:8989/api/collections/books/records?expand=author&#39;
+
+# Get one
+curl http://localhost:8989/api/collections/products/records/&lt;id&gt;
+
+# Get one with expanded relations
+curl &#39;http://localhost:8989/api/collections/books/records/&lt;id&gt;?expand=author&#39;
+
+# Update (admin token, unless update_rule allows the caller)
+curl -X PATCH http://localhost:8989/api/collections/products/records/&lt;id&gt; \
+  -H &quot;Authorization: Bearer $TOKEN&quot; \
+  -H &#39;Content-Type: application/json&#39; \
+  -d &#39;{&quot;data&quot;: {&quot;price&quot;: 1299}}&#39;
+
+# Delete (admin token, unless delete_rule allows the caller)
+curl -X DELETE http://localhost:8989/api/collections/products/records/&lt;id&gt; \
+  -H &quot;Authorization: Bearer $TOKEN&quot;
+</code></pre></div>
+<p>Pagination defaults: <code>page=1</code>, <code>per_page=20</code> (clamped to 1–100).</p>
+<h2 id="file-storage-attachments">File Storage &amp; Attachments</h2>
+<p>Collections support <code>File</code> field types for storing file references (images, documents, archives). The file management workflow is integrated with collections. For the full reference — protected downloads, file tokens, storage backends, and client examples — see <a href="docs-files.html">Files &amp; uploads</a>.</p>
+<h3 id="1-uploading-files-for-a-collection">1. Uploading Files for a Collection</h3>
+<p>Upload one or multiple files using multipart form data to <code>/api/collections/{name}/records/upload</code> (the only upload endpoint; <code>POST /api/collections/{name}/files</code> does not exist):</p>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-4"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-4"># Single file upload
+curl -X POST http://localhost:8989/api/collections/articles/records/upload \
+  -H &quot;Authorization: Bearer $TOKEN&quot; \
+  -F &#39;file=@photo.png;type=image/png&#39;
+
+# Multiple files at one go
+curl -X POST http://localhost:8989/api/collections/articles/records/upload \
+  -H &quot;Authorization: Bearer $TOKEN&quot; \
+  -F &#39;files=@photo1.png;type=image/png&#39; \
+  -F &#39;files=@photo2.png;type=image/png&#39;
+</code></pre></div>
+<ul>
+<li><strong>Access Rules</strong>: Governed by the collection&#39;s <code>create_rule</code>. Callers without create permission receive <code>403 Forbidden</code>.</li>
+<li><strong>Target Collection (<code>{name}</code>)</strong>: Must match an existing collection in the database (e.g. <code>articles</code>, <code>users</code>, <code>posts</code>). If the collection does not exist, a <code>404 Not Found</code> is returned.</li>
+<li><strong>Collection Linkage</strong>: Uploads record the <code>collection_name</code> in the <code>_files</code> metadata table, allowing multiple files to be tracked and retrieved per collection.</li>
+<li><strong>Field-aware uploads</strong>: When a multipart part is named after a <code>File</code> column of the collection (e.g. <code>-F &#39;cover=@photo.png&#39;</code>), the column&#39;s <code>max_size</code> (bytes), <code>mime_types</code> (supports wildcards like <code>image/*</code> or <code>*/*</code>), and <code>pattern</code> (regex matched against the original file name, e.g. <code>\.(png|jpe?g)$</code>) are enforced. A single-file column (<code>max</code> unset or <code>max: 1</code>) rejects more than one part for the same field name; a multi-file column (<code>max &gt; 1</code> or <code>min &gt; 1</code>) accepts up to <code>max</code> parts. Parts that do not match a column name are stored without field-level constraints.</li>
+<li><strong>Request size limit</strong>: multipart bodies are capped at 100 MB per request.</li>
+<li><strong>Response</strong>: the <code>files</code> array mirrors the stored <code>_files</code> metadata rows:<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-5"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-5">{
+  &quot;files&quot;: [
+    {
+      &quot;id&quot;: &quot;e97669ba-...&quot;,
+      &quot;key&quot;: &quot;uploads/.../photo1.png&quot;,
+      &quot;backend&quot;: &quot;local&quot;,
+      &quot;container&quot;: &quot;$HOME/crabbase/files/&quot;,
+      &quot;originalName&quot;: &quot;photo1.png&quot;,
+      &quot;contentType&quot;: &quot;image/png&quot;,
+      &quot;sizeBytes&quot;: 10240,
+      &quot;checksum&quot;: &quot;9f86d081884c7d65...&quot;,
+      &quot;collectionName&quot;: &quot;articles&quot;,
+      &quot;created&quot;: &quot;2026-10-18T15:42:32.888198Z&quot;,
+      &quot;updated&quot;: &quot;2026-10-18T15:42:32.888198Z&quot;
+    }
+  ]
+}
+</code></pre></div>
+Use the returned <code>id</code> (or <code>key</code>) when linking files to records.</li>
+</ul>
+<h3 id="2-creating-or-updating-records-with-files">2. Creating or Updating Records with Files</h3>
+<p>Use the returned file ID or storage key when creating or updating records:</p>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-6"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-6"># Single file
+curl -X POST http://localhost:8989/api/collections/articles/records \
+  -H &#39;Content-Type: application/json&#39; \
+  -d &#39;{&quot;data&quot;: {&quot;title&quot;: &quot;My Article&quot;, &quot;cover&quot;: &quot;e97669ba-...&quot;}}&#39;
+
+# Multiple files (the &quot;photos&quot; field must declare &quot;max&quot;: &gt;1, e.g. &quot;max&quot;: 10)
+curl -X POST http://localhost:8989/api/collections/articles/records \
+  -H &#39;Content-Type: application/json&#39; \
+  -d &#39;{&quot;data&quot;: {&quot;title&quot;: &quot;Gallery Post&quot;, &quot;photos&quot;: [&quot;e97669ba-...&quot;, &quot;f1284abc-...&quot;]}}&#39;
+</code></pre></div>
+<p>Single-file columns (<code>max</code> unset or <code>max: 1</code>) accept only a string (an array is rejected with <code>400</code>), while multi-file columns (<code>max &gt; 1</code> or <code>min &gt; 1</code>) require an array of file IDs/keys and enforce <code>min</code>/<code>max</code> item counts on save. In API responses, each stored ID/key is replaced by its <code>_files</code> record (<code>id</code>, <code>key</code>, <code>originalName</code>, <code>contentType</code>, <code>sizeBytes</code>, …); multi-file fields return an array of such records. IDs/keys without a metadata row are left as-is, and removing an item on update deletes the corresponding file.</p>
+<h3 id="3-automatic-cleanup">3. Automatic Cleanup</h3>
+<ul>
+<li><strong>Update</strong>: If a file field is replaced with a new file or cleared, the old file record and its storage bytes are automatically purged from the backend.</li>
+<li><strong>Delete</strong>: When a record is deleted, all files attached to its file fields are automatically removed from disk/S3 and the <code>_files</code> metadata table.</li>
+</ul>
+<h3 id="4-listing-files-in-a-collection">4. Listing Files in a Collection</h3>
+<p>Retrieve all files belonging to a collection:</p>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-7"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-7">curl http://localhost:8989/api/collections/articles/files
+</code></pre></div>
+<p>Governed by the collection&#39;s <code>list_rule</code>.</p>
+<h3 id="5-downloading-viewing-collection-files">5. Downloading / Viewing Collection Files</h3>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-8"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-8">curl http://localhost:8989/api/collections/articles/files/&lt;file_id&gt;
+</code></pre></div>
+<p>Governed by the collection&#39;s <code>view_rule</code>. Files can also be fetched from
+<code>/api/files/&lt;file_id&gt;</code>, where the file&#39;s own collection supplies the rule. For
+non-public collections, exchange a Bearer token for a short-lived file token at
+<code>POST /api/files/token</code> and append <code>?token=...</code>; see
+<a href="docs-files.html#protected-files">Protected files</a>. Add <code>?download=1</code> to
+force an attachment.</p>
+<h2 id="dynamic-record-filtering-filter">Dynamic record filtering (<code>?filter</code>)</h2>
+<p>Crabbase supports client-side dynamic record filtering on <code>GET /api/collections/{name}/records</code> with full PocketBase compatibility. Clients can filter records by passing an expression in the <code>filter</code> query parameter. The expression is parsed into a safe AST and compiled to parameterized PostgreSQL SQL.</p>
+<h3 id="quick-examples">Quick Examples</h3>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-9"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-9"># Exact equality
+curl -G &#39;http://localhost:8989/api/collections/posts/records&#39; \
+  --data-urlencode &quot;filter=status=&#39;published&#39;&quot;
+
+# Case-insensitive substring search (ILIKE &#39;%pocket%&#39;)
+curl -G &#39;http://localhost:8989/api/collections/products/records&#39; \
+  --data-urlencode &quot;filter=title ~ &#39;pocket&#39;&quot;
+
+# Negated substring search
+curl -G &#39;http://localhost:8989/api/collections/users/records&#39; \
+  --data-urlencode &quot;filter=email !~ &#39;spam&#39;&quot;
+
+# Numeric and date range comparisons
+curl -G &#39;http://localhost:8989/api/collections/orders/records&#39; \
+  --data-urlencode &quot;filter=(total &gt;= 100 &amp;&amp; created &gt; &#39;2024-01-01 00:00:00Z&#39;)&quot;
+
+# Logical grouping with AND (&amp;&amp;), OR (||), and parentheses
+curl -G &#39;http://localhost:8989/api/collections/tickets/records&#39; \
+  --data-urlencode &quot;filter=(priority=&#39;urgent&#39; || priority=&#39;high&#39;) &amp;&amp; status!=&#39;resolved&#39;&quot;
+
+# NULL and NOT NULL checks
+curl -G &#39;http://localhost:8989/api/collections/tasks/records&#39; \
+  --data-urlencode &quot;filter=completed_at = null&quot;
+curl -G &#39;http://localhost:8989/api/collections/tasks/records&#39; \
+  --data-urlencode &quot;filter=assigned_to != null&quot;
+
+# Dynamic macro context (match current authenticated user)
+curl -G &#39;http://localhost:8989/api/collections/posts/records&#39; \
+  -H &quot;Authorization: Bearer $USER_TOKEN&quot; \
+  --data-urlencode &quot;filter=author = @request.auth.id&quot;
+</code></pre></div>
+<h3 id="supported-operators">Supported Operators</h3>
+<div class="doc-table-wrap"><table class="docs-table">
+<thead>
+<tr>
+<th>Operator</th>
+<th>Meaning</th>
+<th>Example Filter</th>
+<th>Generated PostgreSQL SQL</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>=</code></td>
+<td>Equal</td>
+<td><code>status = &#39;active&#39;</code></td>
+<td><code>(&quot;status&quot; = $1)</code></td>
+</tr>
+<tr>
+<td><code>!=</code></td>
+<td>Not equal</td>
+<td><code>status != &#39;draft&#39;</code></td>
+<td><code>(&quot;status&quot; != $1)</code></td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td>Greater than</td>
+<td><code>created &gt; &#39;2024-01-01&#39;</code></td>
+<td><code>(&quot;created&quot; &gt; $1)</code></td>
+</tr>
+<tr>
+<td><code>&gt;=</code></td>
+<td>Greater or equal</td>
+<td><code>views &gt;= 100</code></td>
+<td><code>(&quot;views&quot; &gt;= 100)</code></td>
+</tr>
+<tr>
+<td><code>&lt;</code></td>
+<td>Less than</td>
+<td><code>price &lt; 50</code></td>
+<td><code>(&quot;price&quot; &lt; 50)</code></td>
+</tr>
+<tr>
+<td><code>&lt;=</code></td>
+<td>Less or equal</td>
+<td><code>age &lt;= 18</code></td>
+<td><code>(&quot;age&quot; &lt;= 18)</code></td>
+</tr>
+<tr>
+<td><code>~</code></td>
+<td>Like / Contains (case-insensitive)</td>
+<td><code>title ~ &#39;rust&#39;</code></td>
+<td><code>(&quot;title&quot; ILIKE (&#39;%&#39; || $1 || &#39;%&#39;))</code></td>
+</tr>
+<tr>
+<td><code>!~</code></td>
+<td>Not like / Not contains</td>
+<td><code>email !~ &#39;spam&#39;</code></td>
+<td><code>(&quot;email&quot; IS NULL OR &quot;email&quot; NOT ILIKE (&#39;%&#39; || $1 || &#39;%&#39;))</code></td>
+</tr>
+<tr>
+<td><code>&amp;&amp;</code> / <code>&amp;</code></td>
+<td>Logical AND</td>
+<td><code>status = &#39;active&#39; &amp;&amp; views &gt; 0</code></td>
+<td><code>((&quot;status&quot; = $1) AND (&quot;views&quot; &gt; 0))</code></td>
+</tr>
+<tr>
+<td><code>||</code> / <code>|</code></td>
+<td>Logical OR</td>
+<td><code>role = &#39;admin&#39; || role = &#39;editor&#39;</code></td>
+<td><code>((&quot;role&quot; = $1) OR (&quot;role&quot; = $2))</code></td>
+</tr>
+<tr>
+<td><code>(...)</code></td>
+<td>Parentheses grouping</td>
+<td><code>(a = 1 || b = 2) &amp;&amp; c = 3</code></td>
+<td><code>(((&quot;a&quot; = 1) OR (&quot;b&quot; = 2)) AND (&quot;c&quot; = 3))</code></td>
+</tr>
+<tr>
+<td><code>= null</code></td>
+<td>IS NULL check</td>
+<td><code>deleted_at = null</code></td>
+<td><code>(&quot;deleted_at&quot; IS NULL)</code></td>
+</tr>
+<tr>
+<td><code>!= null</code></td>
+<td>IS NOT NULL check</td>
+<td><code>avatar != null</code></td>
+<td><code>(&quot;avatar&quot; IS NOT NULL)</code></td>
+</tr>
+</tbody></table></div>
+<h3 id="literal-types-escaping">Literal Types &amp; Escaping</h3>
+<ul>
+<li><strong>Strings</strong>: <code>&#39;single-quoted&#39;</code> or <code>&quot;double-quoted&quot;</code> (supports <code>\&#39;</code> and <code>\&quot;</code> escaping).</li>
+<li><strong>Numbers</strong>: Integers (<code>42</code>), decimals (<code>3.14</code>), and signed values (<code>-5</code>, <code>+10</code>).</li>
+<li><strong>Booleans</strong>: <code>true</code>, <code>false</code>, <code>TRUE</code>, <code>FALSE</code> (compiled to SQL <code>TRUE</code> / <code>FALSE</code>).</li>
+<li><strong>Null</strong>: <code>null</code>, <code>NULL</code> (translated to <code>IS NULL</code> / <code>IS NOT NULL</code>).</li>
+<li><strong>Dates &amp; Times</strong>: RFC-3339 strings, e.g. <code>&#39;2024-01-01&#39;</code> or <code>&#39;2024-01-01T12:00:00Z&#39;</code>.</li>
+</ul>
+<h3 id="context-macros">Context Macros</h3>
+<ul>
+<li><code>@request.auth.&lt;field&gt;</code> — Dynamically resolved from the authenticated record&#39;s JWT claims (e.g. <code>@request.auth.id</code>, <code>@request.auth.email</code>).</li>
+<li><code>@request.query.&lt;param&gt;</code> — Dynamically resolved from URL query parameters (e.g. <code>@request.query.search</code>).</li>
+</ul>
+<h3 id="security-access-control-interaction">Security &amp; Access Control Interaction</h3>
+<p>The client filter works alongside the collection&#39;s access control (<code>list_rule</code>):</p>
+<ul>
+<li><strong>Non-Admin (Public / Authenticated)</strong>: If the collection has a <code>list_rule</code>, Crabbase automatically combines them safely as <code>({list_rule}) &amp;&amp; ({client_filter})</code>. The client cannot bypass or weaken the server security rules. If <code>list_rule</code> is <code>None</code> (Admin-only), non-admin requests receive <code>403 Forbidden</code>.</li>
+<li><strong>Superuser (Admin)</strong>: Superusers bypass the collection&#39;s <code>list_rule</code>, and the client <code>filter</code> expression is applied directly.</li>
+</ul>
+<h3 id="client-library-javascript-usage">Client Library / JavaScript Usage</h3>
+<div class="docs-code"><div class="docs-code-head"><span>JAVASCRIPT</span><button class="docs-copy" type="button" data-copy-target="doc-code-10"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-10">// Fetch filtered records with JavaScript / TypeScript fetch
+async function fetchProducts({ search = &#39;&#39;, minPrice = 0, page = 1 } = {}) {
+  const filters = [];
+  if (search) filters.push(`title ~ &#39;${search.replace(/&#39;/g, &quot;\\&#39;&quot;)}&#39;`);
+  if (minPrice &gt; 0) filters.push(`price &gt;= ${minPrice}`);
+
+  const params = new URLSearchParams({
+    page: page.toString(),
+    per_page: &#39;20&#39;,
+  });
+
+  if (filters.length &gt; 0) {
+    params.set(&#39;filter&#39;, filters.join(&#39; &amp;&amp; &#39;));
+  }
+
+  const res = await fetch(`http://localhost:8989/api/collections/products/records?${params.toString()}`);
+  return res.json();
+}
+</code></pre></div>
+<h3 id="searching-filtering-in-the-admin-dashboard">Searching &amp; Filtering in the Admin Dashboard</h3>
+<p>In the Crabbase Admin Dashboard (<code>crabbase admin</code>):</p>
+<ol>
+<li>Navigate to any collection.</li>
+<li>In the top search bar (<code>Filter records (e.g. status = &#39;active&#39; || title ~ &#39;john&#39;)...</code>), type any valid filter query.</li>
+<li>The UI automatically debounces input by 350ms (or applies instantly when pressing <code>Enter</code>).</li>
+<li>When a filter is active, clicking the <code>✕</code> icon clears the filter and restores all records.</li>
+<li>If a filter expression has syntax errors, an inline error notification is displayed with the exact compiler error.</li>
+</ol>
+<h2 id="relations">Relations</h2>
+<p>Define them at creation time; Crabbase creates a real foreign key:</p>
+<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-11"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-11">{ &quot;name&quot;: &quot;category_id&quot;, &quot;data_type&quot;: &quot;Relation&quot;, &quot;related_to&quot;: &quot;categories&quot; }
+</code></pre></div>
+<p>Store the related record&#39;s UUID in the field value. The referenced collection must exist before you can relate to it.</p>
+<p>To fetch related records inline in the same API request instead of making separate queries, use the <code>?expand</code> query parameter (see <a href="#expanding-relations-expand">Expanding relations (<code>?expand</code>)</a> below).</p>
+<h2 id="expanding-relations-expand">Expanding relations (<code>?expand</code>)</h2>
+<p>Crabbase supports expanding relation fields inline on both list (<code>GET /api/collections/{name}/records</code>) and single-record (<code>GET /api/collections/{name}/records/{id}</code>) endpoints, matching PocketBase&#39;s <code>?expand</code> API contract.</p>
+<p>Normally, relation fields store only the foreign-key UUID of the related record in <code>record.data.&lt;field_name&gt;</code>. Passing <code>?expand</code> resolves those foreign keys and embeds the full referenced record(s) inside a top-level <code>expand</code> map on each record in a single HTTP request.</p>
+<h3 id="quick-examples-2">Quick Examples</h3>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-12"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-12"># Single relation expansion on list endpoint
+curl &#39;http://localhost:8989/api/collections/books/records?expand=author&#39;
+
+# Multiple relation expansions (comma-separated)
+curl &#39;http://localhost:8989/api/collections/articles/records?expand=author,category&#39;
+
+# Expanding a single record by ID
+curl &#39;http://localhost:8989/api/collections/books/records/a988d3e2-8d7b-410a-b32d-209a896d8e21?expand=author&#39;
+
+# Combining ?filter, pagination, and ?expand
+curl -G &#39;http://localhost:8989/api/collections/books/records&#39; \
+  --data-urlencode &quot;filter=published_year &gt;= 1950&quot; \
+  --data-urlencode &quot;expand=author,category&quot; \
+  -d &quot;page=1&quot; -d &quot;per_page=20&quot;
+</code></pre></div>
+<h3 id="response-payload-structure">Response Payload Structure</h3>
+<p>When <code>?expand</code> is specified, each expanded relation is embedded into a top-level <code>expand</code> object on the record, keyed by the relation field name:</p>
+<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-13"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-13">{
+  &quot;id&quot;: &quot;a988d3e2-8d7b-410a-b32d-209a896d8e21&quot;,
+  &quot;data&quot;: {
+    &quot;title&quot;: &quot;1984&quot;,
+    &quot;author&quot;: &quot;7d91d79a-1153-4cf0-9ec8-6cf455bb3f91&quot;,
+    &quot;isbn&quot;: &quot;9780451524935&quot;
+  },
+  &quot;expand&quot;: {
+    &quot;author&quot;: {
+      &quot;id&quot;: &quot;7d91d79a-1153-4cf0-9ec8-6cf455bb3f91&quot;,
+      &quot;data&quot;: {
+        &quot;name&quot;: &quot;George Orwell&quot;,
+        &quot;bio&quot;: &quot;English novelist, essayist, journalist, and critic.&quot;
+      },
+      &quot;created&quot;: &quot;2026-09-09T14:30:00Z&quot;,
+      &quot;updated&quot;: &quot;2026-09-09T14:30:00Z&quot;
+    }
+  },
+  &quot;created&quot;: &quot;2026-09-09T14:30:00Z&quot;,
+  &quot;updated&quot;: &quot;2026-09-09T14:30:00Z&quot;
+}
+</code></pre></div>
+<blockquote>
+<p><strong>Zero Payload Bloat:</strong> When <code>?expand</code> is omitted or no relations are resolved, the <code>&quot;expand&quot;</code> field is completely omitted from the JSON payload (<code>Option::None</code>), keeping standard query responses lightweight.</p>
+</blockquote>
+<h3 id="security-authorization-privacy-invariants">Security, Authorization &amp; Privacy Invariants</h3>
+<p>Expanding relations across collection boundaries can easily introduce Insecure Direct Object References (IDOR) or leak hidden columns if not strictly authorized. Crabbase enforces the following security invariants at the database query level:</p>
+<ol>
+<li><p><strong>Target View Rule Enforcement</strong>:
+Every expand query compiles and executes the target collection&#39;s <code>view_rule</code> using the requester&#39;s authentication context (<code>SqlContext</code>):</p>
+<ul>
+<li><strong>Admin / Superuser</strong>: Bypasses <code>view_rule</code>.</li>
+<li><strong>Non-Admin / Public</strong>:<ul>
+<li>If the target collection has <code>view_rule = null</code> (admin-only), non-admins cannot expand this collection. The relation is silently omitted from <code>record.expand</code>.</li>
+<li>If the target collection has a <code>view_rule</code> expression (e.g. <code>public = true || owner = @request.auth.id</code>), the rule is compiled to SQL and appended:<div class="docs-code"><div class="docs-code-head"><span>SQL</span><button class="docs-copy" type="button" data-copy-target="doc-code-14"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-14">SELECT * FROM &quot;authors&quot; WHERE id = ANY($1) AND (&lt;target_view_rule&gt;)
+</code></pre></div>
+</li>
+</ul>
+</li>
+<li><strong>Silent Degradation</strong>: If an unauthenticated or non-admin user is not authorized to view a specific target record, PostgreSQL filters that record out. It is omitted from <code>record.expand</code> without failing the parent request, matching PocketBase&#39;s security model.</li>
+</ul>
+</li>
+<li><p><strong>Automatic Redaction of <code>hidden</code> Fields</strong>:
+Before attaching target records into <code>record.expand</code>, all fields in the target collection defined with <code>&quot;hidden&quot;: true</code> are stripped from <code>record.data</code>. Internal fields (such as email visibility flags, verification tokens, or private notes) are never leaked via relation expansion.</p>
+</li>
+</ol>
+<h3 id="performance-database-architecture">Performance &amp; Database Architecture</h3>
+<p>Crabbase implements relation expansion with connection-pool friendliness and zero $N+1$ query overhead:</p>
+<div class="doc-table-wrap"><table class="docs-table">
+<thead>
+<tr>
+<th>Feature</th>
+<th>Implementation</th>
+<th>Benefit</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>$N+1$ Query Elimination</strong></td>
+<td>Uses PostgreSQL <code>WHERE id = ANY($1::uuid[])</code> batch queries</td>
+<td>Executes <strong>$1 + M$ queries</strong> for $M$ relations instead of $1 + (N \times M)$ queries.</td>
+</tr>
+<tr>
+<td><strong>Foreign Key Deduplication</strong></td>
+<td>Collects unique foreign keys across the page using <code>HashSet&lt;Uuid&gt;</code></td>
+<td>Eliminates redundant database lookups when multiple parent records share the same target (e.g. 50 articles by 2 authors queries only 2 UUIDs).</td>
+</tr>
+<tr>
+<td><strong>Connection Pool Safety</strong></td>
+<td>Executes relation batch queries sequentially</td>
+<td>Holds at most 1 connection at a time, avoiding pool exhaustion on servers with small pools (<code>max_connections = 10</code>).</td>
+</tr>
+<tr>
+<td><strong>Zero-Cost Short-Circuit</strong></td>
+<td>Checks <code>unique_uuids.is_empty()</code> before dispatch</td>
+<td>If all records have <code>null</code> or empty foreign keys for a relation, 0 database queries are executed.</td>
+</tr>
+<tr>
+<td><strong>Prepared Statement Plan Caching</strong></td>
+<td>Uses static <code>WHERE id = ANY($1)</code> syntax</td>
+<td>Allows PostgreSQL to reuse prepared execution plans and index scans, unlike dynamic <code>IN ($1, $2, ...)</code>.</td>
+</tr>
+<tr>
+<td><strong>In-Place Mutation</strong></td>
+<td>Modifies records in-place (<code>&amp;mut [Record]</code>)</td>
+<td>Zero memory re-allocation or record cloning overhead.</td>
+</tr>
+</tbody></table></div>
+<h3 id="client-integration-examples">Client Integration Examples</h3>
+<h4 id="typescript-javascript-fetch">TypeScript / JavaScript Fetch</h4>
+<div class="docs-code"><div class="docs-code-head"><span>TYPESCRIPT</span><button class="docs-copy" type="button" data-copy-target="doc-code-15"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-15">interface Author {
+  id: string;
+  data: {
+    name: string;
+    bio?: string;
+  };
+  created: string;
+  updated: string;
+}
+
+interface Book {
+  id: string;
+  data: {
+    title: string;
+    author: string; // Foreign key UUID
+    isbn?: string;
+  };
+  expand?: {
+    author?: Author;
+  };
+  created: string;
+  updated: string;
+}
+
+// Fetch books with expanded author relation
+async function fetchBooks(): Promise&lt;Book[]&gt; {
+  const params = new URLSearchParams({
+    page: &#39;1&#39;,
+    per_page: &#39;20&#39;,
+    expand: &#39;author&#39;,
+  });
+
+  const res = await fetch(`http://localhost:8989/api/collections/books/records?${params}`);
+  if (!res.ok) {
+    throw new Error(`Failed to fetch books: ${res.statusText}`);
+  }
+
+  const json = await res.json();
+  return json.items;
+}
+
+// Example usage:
+const books = await fetchBooks();
+for (const book of books) {
+  const authorName = book.expand?.author?.data.name ?? &#39;Unknown Author&#39;;
+  console.log(`&quot;${book.data.title}&quot; by ${authorName}`);
+}
+</code></pre></div>
+<h4 id="python-requests-httpx">Python (Requests / HTTPX)</h4>
+<div class="docs-code"><div class="docs-code-head"><span>PYTHON</span><button class="docs-copy" type="button" data-copy-target="doc-code-16"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-16">import requests
+
+# Fetch single book with author expanded
+response = requests.get(
+    &quot;http://localhost:8989/api/collections/books/records/a988d3e2-8d7b-410a-b32d-209a896d8e21&quot;,
+    params={&quot;expand&quot;: &quot;author&quot;}
+)
+response.raise_for_status()
+book = response.json()
+
+title = book[&quot;data&quot;][&quot;title&quot;]
+author_name = book.get(&quot;expand&quot;, {}).get(&quot;author&quot;, {}).get(&quot;data&quot;, {}).get(&quot;name&quot;, &quot;Unknown&quot;)
+print(f&quot;Book: {title}, Author: {author_name}&quot;)
+</code></pre></div>
+<h2 id="api-rules">API rules</h2>
+<p>Each collection stores rule strings — <code>list_rule</code>, <code>view_rule</code>, <code>create_rule</code>, <code>update_rule</code>, <code>delete_rule</code> — written in a PocketBase-style filter language, compiled to parameterized SQL (no string injection of user values).</p>
+<p>Supported syntax:</p>
+<ul>
+<li>Operators: <code>= != &lt; &gt; &lt;= &gt;= ~ !~</code> (<code>~</code> is SQL <code>LIKE</code> / <code>ILIKE</code>, <code>!~</code> is <code>NOT LIKE</code>)</li>
+<li>Boolean combinators: <code>&amp;&amp;</code> and <code>||</code>, grouping with parentheses</li>
+<li>Literals: quoted strings, numbers, <code>true</code>/<code>false</code>, <code>null</code></li>
+<li>Context variables:<ul>
+<li><code>@request.auth.&lt;field&gt;</code> — a field from the authenticated record&#39;s row (e.g. <code>@request.auth.id</code>)</li>
+<li><code>@request.query.&lt;param&gt;</code> — a query-string parameter from the current request</li>
+</ul>
+</li>
+</ul>
+<p>Examples:</p>
+<div class="docs-code"><div class="docs-code-head"><span>TEXT</span><button class="docs-copy" type="button" data-copy-target="doc-code-17"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-17">owner = @request.auth.id
+status = &#39;active&#39;
+(owner = @request.auth.id) &amp;&amp; status = &#39;active&#39;
+title ~ @request.query.search
+</code></pre></div>
+<p>Set rules when creating or updating a collection:</p>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-18"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-18">curl -X PATCH http://localhost:8989/api/collections/tasks \
+  -H &quot;Authorization: Bearer $TOKEN&quot; -H &#39;Content-Type: application/json&#39; \
+  -d &#39;{ &quot;list_rule&quot;: &quot;owner = @request.auth.id &amp;&amp; done = false&quot; }&#39;
+</code></pre></div>
+<blockquote>
+<p><strong>Rule Enforcement Status:</strong> <code>list_rule</code> (list), <code>view_rule</code> (single-record fetch and <code>?expand</code> targets), <code>create_rule</code> (create/upload), and <code>delete_rule</code> (delete) are enforced. <code>update_rule</code> rejects non-admins when it is null, but expressions are not applied to update rows yet (an empty string allows all non-admins).</p>
+</blockquote>
+</div>
+
+              <div class="mt-12 pt-8 border-t border-surface-variant flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+                  <span class="material-symbols-outlined text-[18px] text-tertiary" aria-hidden="true">help_outline</span>
+                  <span>Stuck? Reach our community on <a class="text-primary hover:underline font-medium" href="https://github.com/ropali/crabbase/discussions" rel="noopener noreferrer" target="_blank">GitHub Discussions</a>.</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-3"><a class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container text-primary font-body-sm text-body-sm font-semibold transition-colors group" href="./docs.html"><span class="material-symbols-outlined text-[18px] group-hover:-translate-x-0.5 transition-transform" aria-hidden="true">arrow_back</span><span>Previous: Getting Started</span></a><a class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container text-primary font-body-sm text-body-sm font-semibold transition-colors group" href="./docs-authentication.html"><span>Next: Authentication</span><span class="material-symbols-outlined text-[18px] group-hover:translate-x-0.5 transition-transform" aria-hidden="true">arrow_forward</span></a></div>
+              </div>
+
+              <div class="mt-10 pt-6 border-t border-outline-variant/40 flex flex-col sm:flex-row items-center justify-between gap-2 font-body-sm text-label-xs text-on-surface-variant">
+                <span>Dual-licensed under MIT and Apache 2.0. Built for the Rust community.</span>
+                <span>© <span data-year>2026</span> Crabbase Engine Maintainers.</span>
+              </div>
+            </div>
+          </div>
+
+          <aside class="hidden 2xl:block w-72 shrink-0 py-8 pr-8" aria-label="On this page">
+            <div class="sticky top-24 space-y-6">
+              <div class="border-l border-outline-variant pl-4 space-y-3">
+                <div class="font-label-xs text-label-xs uppercase tracking-wider text-outline font-semibold">On this page</div>
+                <nav class="space-y-2 text-body-sm font-body-sm text-on-surface-variant" id="docs-toc">
+                  <a class="block transition-colors hover:text-primary" data-toc href="#the-easy-way-the-admin-dashboard">The easy way: the admin dashboard</a>
+                  <a class="block transition-colors hover:text-primary" data-toc href="#endpoints">Endpoints</a>
+                  <a class="block transition-colors hover:text-primary" data-toc href="#creating-a-collection">Creating a collection</a>
+                  <a class="block transition-colors hover:text-primary" data-toc href="#updating-schema-live-migration">Updating schema (live migration)</a>
+                  <a class="block transition-colors hover:text-primary" data-toc href="#working-with-records">Working with records</a>
+                  <a class="block transition-colors hover:text-primary" data-toc href="#file-storage-attachments">File Storage &amp; Attachments</a>
+                  <a class="block transition-colors hover:text-primary" data-toc href="#dynamic-record-filtering-filter">Dynamic record filtering (?filter)</a>
+                  <a class="block transition-colors hover:text-primary" data-toc href="#relations">Relations</a>
+                  <a class="block transition-colors hover:text-primary" data-toc href="#expanding-relations-expand">Expanding relations (?expand)</a>
+                  <a class="block transition-colors hover:text-primary" data-toc href="#api-rules">API rules</a>
+                </nav>
+              </div>
+              <div class="border-t border-outline-variant pt-4 pl-4 space-y-2 text-body-sm font-body-sm">
+                <a class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors" href="https://github.com/ropali/crabbase/edit/main/docs/collections-and-records.md" rel="noopener noreferrer" target="_blank">
+                  <span class="material-symbols-outlined text-[16px]" aria-hidden="true">edit_document</span>
+                  <span>Edit this page on GitHub</span>
+                </a>
+                <a class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors" href="https://github.com/ropali/crabbase/issues/new" rel="noopener noreferrer" target="_blank">
+                  <span class="material-symbols-outlined text-[16px]" aria-hidden="true">forum</span>
+                  <span>Submit Feedback</span>
+                </a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
+
+    <div id="docs-search-modal" class="fixed inset-0 z-[60] hidden items-start justify-center bg-on-surface/40 backdrop-blur-sm px-4 pt-[12vh]" role="dialog" aria-modal="true" aria-labelledby="docs-search-title">
+      <div class="w-full max-w-xl rounded-xl bg-surface-container-lowest shadow-2xl border border-outline-variant overflow-hidden">
+        <h2 id="docs-search-title" class="sr-only">Search documentation</h2>
+        <div class="flex items-center gap-3 px-4 py-3 border-b border-outline-variant">
+          <span class="material-symbols-outlined text-[20px] text-tertiary" aria-hidden="true">search</span>
+          <input id="docs-search-input" type="search" class="w-full bg-transparent font-body-md text-body-md text-on-surface placeholder:text-tertiary focus:outline-none" placeholder="Search docs, crates, APIs..." autocomplete="off" />
+          <button id="docs-search-close" type="button" class="inline-flex items-center justify-center w-7 h-7 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" aria-label="Close search">
+            <span class="material-symbols-outlined text-[18px]" aria-hidden="true">close</span>
+          </button>
+        </div>
+        <div id="docs-search-results" class="max-h-[55vh] overflow-y-auto p-2"></div>
+        <div class="flex items-center justify-between gap-3 border-t border-outline-variant px-4 py-2 font-code-md text-label-xs text-tertiary">
+          <span>Type to filter documentation</span>
+          <span>Esc to close</span>
+        </div>
+      </div>
+    </div>
+
+    <script src="./assets/js/docs-search-index.js" defer></script>
+    <script src="./assets/js/docs.js" defer></script>
+  </body>
+</html>

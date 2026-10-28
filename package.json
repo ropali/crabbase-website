@@ -1,0 +1,18 @@
+{
+  "name": "crabbase-landing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static landing page for Crabbase, built with Tailwind CSS.",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./assets/css/styles.css --minify",
+    "watch:css": "tailwindcss -i ./src/input.css -o ./assets/css/styles.css --watch",
+    "build": "npm run build:docs && npm run build:css && node scripts/build.mjs",
+    "dev": "npm run build:docs && npm run watch:css",
+    "preview": "npm run build && node scripts/serve.mjs",
+    "build:docs": "node scripts/build-docs.mjs"
+  },
+  "devDependencies": {
+    "marked": "^18.1.2",
+    "tailwindcss": "^3.4.17"
+  }
+}
