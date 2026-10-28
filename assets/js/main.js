@@ -5,6 +5,7 @@
 
   var doc = document;
   var header = doc.getElementById("site-header");
+  var progressBar = doc.getElementById("scroll-progress");
   var menuToggle = doc.getElementById("menu-toggle");
   var mobileMenu = doc.getElementById("mobile-menu");
   var menuIcon = doc.querySelector("[data-menu-icon]");
@@ -77,12 +78,20 @@
     });
   }
 
+  function updateProgress() {
+    if (!progressBar) return;
+    var max = doc.documentElement.scrollHeight - window.innerHeight;
+    var progress = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+    progressBar.style.transform = "scaleX(" + progress + ")";
+  }
+
   var scrollQueued = false;
   function handleScroll() {
     if (scrollQueued) return;
     scrollQueued = true;
     window.requestAnimationFrame(function () {
       if (header) header.classList.toggle("is-scrolled", window.scrollY > 8);
+      updateProgress();
       updateActiveNav();
       scrollQueued = false;
     });
@@ -233,6 +242,71 @@
     });
   } else {
     revealAll();
+  }
+
+  var counters = Array.prototype.slice.call(doc.querySelectorAll("[data-count]"));
+  var reduceMotion =
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function formatCounter(value, decimals) {
+    return value.toLocaleString("en-US", {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    });
+  }
+
+  function counterText(element, value) {
+    var decimals = parseInt(element.getAttribute("data-decimals") || "0", 10);
+    var prefix = element.getAttribute("data-prefix") || "";
+    var suffix = element.getAttribute("data-suffix") || "";
+    return prefix + formatCounter(value, decimals) + suffix;
+  }
+
+  function finishCounter(element) {
+    var target = parseFloat(element.getAttribute("data-count"));
+    if (isNaN(target)) return;
+    element.textContent = counterText(element, target);
+  }
+
+  function animateCounter(element) {
+    var target = parseFloat(element.getAttribute("data-count"));
+    if (isNaN(target)) return;
+    var startTime = null;
+    var duration = 1200;
+
+    function frame(now) {
+      if (startTime === null) startTime = now;
+      var progress = Math.min((now - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      element.textContent = counterText(element, target * eased);
+      if (progress < 1) window.requestAnimationFrame(frame);
+      else finishCounter(element);
+    }
+
+    window.requestAnimationFrame(frame);
+  }
+
+  if (counters.length) {
+    if (reduceMotion) {
+      counters.forEach(finishCounter);
+    } else if ("IntersectionObserver" in window) {
+      var counterObserver = new IntersectionObserver(
+        function (entries, instance) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            animateCounter(entry.target);
+            instance.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.5, rootMargin: "0px 0px -40px 0px" }
+      );
+      counters.forEach(function (counter) {
+        counterObserver.observe(counter);
+      });
+    } else {
+      counters.forEach(animateCounter);
+    }
   }
 
   Array.prototype.forEach.call(doc.querySelectorAll("[data-year]"), function (node) {

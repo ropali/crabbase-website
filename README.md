@@ -77,7 +77,7 @@ The generated pages are `docs-collections.html`, `docs-authentication.html`, `do
 
 1. Edit `docs.html` directly.
 2. If you add or remove sections, update the manual right-hand TOC and `GETTING_STARTED_INDEX` in `scripts/build-docs.mjs`.
-3. If you bump the version, update `v0.14.2` in `docs.html` and in `renderShell()` in `scripts/build-docs.mjs`.
+3. Version labels use `data-app-version` and are populated from GitHub by `assets/js/github-stars.js`; keep the static fallback text in `docs.html` and `renderShell()` for no-JS visitors.
 4. Run `npm run build`.
 
 ## Deploy to GitHub Pages
@@ -95,10 +95,10 @@ If your default branch is not `main`, update the branch name in the workflow. Yo
 - **Reference docs:** `docs-src/*.md`
 - **Animations and custom component styles:** `src/input.css`
 - **Interactions:** `assets/js/main.js` and `assets/js/docs.js`
-- **GitHub star count:** `assets/js/github-stars.js`
+- **GitHub stars and version:** `assets/js/github-stars.js`
 - **Admin preview:** `assets/images/admin_ui.png` (replace with a new screenshot to update the landing hero)
 
-GitHub links point to `https://github.com/ropali/crabbase` (including the docs edit, issue, security, and release links). Update them if the repository is renamed or forked. The navbar star count is fetched from the public GitHub API and cached in `localStorage` for one hour; if the API is unavailable or rate-limited, the fallback `Star` label remains.
+GitHub links point to `https://github.com/ropali/crabbase` (including the docs edit, issue, security, and release links). Update them if the repository is renamed or forked. The navbar star count is fetched from the public GitHub API and cached in `localStorage` for one hour; if the API is unavailable or rate-limited, the fallback `Star` label remains. Version labels use `data-app-version` and are read from the latest GitHub release, then the latest tag, then `crabbase/Cargo.toml`; the static `v0.1.0` text remains as the no-JS/API-failure fallback.
 
 These links are still placeholders from the design and should be replaced with real project URLs:
 

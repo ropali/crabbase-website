@@ -48,6 +48,7 @@
   </head>
   <body class="bg-background font-body-md text-on-surface antialiased">
     <a class="skip-link" href="#main">Skip to content</a>
+    <div id="scroll-progress" aria-hidden="true"></div>
 
     <header
       id="site-header"
@@ -76,7 +77,8 @@
               >
               <span
                 class="font-code-md text-label-xs text-primary leading-tight"
-                >v0.14.2</span
+                data-app-version
+                >v0.1.0</span
               >
             </div>
           </a>
@@ -225,11 +227,10 @@
           aria-labelledby="hero-title"
         >
           <div
-            class="absolute -top-32 left-1/2 -translate-x-1/2 w-[720px] h-[360px] bg-secondary-fixed/40 rounded-full blur-3xl pointer-events-none -z-10 animate-pulse"
-            style="animation-duration: 6s"
+            class="absolute -top-32 left-1/2 -translate-x-1/2 w-[720px] h-[360px] bg-secondary-fixed/40 rounded-full blur-3xl pointer-events-none -z-10 ambient-float"
           ></div>
           <div
-            class="absolute top-96 right-10 w-96 h-96 bg-surface-container-high/60 rounded-full blur-2xl pointer-events-none -z-10"
+            class="absolute top-96 right-10 w-96 h-96 bg-surface-container-high/60 rounded-full blur-2xl pointer-events-none -z-10 ambient-float-slow"
           ></div>
           <div
             class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col items-center text-center"
@@ -255,7 +256,9 @@
                   title="Rust crab!"
                   >🦀</span
                 >
-                v0.14.2 Production Ready
+                <span class="whitespace-nowrap"
+                  ><span data-app-version>v0.1.0</span> Production Ready</span
+                >
               </span>
               <span class="h-3 w-px bg-outline-variant"></span>
               <span
@@ -770,7 +773,7 @@
                       </span>
                       <span
                         class="font-code-md text-body-md font-bold text-primary text-right"
-                        >145,000 req/s
+                        ><span class="tabular-nums" data-count="145000">145,000</span> req/s
                         <span
                           class="font-normal text-label-xs text-on-surface-variant"
                           >(0.8ms p99)</span
@@ -804,7 +807,7 @@
                       </span>
                       <span
                         class="font-code-md text-body-sm text-on-surface font-semibold text-right"
-                        >42,000 req/s
+                        ><span class="tabular-nums" data-count="42000">42,000</span> req/s
                         <span
                           class="font-normal text-label-xs text-on-surface-variant"
                           >(2.9ms p99)</span
@@ -838,7 +841,7 @@
                       </span>
                       <span
                         class="font-code-md text-body-sm text-on-surface font-semibold text-right"
-                        >18,000 req/s
+                        ><span class="tabular-nums" data-count="18000">18,000</span> req/s
                         <span
                           class="font-normal text-label-xs text-on-surface-variant"
                           >(9.4ms p99)</span
@@ -872,7 +875,7 @@
                     <div
                       class="font-code-md text-headline-md font-bold text-primary whitespace-nowrap"
                     >
-                      12 MB
+                      <span class="tabular-nums" data-count="12" data-suffix=" MB">12 MB</span>
                     </div>
                     <div
                       class="font-body-sm text-label-xs text-on-surface-variant"
@@ -884,7 +887,7 @@
                     class="flex items-center justify-between gap-3 sm:block hover:bg-surface-container-lowest/60 p-2 rounded transition-colors"
                   >
                     <div class="font-code-md text-headline-md font-bold text-on-surface whitespace-nowrap">
-                      &lt;2 ms
+                      <span class="tabular-nums" data-count="2" data-prefix="&lt;" data-suffix=" ms">&lt;2 ms</span>
                     </div>
                     <div
                       class="font-body-sm text-label-xs text-on-surface-variant"
@@ -896,7 +899,7 @@
                     class="flex items-center justify-between gap-3 sm:block hover:bg-surface-container-lowest/60 p-2 rounded transition-colors"
                   >
                     <div class="font-code-md text-headline-md font-bold text-on-surface whitespace-nowrap">
-                      18.4 MB
+                      <span class="tabular-nums" data-count="18.4" data-decimals="1" data-suffix=" MB">18.4 MB</span>
                     </div>
                     <div
                       class="font-body-sm text-label-xs text-on-surface-variant"
@@ -1176,7 +1179,8 @@
                   </div>
                   <br />
                   <div class="text-primary">
-                    &gt; [INFO] Crabbase v0.14.2 initialized in 1.4ms
+                    &gt; [INFO] Crabbase
+                    <span data-app-version>v0.1.0</span> initialized in 1.4ms
                   </div>
                   <div class="text-primary">
                     &gt; [INFO] REST API active at http://127.0.0.1:8090/api/
@@ -1333,11 +1337,10 @@
               data-reveal
             >
               <div
-                class="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-secondary-fixed/50 blur-3xl pointer-events-none animate-pulse"
-                style="animation-duration: 4s"
+                class="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-secondary-fixed/50 blur-3xl pointer-events-none ambient-float-slow"
               ></div>
               <div
-                class="absolute -left-20 -bottom-20 w-80 h-80 rounded-full bg-surface-container-high/60 blur-3xl pointer-events-none"
+                class="absolute -left-20 -bottom-20 w-80 h-80 rounded-full bg-surface-container-high/60 blur-3xl pointer-events-none ambient-float-slower"
               ></div>
               <div class="relative z-10 max-w-2xl mx-auto">
                 <span

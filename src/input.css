@@ -91,6 +91,80 @@
   animation: heroFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both;
 }
 
+/* Ambient background drift */
+@keyframes ambientFloat {
+  0%,
+  100% {
+    translate: 0 0;
+    scale: 1;
+  }
+  33% {
+    translate: 24px -18px;
+    scale: 1.06;
+  }
+  66% {
+    translate: -18px 14px;
+    scale: 0.97;
+  }
+}
+
+.ambient-float {
+  animation: ambientFloat 18s ease-in-out infinite;
+}
+.ambient-float-slow {
+  animation: ambientFloat 24s ease-in-out -8s infinite;
+}
+.ambient-float-slower {
+  animation: ambientFloat 30s ease-in-out -14s infinite;
+}
+.ambient-float,
+.ambient-float-slow,
+.ambient-float-slower {
+  will-change: translate, scale;
+}
+
+/* Feature icon pop on reveal */
+@keyframes iconPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.55) rotate(-10deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.12) rotate(4deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.js .bento-card .feature-icon {
+  opacity: 0;
+}
+
+.js .bento-card.is-visible .feature-icon {
+  opacity: 1;
+  animation: iconPop 0.65s cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--reveal-delay, 0ms) + 120ms) backwards;
+}
+
+/* Scroll progress */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(90deg, #ab2815, #fe5d4a);
+  box-shadow: 0 0 8px rgba(254, 93, 74, 0.45);
+  pointer-events: none;
+  z-index: 60;
+  will-change: transform;
+}
+
 /* Glowing radar pulse */
 @keyframes beaconRings {
   0% {
