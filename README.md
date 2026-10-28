@@ -37,6 +37,49 @@ npm run preview
 
 The Markdown in `docs-src/` is copied from the main Crabbase repository (`docs/`). Update it there first, then sync it here.
 
+### Edit an existing generated doc
+
+The generated pages are `docs-collections.html`, `docs-authentication.html`, `docs-files.html`, and `docs-settings.html`.
+
+1. Update the source in the main Crabbase repository (`docs/`), then copy it into `docs-src/`.
+2. Regenerate the pages:
+   ```bash
+   npm run build:docs
+   ```
+   Or run `npm run build` to also rebuild the CSS and `dist/`.
+3. `npm run dev` generates the docs once at startup; rerun `build:docs` after Markdown edits.
+4. Heading IDs, the right-hand TOC, and the search index update automatically.
+5. If you add links to another `.md` file, add a mapping in `rewriteLinks()` in `scripts/build-docs.mjs`; otherwise the link points at a `.md` file that is not copied to `dist/`.
+
+### Add a new generated doc
+
+1. Add `docs-src/<new-file>.md` with a `# Title` and an intro paragraph. The intro becomes the page description; `##` headings become the right-hand TOC, and `##`/`###` headings become search entries.
+2. Add an entry to the `DOCS` array in `scripts/build-docs.mjs`:
+   ```js
+   {
+     slug: "deployment",
+     file: "deployment.md",
+     href: "docs-deployment.html",
+     title: "Deployment",
+     icon: "rocket_launch",
+     badge: "Guide"
+   }
+   ```
+   Array order controls sidebar order and previous/next links. `icon` is a Material Symbols name.
+3. Generated pages add the sidebar link automatically. Add it manually to the sidebar in `docs.html` if you want it on the Getting Started page.
+4. If other docs link to the new `.md`, add a `rewriteLinks()` mapping for it.
+5. Name the output `docs-*.html` so `scripts/build.mjs` copies it to `dist/` and Tailwind scans it. If you use another prefix, update `scripts/build.mjs` and `tailwind.config.js`.
+6. Run `npm run build` and verify the new page, sidebar, TOC, search, and links.
+
+### Edit the Getting Started page
+
+`docs.html` is hand-crafted; `docs-src/getting-started.md` is not used to generate it.
+
+1. Edit `docs.html` directly.
+2. If you add or remove sections, update the manual right-hand TOC and `GETTING_STARTED_INDEX` in `scripts/build-docs.mjs`.
+3. If you bump the version, update `v0.14.2` in `docs.html` and in `renderShell()` in `scripts/build-docs.mjs`.
+4. Run `npm run build`.
+
 ## Deploy to GitHub Pages
 
 1. Push the repository to GitHub.
