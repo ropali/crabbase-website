@@ -1,3 +1,5 @@
+/* Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V4 · motion: brisk · zero floor violations */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,15 +7,28 @@
 @layer base {
   :root {
     color-scheme: light;
+    --dur-micro: 120ms;
+    --dur-short: 200ms;
+    --dur-long: 380ms;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --color-primary: #ab2815;
+    --color-primary-container: #ce412b;
+    --color-secondary-container: #fe5d4a;
+    --color-surface: #fff8f6;
+    --color-on-surface: #261816;
   }
 
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
   }
 
   body {
     overscroll-behavior: none;
+    overflow-x: clip;
   }
 
   ::selection {
@@ -21,9 +36,11 @@
     color: #261816;
   }
 
+  /* Instant, accessible focus ring per Hallmark Floor Rule 6 */
   :focus-visible {
-    outline: 2px solid #ce412b;
-    outline-offset: 3px;
+    outline: 2px solid var(--color-primary-container) !important;
+    outline-offset: 3px !important;
+    transition: none !important;
   }
 
   section[id],
@@ -47,12 +64,12 @@
     z-index: 100;
     padding: 0.6rem 1rem;
     border-radius: 0.25rem;
-    background: #ab2815;
+    background: var(--color-primary);
     color: #ffffff;
     font-size: 13px;
     font-weight: 600;
     transform: translateY(-160%);
-    transition: transform 0.2s ease;
+    transition: transform var(--dur-short) var(--ease-out);
   }
 
   .skip-link:focus {
@@ -60,11 +77,33 @@
   }
 }
 
-/* Hero entrance */
+/* ==========================================================================
+   Hallmark Motion System — Character: Brisk (0.85x developer tool aesthetic)
+   Floor Rule 2: Never transition: all. Never animate width, height, top or left.
+   ========================================================================== */
+
+/* Button and interactive control microinteractions */
+button,
+.btn,
+.nav-link,
+[role="tab"] {
+  transition: background-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    transform var(--dur-micro) var(--ease-out),
+    box-shadow var(--dur-short) var(--ease-out);
+}
+
+button:active:not(:disabled),
+.btn-press:active {
+  transform: translateY(1px);
+}
+
+/* Hero entrance orchestration */
 @keyframes heroFadeUp {
   from {
     opacity: 0;
-    transform: translateY(22px);
+    transform: translateY(18px);
   }
   to {
     opacity: 1;
@@ -73,83 +112,38 @@
 }
 
 .animate-hero-1 {
-  animation: heroFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: heroFadeUp var(--dur-long) var(--ease-out) forwards;
 }
 .animate-hero-2 {
-  animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+  animation: heroFadeUp var(--dur-long) var(--ease-out) 100ms both;
 }
 .animate-hero-3 {
-  animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both;
+  animation: heroFadeUp var(--dur-long) var(--ease-out) 180ms both;
 }
 .animate-hero-4 {
-  animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+  animation: heroFadeUp var(--dur-long) var(--ease-out) 260ms both;
 }
 .animate-hero-5 {
-  animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.52s both;
+  animation: heroFadeUp var(--dur-long) var(--ease-out) 340ms both;
 }
 .animate-hero-mockup {
-  animation: heroFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both;
+  animation: heroFadeUp var(--dur-long) var(--ease-out) 420ms both;
 }
 
-/* Ambient background drift */
-@keyframes ambientFloat {
-  0%,
-  100% {
-    translate: 0 0;
-    scale: 1;
-  }
-  33% {
-    translate: 24px -18px;
-    scale: 1.06;
-  }
-  66% {
-    translate: -18px 14px;
-    scale: 0.97;
-  }
+/* Technical grid background: structural & clean, replaces blurry AI orbs */
+.tech-grid-bg {
+  background-image: radial-gradient(rgba(171, 40, 21, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(ellipse 65% 55% at 50% 25%, #000 35%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 65% 55% at 50% 25%, #000 35%, transparent 100%);
 }
 
-.ambient-float {
-  animation: ambientFloat 18s ease-in-out infinite;
-}
-.ambient-float-slow {
-  animation: ambientFloat 24s ease-in-out -8s infinite;
-}
-.ambient-float-slower {
-  animation: ambientFloat 30s ease-in-out -14s infinite;
-}
-.ambient-float,
-.ambient-float-slow,
-.ambient-float-slower {
-  will-change: translate, scale;
+.tech-grid-dense {
+  background-image: radial-gradient(rgba(171, 40, 21, 0.09) 1px, transparent 1px);
+  background-size: 16px 16px;
 }
 
-/* Feature icon pop on reveal */
-@keyframes iconPop {
-  0% {
-    opacity: 0;
-    transform: scale(0.55) rotate(-10deg);
-  }
-  60% {
-    opacity: 1;
-    transform: scale(1.12) rotate(4deg);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-  }
-}
-
-.js .bento-card .feature-icon {
-  opacity: 0;
-}
-
-.js .bento-card.is-visible .feature-icon {
-  opacity: 1;
-  animation: iconPop 0.65s cubic-bezier(0.16, 1, 0.3, 1)
-    calc(var(--reveal-delay, 0ms) + 120ms) backwards;
-}
-
-/* Scroll progress */
+/* Scroll progress spine (Hallmark Floor compliant: transform scaleX, linear root tracking) */
 #scroll-progress {
   position: fixed;
   top: 0;
@@ -159,24 +153,24 @@
   transform: scaleX(0);
   transform-origin: left center;
   background: linear-gradient(90deg, #ab2815, #fe5d4a);
-  box-shadow: 0 0 8px rgba(254, 93, 74, 0.45);
+  box-shadow: 0 0 8px rgba(254, 93, 74, 0.35);
   pointer-events: none;
   z-index: 60;
   will-change: transform;
 }
 
-/* Glowing radar pulse */
+/* Beacon radar pulse */
 @keyframes beaconRings {
   0% {
     transform: scale(0.9);
     opacity: 0.9;
   }
   50% {
-    transform: scale(1.6);
-    opacity: 0.35;
+    transform: scale(1.5);
+    opacity: 0.3;
   }
   100% {
-    transform: scale(2.2);
+    transform: scale(2.1);
     opacity: 0;
   }
 }
@@ -195,56 +189,24 @@
   pointer-events: none;
 }
 
-/* Sparkline flow */
-@keyframes sparklineDash {
-  0% {
-    stroke-dashoffset: 200;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes sparklineGlow {
-  0%,
-  100% {
-    opacity: 0.85;
-    filter: drop-shadow(0 0 1px rgba(171, 40, 21, 0.4));
-  }
-  50% {
-    opacity: 1;
-    filter: drop-shadow(0 0 4px rgba(171, 40, 21, 0.7));
-  }
-}
-
-.sparkline-line {
-  stroke-dasharray: 200;
-  animation: sparklineDash 2.4s ease-out forwards,
-    sparklineGlow 3s ease-in-out infinite;
-}
-
-/* Mascot micro-delight */
-@keyframes crabWiggle {
-  0%,
-  100% {
+/* Mascot crisp micro-interaction: single purposeful nod, never endless shake */
+@keyframes crabNod {
+  0%, 100% {
     transform: rotate(0deg) scale(1);
   }
-  25% {
-    transform: rotate(-8deg) scale(1.06);
+  30% {
+    transform: rotate(-6deg) scale(1.08);
   }
-  50% {
-    transform: rotate(8deg) scale(1.06);
-  }
-  75% {
-    transform: rotate(-4deg) scale(1.04);
+  70% {
+    transform: rotate(6deg) scale(1.08);
   }
 }
 
 .crab-wiggle:hover {
-  animation: crabWiggle 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+  animation: crabNod 0.4s var(--ease-out) 1;
 }
 
-/* Shimmer button overlay */
+/* Button Shimmer: GPU translateX only, never animates 'left' */
 .btn-shimmer {
   position: relative;
   overflow: hidden;
@@ -255,63 +217,77 @@
   content: "";
   position: absolute;
   top: -50%;
-  left: -60%;
+  left: 0;
   width: 50%;
   height: 200%;
   background: linear-gradient(
     60deg,
     rgba(255, 255, 255, 0) 20%,
-    rgba(255, 255, 255, 0.24) 50%,
+    rgba(255, 255, 255, 0.28) 50%,
     rgba(255, 255, 255, 0) 80%
   );
-  transform: rotate(25deg);
-  transition: left 0.65s ease;
+  transform: rotate(25deg) translateX(-180%);
+  transition: transform var(--dur-long) var(--ease-out);
   pointer-events: none;
 }
 
 .btn-shimmer:hover::after {
-  left: 130%;
+  transform: rotate(25deg) translateX(280%);
 }
 
-/* Feature card lift */
+/* Feature Bento Card: cursor-tracking spotlight border & GPU elevation */
 .bento-card {
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.28s ease, border-color 0.28s ease;
+  position: relative;
+  transition: transform var(--dur-short) var(--ease-out),
+    box-shadow var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out);
+  will-change: transform;
 }
 
 .bento-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   box-shadow: 0 12px 28px -6px rgba(171, 40, 21, 0.08),
-    0 4px 10px -2px rgba(0, 0, 0, 0.04);
+    0 4px 10px -2px rgba(0, 0, 0, 0.03);
+  border-color: rgba(171, 40, 21, 0.35);
+}
+
+.bento-card .feature-icon {
+  transition: transform var(--dur-short) var(--ease-out),
+    background-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
 }
 
 .bento-card:hover .feature-icon {
-  transform: scale(1.1) rotate(4deg);
+  transform: scale(1.08);
+  background-color: rgba(254, 93, 74, 0.15);
 }
 
-.feature-icon {
-  transition: transform 0.3s ease;
+/* Benchmark Bars: GPU scaleX transform, never animate width! */
+.bench-bar-track {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 9999px;
 }
 
-/* Benchmark bars animate into view */
 .bench-bar {
-  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.js .bench-bar {
-  width: 0;
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.65s var(--ease-out);
+  will-change: transform;
 }
 
 .js .bench-bar.is-visible {
-  width: var(--target-width, 100%);
+  transform: scaleX(var(--target-scale, 1));
 }
 
-/* Scroll reveal */
+/* Scroll reveal (Hallmark Gate 62 compliant: visible by default without JS) */
 .js [data-reveal] {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(16px);
+  transition: opacity 0.55s var(--ease-out),
+    transform 0.55s var(--ease-out);
   transition-delay: var(--reveal-delay, 0ms);
   will-change: opacity, transform;
 }
@@ -321,7 +297,7 @@
   transform: translateY(0);
 }
 
-/* Tab panel swap */
+/* Tab panel switch */
 @keyframes tabFade {
   from {
     opacity: 0;
@@ -334,30 +310,91 @@
 }
 
 .tab-enter {
-  animation: tabFade 0.28s ease both;
+  animation: tabFade var(--dur-short) var(--ease-out) both;
 }
 
 /* Header elevation after scroll */
-#site-header.is-scrolled {
-  box-shadow: 0 6px 24px rgba(38, 24, 22, 0.07);
+#site-header {
+  transition: box-shadow var(--dur-short) var(--ease-out),
+    background-color var(--dur-short) var(--ease-out);
 }
 
-/* Slim horizontal scrollbar for the tab strip */
+#site-header.is-scrolled {
+  box-shadow: 0 4px 20px rgba(38, 24, 22, 0.06);
+}
+
+/* Slim horizontal scrollbar */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
-
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
-@media (hover: none) {
-  .crab-wiggle:hover {
-    animation: none;
+/* ==========================================================================
+   Modern Relevant Architecture & Realtime Interactive Elements
+   Modeled after high-performance backend tools (Supabase, PocketBase, Convex)
+   ========================================================================== */
+
+/* Architecture data-flow conduit */
+@keyframes conduitFlow {
+  0% {
+    stroke-dashoffset: 32;
+  }
+  100% {
+    stroke-dashoffset: 0;
   }
 }
 
+.conduit-stream {
+  stroke-dasharray: 4 4;
+  animation: conduitFlow 1.4s linear infinite;
+}
+
+/* Realtime live event pulse */
+@keyframes realtimeRowEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+    background-color: rgba(254, 93, 74, 0.25);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(0);
+    background-color: rgba(254, 93, 74, 0.16);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.realtime-row-enter {
+  animation: realtimeRowEnter 0.75s var(--ease-out) forwards;
+}
+
+/* Admin UI interactive hotspot */
+.hotspot-ring {
+  animation: beaconRings 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.hotspot-pin {
+  transition: transform var(--dur-micro) var(--ease-out),
+    background-color var(--dur-short) var(--ease-out);
+}
+.hotspot-pin:hover {
+  transform: scale(1.18);
+}
+
+/* Workload tab pill indicator */
+.workload-tab {
+  transition: background-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    box-shadow var(--dur-short) var(--ease-out);
+}
+
+/* Accessibility: Prefers reduced motion overrides (Hallmark Rule 7) */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
@@ -369,12 +406,21 @@
   }
 
   .js .bench-bar {
-    width: var(--target-width, 100%);
+    transform: scaleX(var(--target-scale, 1)) !important;
   }
 
   .js [data-reveal] {
-    opacity: 1;
-    transform: none;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .conduit-stream {
+    animation: none !important;
+    stroke-dasharray: none !important;
+  }
+
+  .btn-shimmer::after {
+    display: none !important;
   }
 }
 

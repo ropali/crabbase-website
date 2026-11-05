@@ -87,26 +87,26 @@
             aria-label="Primary navigation"
           >
             <a
-              class="nav-link px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all duration-200 font-body-sm text-body-sm hover:translate-y-[-1px] data-[active=true]:bg-surface-container-high data-[active=true]:text-on-surface data-[active=true]:font-semibold"
+              class="nav-link px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-[color,background-color,transform] duration-150 font-body-sm text-body-sm hover:translate-y-[-1px] data-[active=true]:bg-surface-container-high data-[active=true]:text-on-surface data-[active=true]:font-semibold"
               data-nav
               href="#features"
               >Features</a
             >
             <a
-              class="nav-link px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all duration-200 font-body-sm text-body-sm hover:translate-y-[-1px] data-[active=true]:bg-surface-container-high data-[active=true]:text-on-surface data-[active=true]:font-semibold"
+              class="nav-link px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-[color,background-color,transform] duration-150 font-body-sm text-body-sm hover:translate-y-[-1px] data-[active=true]:bg-surface-container-high data-[active=true]:text-on-surface data-[active=true]:font-semibold"
               data-nav
               href="#architecture"
               >Architecture</a
             >
             <a
-              class="nav-link px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all duration-200 font-body-sm text-body-sm hover:translate-y-[-1px] data-[active=true]:bg-surface-container-high data-[active=true]:text-on-surface data-[active=true]:font-semibold"
+              class="nav-link px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-[color,background-color,transform] duration-150 font-body-sm text-body-sm hover:translate-y-[-1px] data-[active=true]:bg-surface-container-high data-[active=true]:text-on-surface data-[active=true]:font-semibold"
               data-nav
               data-nav-sub
               href="#benchmarks"
               >Benchmarks</a
             >
             <a
-              class="nav-link px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all duration-200 font-body-sm text-body-sm hover:translate-y-[-1px] data-[active=true]:bg-surface-container-high data-[active=true]:text-on-surface data-[active=true]:font-semibold"
+              class="nav-link px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-[color,background-color,transform] duration-150 font-body-sm text-body-sm hover:translate-y-[-1px] data-[active=true]:bg-surface-container-high data-[active=true]:text-on-surface data-[active=true]:font-semibold"
               data-nav
               href="./docs.html"
               >Documentation</a
@@ -115,7 +115,7 @@
         </div>
         <div class="flex items-center gap-3">
           <a
-            class="group hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container hover:text-on-surface text-on-surface-variant transition-all duration-200 hover:shadow-sm active:scale-95"
+            class="group hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container hover:text-on-surface text-on-surface-variant transition-[color,background-color,box-shadow,transform] duration-150 hover:shadow-sm active:translate-y-[1px]"
             href="https://github.com/ropali/crabbase"
             rel="noopener noreferrer"
             target="_blank"
@@ -137,7 +137,7 @@
             </span>
           </a>
           <a
-            class="btn-shimmer inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary transition-all duration-200 font-body-sm text-body-sm font-medium shadow-sm hover:shadow active:scale-95"
+            class="btn-shimmer inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary transition-[background-color,box-shadow,transform] duration-150 font-body-sm text-body-sm font-medium shadow-sm hover:shadow active:translate-y-[1px]"
             href="#admin"
             >Launch Demo</a
           >
@@ -226,17 +226,12 @@
           class="relative w-full overflow-hidden bg-surface py-20 lg:py-28"
           aria-labelledby="hero-title"
         >
-          <div
-            class="absolute -top-32 left-1/2 -translate-x-1/2 w-[720px] h-[360px] bg-secondary-fixed/40 rounded-full blur-3xl pointer-events-none -z-10 ambient-float"
-          ></div>
-          <div
-            class="absolute top-96 right-10 w-96 h-96 bg-surface-container-high/60 rounded-full blur-2xl pointer-events-none -z-10 ambient-float-slow"
-          ></div>
+          <div class="absolute inset-0 tech-grid-bg pointer-events-none -z-10" aria-hidden="true"></div>
           <div
             class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col items-center text-center"
           >
             <div
-              class="animate-hero-1 inline-flex flex-wrap items-center justify-center gap-2.5 px-3.5 py-1.5 rounded-full bg-surface-container text-on-surface mb-8 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] cursor-default border border-outline-variant/30"
+              class="animate-hero-1 inline-flex flex-wrap items-center justify-center gap-2.5 px-3.5 py-1.5 rounded-full bg-surface-container text-on-surface mb-8 shadow-sm hover:shadow-md transition-[box-shadow,transform] duration-200 hover:translate-y-[-1px] cursor-default border border-outline-variant/30"
             >
               <span
                 class="relative flex h-2.5 w-2.5 items-center justify-center text-primary"
@@ -297,7 +292,7 @@
               class="animate-hero-4 flex flex-wrap items-center justify-center gap-4 w-full max-w-md mx-auto mb-10"
             >
               <a
-                class="btn-shimmer group w-full sm:w-auto px-6 py-3.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-body-md text-body-md font-semibold transition-all duration-200 shadow-md hover:shadow-xl hover:translate-y-[-2px] active:scale-95 flex items-center justify-center gap-2"
+                class="btn-shimmer group w-full sm:w-auto px-6 py-3.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-body-md text-body-md font-semibold transition-[background-color,box-shadow,transform] duration-150 shadow-md hover:shadow-xl hover:translate-y-[-2px] active:translate-y-[1px] flex items-center justify-center gap-2"
                 href="./docs.html"
               >
                 <span>Get Started in 60s</span>
@@ -308,7 +303,7 @@
                 >
               </a>
               <a
-                class="group w-full sm:w-auto px-5 py-3.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-body-md text-body-md font-medium transition-all duration-200 shadow-sm hover:shadow hover:translate-y-[-2px] active:scale-95 flex items-center justify-center gap-2 border border-outline-variant/30"
+                class="group w-full sm:w-auto px-5 py-3.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-body-md text-body-md font-medium transition-[background-color,box-shadow,transform] duration-150 shadow-sm hover:shadow hover:translate-y-[-2px] active:translate-y-[1px] flex items-center justify-center gap-2 border border-outline-variant/30"
                 href="https://github.com/ropali/crabbase"
                 rel="noopener noreferrer"
                 target="_blank"
@@ -326,7 +321,7 @@
             </div>
 
             <div
-              class="animate-hero-5 w-full max-w-xl bg-surface-container-low hover:bg-surface-container rounded-xl p-2.5 shadow-sm hover:shadow-md transition-all duration-200 mb-16 flex items-center justify-between gap-3 border border-outline-variant/40"
+              class="animate-hero-5 w-full max-w-xl bg-surface-container-low hover:bg-surface-container rounded-xl p-2.5 shadow-sm hover:shadow-md transition-[background-color,box-shadow,border-color] duration-150 mb-16 flex items-center justify-between gap-3 border border-outline-variant/40"
             >
               <button
                 type="button"
@@ -346,7 +341,7 @@
               </button>
               <button
                 type="button"
-                class="shrink-0 px-3 py-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container-high text-on-surface font-code-md text-label-xs transition-all duration-200 flex items-center gap-1.5 shadow-sm active:scale-95 border border-outline-variant/20 hover:border-primary/40 cursor-pointer"
+                class="shrink-0 px-3 py-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container-high text-on-surface font-code-md text-label-xs transition-[background-color,border-color,transform] duration-150 flex items-center gap-1.5 shadow-sm active:translate-y-[1px] border border-outline-variant/20 hover:border-primary/40 cursor-pointer"
                 id="copy-curl-btn"
                 aria-label="Copy the Crabbase install command"
               >
@@ -362,17 +357,32 @@
 
             <div
               id="admin"
-              class="animate-hero-mockup w-full max-w-4xl rounded-xl bg-surface-container-lowest shadow-2xl hover:shadow-[0_20px_50px_rgba(171,40,21,0.12)] transition-shadow duration-500 overflow-hidden text-left relative border border-outline-variant/40"
+              class="animate-hero-mockup w-full max-w-4xl rounded-xl bg-surface-container-lowest shadow-2xl hover:shadow-[0_20px_50px_rgba(171,40,21,0.12)] transition-shadow duration-300 overflow-hidden text-left relative border border-outline-variant/40 group"
             >
               <img
                 src="./assets/images/admin_ui.png"
                 alt="Crabbase admin dashboard showing the posts collection, schema controls, and record table."
                 width="3807"
                 height="1895"
-                loading="lazy"
+                loading="eager"
+                fetchpriority="high"
                 decoding="async"
                 class="block w-full h-auto"
               />
+
+              <!-- Interactive Feature Hotspot Badges -->
+              <div class="absolute top-4 left-6 hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-surface-container-lowest/95 backdrop-blur-sm border border-outline-variant/40 shadow-sm text-label-xs font-code-md text-primary hotspot-pin cursor-help" title="Dynamic schema migrations compiled directly into Rust">
+                <span class="w-2 h-2 rounded-full bg-primary hotspot-ring"></span>
+                <span>Type-Safe Schema</span>
+              </div>
+              <div class="absolute top-4 right-6 hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-surface-container-lowest/95 backdrop-blur-sm border border-outline-variant/40 shadow-sm text-label-xs font-code-md text-primary hotspot-pin cursor-help" title="Instant REST & GraphQL endpoint reflection">
+                <span class="w-2 h-2 rounded-full bg-primary hotspot-ring"></span>
+                <span>Instant REST / GraphQL</span>
+              </div>
+              <div class="absolute bottom-4 left-1/2 -translate-x-1/2 hidden md:flex items-center gap-2 px-3 py-1 rounded-full bg-inverse-surface text-inverse-on-surface shadow-md text-label-xs font-code-md border border-outline-variant/20 hotspot-pin cursor-help" title="Live streaming rows synced over SSE">
+                <span class="material-symbols-outlined text-[14px] text-secondary-container" aria-hidden="true">sensors</span>
+                <span>Live In-Memory WAL Table (0.4ms dispatch)</span>
+              </div>
             </div>
           </div>
         </section>
@@ -654,18 +664,172 @@
 
         <section
           id="architecture"
-          class="w-full bg-surface py-20 lg:py-24"
-          aria-labelledby="benchmarks-title"
+          class="relative w-full bg-surface py-20 lg:py-28 overflow-hidden"
+          aria-labelledby="architecture-title"
         >
+          <div class="absolute inset-0 tech-grid-dense opacity-40 pointer-events-none -z-10" aria-hidden="true"></div>
+
           <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <!-- Architecture Section Header -->
+            <div class="max-w-3xl mb-12" data-reveal>
+              <div
+                class="font-code-md text-label-xs uppercase tracking-wider text-primary font-semibold mb-2 flex items-center gap-1.5"
+              >
+                <span class="material-symbols-outlined text-[16px]" aria-hidden="true">account_tree</span>
+                Engine Architecture &amp; Data Pipeline
+              </div>
+              <h2
+                id="architecture-title"
+                class="font-headline-lg text-headline-lg sm:text-4xl text-on-surface font-bold tracking-tight"
+              >
+                A unified runtime. Zero inter-process network overhead.
+              </h2>
+              <p
+                class="font-body-md text-body-md text-on-surface-variant mt-3 leading-relaxed"
+              >
+                Unlike traditional Node/Postgres stacks or microservice sprawl that wastes CPU cycles serializing JSON over internal TCP sockets, Crabbase executes storage, auth, and realtime dispatch inside a single statically-linked Rust binary.
+              </p>
+            </div>
+
+            <!-- Interactive Architecture Pipeline Diagram -->
             <div
-              class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center"
+              class="mb-16 p-6 sm:p-8 rounded-2xl bg-surface-container-lowest border border-outline-variant/30 shadow-md"
+              data-reveal
             >
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 mb-6 border-b border-outline-variant/20">
+                <div>
+                  <div class="font-headline-md text-headline-md text-on-surface font-bold flex items-center gap-2">
+                    <span>Rust Zero-Cost Conduit Pipeline</span>
+                    <span class="px-2 py-0.5 rounded bg-primary/10 text-primary font-code-md text-[11px] font-semibold">Sub-Millisecond Path</span>
+                  </div>
+                  <div class="font-body-sm text-label-xs text-on-surface-variant mt-0.5">
+                    Click any architectural node to inspect memory &amp; execution topology.
+                  </div>
+                </div>
+                <div class="flex items-center gap-2 font-code-md text-label-xs text-primary bg-surface-container px-3 py-1.5 rounded-lg border border-outline-variant/20">
+                  <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                  <span>Direct Process In-Memory Bus</span>
+                </div>
+              </div>
+
+              <!-- Pipeline Flow Grid -->
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+                <!-- Node 1: Ingestion -->
+                <button
+                  type="button"
+                  data-arch-btn="ingest"
+                  data-active="true"
+                  class="text-left p-4 rounded-xl border border-outline-variant/30 bg-surface-container-high ring-2 ring-primary transition-[background-color,border-color,box-shadow,transform] duration-150 hover:translate-y-[-2px] cursor-pointer"
+                >
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="material-symbols-outlined text-[20px] text-primary" aria-hidden="true">input</span>
+                    <span class="font-code-md text-[10px] uppercase font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded">Stage 1</span>
+                  </div>
+                  <div class="font-headline-md text-body-md font-bold text-on-surface">Client Ingestion</div>
+                  <div class="font-body-sm text-label-xs text-on-surface-variant mt-1">HTTP/1.1, HTTP/2, WS &amp; SSE</div>
+                  <div class="mt-3 pt-2 border-t border-outline-variant/20 flex items-center gap-1 font-code-md text-[11px] text-tertiary">
+                    <span class="material-symbols-outlined text-[13px] text-primary" aria-hidden="true">bolt</span>
+                    <span>0.18ms parsing</span>
+                  </div>
+                </button>
+
+                <!-- Node 2: Tokio Runtime -->
+                <button
+                  type="button"
+                  data-arch-btn="runtime"
+                  data-active="false"
+                  class="text-left p-4 rounded-xl border border-outline-variant/30 bg-surface-container-low transition-[background-color,border-color,box-shadow,transform] duration-150 hover:translate-y-[-2px] cursor-pointer"
+                >
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="material-symbols-outlined text-[20px] text-primary" aria-hidden="true">memory</span>
+                    <span class="font-code-md text-[10px] uppercase font-bold text-on-surface-variant bg-surface-container px-1.5 py-0.5 rounded">Stage 2</span>
+                  </div>
+                  <div class="font-headline-md text-body-md font-bold text-on-surface">Tokio Engine</div>
+                  <div class="font-body-sm text-label-xs text-on-surface-variant mt-1">Work-stealing async scheduler</div>
+                  <div class="mt-3 pt-2 border-t border-outline-variant/20 flex items-center gap-1 font-code-md text-[11px] text-tertiary">
+                    <span class="material-symbols-outlined text-[13px] text-primary" aria-hidden="true">check_circle</span>
+                    <span>Zero GC pauses</span>
+                  </div>
+                </button>
+
+                <!-- Node 3: Storage -->
+                <button
+                  type="button"
+                  data-arch-btn="storage"
+                  data-active="false"
+                  class="text-left p-4 rounded-xl border border-outline-variant/30 bg-surface-container-low transition-[background-color,border-color,box-shadow,transform] duration-150 hover:translate-y-[-2px] cursor-pointer"
+                >
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="material-symbols-outlined text-[20px] text-primary" aria-hidden="true">database</span>
+                    <span class="font-code-md text-[10px] uppercase font-bold text-on-surface-variant bg-surface-container px-1.5 py-0.5 rounded">Stage 3</span>
+                  </div>
+                  <div class="font-headline-md text-body-md font-bold text-on-surface">Embedded Storage</div>
+                  <div class="font-body-sm text-label-xs text-on-surface-variant mt-1">SQLite &amp; RocksDB WAL</div>
+                  <div class="mt-3 pt-2 border-t border-outline-variant/20 flex items-center gap-1 font-code-md text-[11px] text-tertiary">
+                    <span class="material-symbols-outlined text-[13px] text-primary" aria-hidden="true">lock_clock</span>
+                    <span>Zero TCP tax</span>
+                  </div>
+                </button>
+
+                <!-- Node 4: Realtime Bus -->
+                <button
+                  type="button"
+                  data-arch-btn="realtime"
+                  data-active="false"
+                  class="text-left p-4 rounded-xl border border-outline-variant/30 bg-surface-container-low transition-[background-color,border-color,box-shadow,transform] duration-150 hover:translate-y-[-2px] cursor-pointer"
+                >
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="material-symbols-outlined text-[20px] text-primary" aria-hidden="true">stream</span>
+                    <span class="font-code-md text-[10px] uppercase font-bold text-on-surface-variant bg-surface-container px-1.5 py-0.5 rounded">Stage 4</span>
+                  </div>
+                  <div class="font-headline-md text-body-md font-bold text-on-surface">Realtime Dispatch</div>
+                  <div class="font-body-sm text-label-xs text-on-surface-variant mt-1">Lock-free broadcast channels</div>
+                  <div class="mt-3 pt-2 border-t border-outline-variant/20 flex items-center gap-1 font-code-md text-[11px] text-tertiary">
+                    <span class="material-symbols-outlined text-[13px] text-primary" aria-hidden="true">speed</span>
+                    <span>0.3ms fan-out</span>
+                  </div>
+                </button>
+              </div>
+
+              <!-- Animated Conduit Wire -->
+              <div class="hidden md:block my-4 px-8" aria-hidden="true">
+                <svg viewBox="0 0 800 12" class="w-full h-3 text-outline-variant">
+                  <line x1="0" y1="6" x2="800" y2="6" stroke="currentColor" stroke-width="2" />
+                  <line x1="0" y1="6" x2="800" y2="6" stroke="#ab2815" stroke-width="2.5" class="conduit-stream" />
+                </svg>
+              </div>
+
+              <!-- Inspector HUD -->
+              <div class="mt-4 p-4 rounded-xl bg-surface-container-low border border-outline-variant/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div class="space-y-1">
+                  <div class="flex items-center gap-2">
+                    <span id="arch-node-title" class="font-headline-md text-body-md font-bold text-on-surface">Client Request Ingestion Layer</span>
+                    <span id="arch-tag" class="font-code-md text-label-xs bg-surface-container-high text-primary px-2 py-0.5 rounded">Axum + Hyper</span>
+                  </div>
+                  <p id="arch-node-desc" class="font-body-sm text-body-sm text-on-surface-variant max-w-2xl">
+                    Handles HTTP/1.1, HTTP/2, and persistent WebSocket/SSE connections via Axum. Employs SIMD-accelerated JSON parsers and zero-allocation routing to achieve sub-millisecond dispatch times.
+                  </p>
+                </div>
+                <div class="flex items-center gap-3 shrink-0">
+                  <div class="px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-outline-variant/30 text-center">
+                    <div id="arch-stat-1" class="font-code-md text-label-xs font-bold text-primary">0.18ms parsing</div>
+                    <div class="font-body-sm text-[10px] text-tertiary">Telemetry</div>
+                  </div>
+                  <div class="px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-outline-variant/30 text-center">
+                    <div id="arch-stat-2" class="font-code-md text-label-xs font-bold text-on-surface">Zero heap realloc</div>
+                    <div class="font-body-sm text-[10px] text-tertiary">Memory Guarantee</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hardware-Grade Benchmarks with Multi-Workload Controller -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               <div class="lg:col-span-5" data-reveal>
                 <div
                   class="font-code-md text-label-xs uppercase tracking-wider text-primary font-semibold mb-2"
                 >
-                  Hardware-Grade Benchmarks
+                  Validated Workloads
                 </div>
                 <h2
                   id="benchmarks-title"
@@ -736,67 +900,106 @@
                 </div>
               </div>
 
+              <!-- Interactive Benchmark Card -->
               <div
                 id="benchmarks"
-                class="lg:col-span-7 bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-md border border-outline-variant/30 hover:shadow-lg transition-all duration-300"
+                class="lg:col-span-7 bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-md border border-outline-variant/30 hover:shadow-lg transition-shadow duration-300"
                 data-reveal
               >
-                <div class="flex items-center justify-between pb-6 mb-6">
+                <!-- Workload Selector Tabs -->
+                <div class="flex items-center gap-1.5 sm:gap-2 mb-6 pb-4 border-b border-outline-variant/20 overflow-x-auto no-scrollbar">
+                  <button
+                    type="button"
+                    data-workload-btn="read"
+                    data-active="true"
+                    aria-selected="true"
+                    class="workload-tab px-3 py-1.5 rounded-lg font-code-md text-label-xs font-semibold bg-primary text-on-primary shadow-sm cursor-pointer whitespace-nowrap active:translate-y-[1px]"
+                  >
+                    Point Reads
+                  </button>
+                  <button
+                    type="button"
+                    data-workload-btn="write"
+                    data-active="false"
+                    aria-selected="false"
+                    class="workload-tab px-3 py-1.5 rounded-lg font-code-md text-label-xs font-semibold bg-surface-container text-on-surface-variant hover:text-on-surface cursor-pointer whitespace-nowrap active:translate-y-[1px]"
+                  >
+                    Batch Writes (WAL)
+                  </button>
+                  <button
+                    type="button"
+                    data-workload-btn="realtime"
+                    data-active="false"
+                    aria-selected="false"
+                    class="workload-tab px-3 py-1.5 rounded-lg font-code-md text-label-xs font-semibold bg-surface-container text-on-surface-variant hover:text-on-surface cursor-pointer whitespace-nowrap active:translate-y-[1px]"
+                  >
+                    Realtime SSE Broadcast
+                  </button>
+                </div>
+
+                <div class="flex items-center justify-between pb-4 mb-6">
                   <div>
                     <div
+                      id="workload-title"
                       class="font-headline-md text-headline-md text-on-surface font-bold"
                     >
                       Throughput (Req/Sec)
                     </div>
                     <div
+                      id="workload-subtitle"
                       class="font-body-sm text-label-xs text-on-surface-variant"
                     >
                       Higher is better. Tested via wrk load-generator.
                     </div>
                   </div>
                   <span
-                    class="px-2.5 py-1 rounded bg-surface-container text-primary font-code-md text-label-xs font-semibold"
+                    id="workload-spec"
+                    class="px-2.5 py-1 rounded bg-surface-container text-primary font-code-md text-label-xs font-semibold shrink-0"
                     >wrk -t8 -c10000</span
                   >
                 </div>
 
                 <div class="space-y-6">
+                  <!-- Row 1: Crabbase -->
                   <div>
                     <div class="flex justify-between items-center mb-1.5 gap-3">
                       <span
                         class="font-headline-md text-body-md font-bold text-on-surface flex items-center gap-2"
                       >
                         <span
-                          class="w-3 h-3 rounded-full bg-primary animate-pulse"
+                          class="w-3 h-3 rounded-full bg-primary beacon-pulse"
                         ></span>
                         Crabbase (Pure Rust)
                       </span>
                       <span
                         class="font-code-md text-body-md font-bold text-primary text-right"
-                        ><span class="tabular-nums" data-count="145000">145,000</span> req/s
+                        ><span id="bench-count-crab" class="tabular-nums" data-count="145000" data-suffix=" req/s">145,000 req/s</span>
                         <span
+                          id="bench-sub-crab"
                           class="font-normal text-label-xs text-on-surface-variant"
                           >(0.8ms p99)</span
                         ></span
                       >
                     </div>
                     <div
-                      class="w-full bg-surface-container h-4 rounded-full overflow-hidden shadow-inner"
+                      class="bench-bar-track bg-surface-container h-4 shadow-inner"
                       aria-hidden="true"
                     >
                       <div
-                        class="bench-bar bg-primary h-full w-full rounded-full shadow-sm"
-                        style="--target-width: 100%"
+                        id="bench-bar-crab"
+                        class="bench-bar bg-primary h-full rounded-full shadow-sm"
+                        style="--target-scale: 1"
                       ></div>
                     </div>
                     <div
                       class="flex justify-between text-[11px] font-code-md text-tertiary mt-1"
                     >
-                      <span>Idle Memory: 12MB</span>
-                      <span>Peak Tokio Concurrency</span>
+                      <span id="bench-idle-crab">Idle Memory: 12MB</span>
+                      <span id="bench-badge-crab">Peak Tokio Concurrency</span>
                     </div>
                   </div>
 
+                  <!-- Row 2: PocketBase -->
                   <div>
                     <div class="flex justify-between items-center mb-1.5 gap-3">
                       <span
@@ -807,30 +1010,33 @@
                       </span>
                       <span
                         class="font-code-md text-body-sm text-on-surface font-semibold text-right"
-                        ><span class="tabular-nums" data-count="42000">42,000</span> req/s
+                        ><span id="bench-count-pocket" class="tabular-nums" data-count="42000" data-suffix=" req/s">42,000 req/s</span>
                         <span
+                          id="bench-sub-pocket"
                           class="font-normal text-label-xs text-on-surface-variant"
                           >(2.9ms p99)</span
                         ></span
                       >
                     </div>
                     <div
-                      class="w-full bg-surface-container h-4 rounded-full overflow-hidden shadow-inner"
+                      class="bench-bar-track bg-surface-container h-4 shadow-inner"
                       aria-hidden="true"
                     >
                       <div
-                        class="bench-bar bg-tertiary h-full w-[29%] rounded-full"
-                        style="--target-width: 29%"
+                        id="bench-bar-pocket"
+                        class="bench-bar bg-tertiary h-full rounded-full"
+                        style="--target-scale: 0.29"
                       ></div>
                     </div>
                     <div
                       class="flex justify-between text-[11px] font-code-md text-tertiary mt-1"
                     >
-                      <span>Idle Memory: 38MB</span>
-                      <span>Go GC pauses observed</span>
+                      <span id="bench-idle-pocket">Idle Memory: 38MB</span>
+                      <span id="bench-badge-pocket">Go GC pauses observed</span>
                     </div>
                   </div>
 
+                  <!-- Row 3: Node / Postgres -->
                   <div>
                     <div class="flex justify-between items-center mb-1.5 gap-3">
                       <span
@@ -841,27 +1047,29 @@
                       </span>
                       <span
                         class="font-code-md text-body-sm text-on-surface font-semibold text-right"
-                        ><span class="tabular-nums" data-count="18000">18,000</span> req/s
+                        ><span id="bench-count-node" class="tabular-nums" data-count="18000" data-suffix=" req/s">18,000 req/s</span>
                         <span
+                          id="bench-sub-node"
                           class="font-normal text-label-xs text-on-surface-variant"
                           >(9.4ms p99)</span
                         ></span
                       >
                     </div>
                     <div
-                      class="w-full bg-surface-container h-4 rounded-full overflow-hidden shadow-inner"
+                      class="bench-bar-track bg-surface-container h-4 shadow-inner"
                       aria-hidden="true"
                     >
                       <div
-                        class="bench-bar bg-outline h-full w-[12%] rounded-full"
-                        style="--target-width: 12%"
+                        id="bench-bar-node"
+                        class="bench-bar bg-outline h-full rounded-full"
+                        style="--target-scale: 0.12"
                       ></div>
                     </div>
                     <div
                       class="flex justify-between text-[11px] font-code-md text-tertiary mt-1"
                     >
-                      <span>Idle Memory: 140MB</span>
-                      <span>V8 GC &amp; ORM overhead</span>
+                      <span id="bench-idle-node">Idle Memory: 140MB</span>
+                      <span id="bench-badge-node">V8 GC &amp; ORM overhead</span>
                     </div>
                   </div>
                 </div>
@@ -870,7 +1078,7 @@
                   class="mt-8 pt-6 grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 text-left sm:text-center bg-surface-container-low p-4 rounded-lg border border-outline-variant/20"
                 >
                   <div
-                    class="flex items-center justify-between gap-3 sm:block hover:bg-surface-container-lowest/60 p-2 rounded transition-colors"
+                    class="flex items-center justify-between gap-3 sm:block hover:bg-surface-container-lowest/60 p-2 rounded transition-colors duration-150"
                   >
                     <div
                       class="font-code-md text-headline-md font-bold text-primary whitespace-nowrap"
@@ -884,7 +1092,7 @@
                     </div>
                   </div>
                   <div
-                    class="flex items-center justify-between gap-3 sm:block hover:bg-surface-container-lowest/60 p-2 rounded transition-colors"
+                    class="flex items-center justify-between gap-3 sm:block hover:bg-surface-container-lowest/60 p-2 rounded transition-colors duration-150"
                   >
                     <div class="font-code-md text-headline-md font-bold text-on-surface whitespace-nowrap">
                       <span class="tabular-nums" data-count="2" data-prefix="&lt;" data-suffix=" ms">&lt;2 ms</span>
@@ -896,7 +1104,7 @@
                     </div>
                   </div>
                   <div
-                    class="flex items-center justify-between gap-3 sm:block hover:bg-surface-container-lowest/60 p-2 rounded transition-colors"
+                    class="flex items-center justify-between gap-3 sm:block hover:bg-surface-container-lowest/60 p-2 rounded transition-colors duration-150"
                   >
                     <div class="font-code-md text-headline-md font-bold text-on-surface whitespace-nowrap">
                       <span class="tabular-nums" data-count="18.4" data-decimals="1" data-suffix=" MB">18.4 MB</span>
@@ -953,7 +1161,7 @@
                   aria-label="Code examples"
                 >
                   <button
-                    class="tab-button px-2.5 sm:px-3.5 py-1.5 rounded-lg font-code-md text-code-md transition-all duration-200 flex items-center gap-1.5 active:scale-95 cursor-pointer whitespace-nowrap text-on-surface-variant hover:text-on-surface hover:bg-surface-container data-[active=true]:bg-surface-container-lowest data-[active=true]:text-primary data-[active=true]:font-semibold data-[active=true]:shadow-sm"
+                    class="tab-button px-2.5 sm:px-3.5 py-1.5 rounded-lg font-code-md text-code-md transition-[background-color,color,box-shadow,transform] duration-150 flex items-center gap-1.5 active:translate-y-[1px] cursor-pointer whitespace-nowrap text-on-surface-variant hover:text-on-surface hover:bg-surface-container data-[active=true]:bg-surface-container-lowest data-[active=true]:text-primary data-[active=true]:font-semibold data-[active=true]:shadow-sm"
                     id="tab-rust"
                     type="button"
                     role="tab"
@@ -971,7 +1179,7 @@
                     <span class="hidden sm:inline">Rust Embedded</span>
                   </button>
                   <button
-                    class="tab-button px-2.5 sm:px-3.5 py-1.5 rounded-lg font-code-md text-code-md transition-all duration-200 flex items-center gap-1.5 active:scale-95 cursor-pointer whitespace-nowrap text-on-surface-variant hover:text-on-surface hover:bg-surface-container data-[active=true]:bg-surface-container-lowest data-[active=true]:text-primary data-[active=true]:font-semibold data-[active=true]:shadow-sm"
+                    class="tab-button px-2.5 sm:px-3.5 py-1.5 rounded-lg font-code-md text-code-md transition-[background-color,color,box-shadow,transform] duration-150 flex items-center gap-1.5 active:translate-y-[1px] cursor-pointer whitespace-nowrap text-on-surface-variant hover:text-on-surface hover:bg-surface-container data-[active=true]:bg-surface-container-lowest data-[active=true]:text-primary data-[active=true]:font-semibold data-[active=true]:shadow-sm"
                     id="tab-ts"
                     type="button"
                     role="tab"
@@ -990,7 +1198,7 @@
                     <span class="hidden sm:inline">TypeScript / Node</span>
                   </button>
                   <button
-                    class="tab-button px-2.5 sm:px-3.5 py-1.5 rounded-lg font-code-md text-code-md transition-all duration-200 flex items-center gap-1.5 active:scale-95 cursor-pointer whitespace-nowrap text-on-surface-variant hover:text-on-surface hover:bg-surface-container data-[active=true]:bg-surface-container-lowest data-[active=true]:text-primary data-[active=true]:font-semibold data-[active=true]:shadow-sm"
+                    class="tab-button px-2.5 sm:px-3.5 py-1.5 rounded-lg font-code-md text-code-md transition-[background-color,color,box-shadow,transform] duration-150 flex items-center gap-1.5 active:translate-y-[1px] cursor-pointer whitespace-nowrap text-on-surface-variant hover:text-on-surface hover:bg-surface-container data-[active=true]:bg-surface-container-lowest data-[active=true]:text-primary data-[active=true]:font-semibold data-[active=true]:shadow-sm"
                     id="tab-cli"
                     type="button"
                     role="tab"
@@ -1194,6 +1402,76 @@
                     http://127.0.0.1:8090/_/
                   </div>
                 </div>
+                          <!-- Interactive Live Realtime Event Stream Simulator -->
+            <div
+              id="realtime-simulator"
+              class="max-w-4xl mx-auto mt-8 bg-surface-container-lowest rounded-xl shadow-lg border border-outline-variant/30 p-5 sm:p-6"
+              data-reveal
+            >
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 mb-4 border-b border-outline-variant/20">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">sensors</span>
+                  </div>
+                  <div>
+                    <div class="font-headline-md text-body-md font-bold text-on-surface flex items-center gap-2">
+                      <span>Realtime In-Memory Subscription Stream</span>
+                      <span class="inline-flex items-center gap-1 font-code-md text-[11px] font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                        LIVE
+                      </span>
+                    </div>
+                    <div class="font-body-sm text-label-xs text-on-surface-variant">
+                      Subscribed to <code class="font-code-md text-primary">collections:*</code> via Tokio lock-free broadcast channel.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                  <div class="text-right hidden sm:block">
+                    <div class="font-code-md text-label-xs font-bold text-on-surface">
+                      <span id="realtime-event-count">1,420</span> events
+                    </div>
+                    <div class="font-body-sm text-[10px] text-tertiary">Dispatched (0.28ms avg)</div>
+                  </div>
+                  <button
+                    type="button"
+                    id="simulate-event-btn"
+                    class="btn-shimmer flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-code-md text-label-xs font-semibold shadow-sm active:translate-y-[1px] transition-[background-color,transform] duration-150 cursor-pointer"
+                    aria-label="Simulate a database mutation"
+                  >
+                    <span class="material-symbols-outlined text-[15px]" aria-hidden="true">add_circle</span>
+                    <span>Simulate Mutation</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Live Event Ledger -->
+              <div id="realtime-event-list" class="space-y-2 max-h-56 overflow-hidden">
+                <div class="realtime-row-enter flex items-center justify-between gap-3 p-2.5 rounded-lg border border-outline-variant/30 bg-surface-container-lowest font-code-md text-label-xs">
+                  <div class="flex items-center gap-2 min-w-0">
+                    <span class="w-2 h-2 rounded-full bg-primary shrink-0"></span>
+                    <span class="font-bold text-primary uppercase">POSTS:INSERT</span>
+                    <span class="text-on-surface truncate">Announcing Crabbase v0.1.0 release</span>
+                  </div>
+                  <span class="text-tertiary shrink-0 font-semibold">0.24ms</span>
+                </div>
+                <div class="flex items-center justify-between gap-3 p-2.5 rounded-lg border border-outline-variant/20 bg-surface-container-lowest font-code-md text-label-xs">
+                  <div class="flex items-center gap-2 min-w-0">
+                    <span class="w-2 h-2 rounded-full bg-tertiary shrink-0"></span>
+                    <span class="font-bold text-tertiary uppercase">USERS:UPDATE</span>
+                    <span class="text-on-surface truncate">Session #402 authenticated via Argon2id</span>
+                  </div>
+                  <span class="text-tertiary shrink-0 font-semibold">0.31ms</span>
+                </div>
+                <div class="flex items-center justify-between gap-3 p-2.5 rounded-lg border border-outline-variant/20 bg-surface-container-lowest font-code-md text-label-xs">
+                  <div class="flex items-center gap-2 min-w-0">
+                    <span class="w-2 h-2 rounded-full bg-tertiary shrink-0"></span>
+                    <span class="font-bold text-tertiary uppercase">STORAGE:UPLOAD</span>
+                    <span class="text-on-surface truncate">RocksDB blob payload verified (1.2MB)</span>
+                  </div>
+                  <span class="text-tertiary shrink-0 font-semibold">0.42ms</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1223,7 +1501,7 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div
-                class="p-6 rounded-xl bg-surface-container-low hover:bg-surface-container flex flex-col justify-between transition-all duration-300 hover:translate-y-[-4px] hover:shadow-lg border border-outline-variant/30 group"
+                class="p-6 rounded-xl bg-surface-container-low hover:bg-surface-container flex flex-col justify-between transition-[background-color,box-shadow,transform] duration-200 hover:translate-y-[-2px] hover:shadow-lg border border-outline-variant/30 group"
                 data-reveal
               >
                 <p
@@ -1236,7 +1514,7 @@
                 </p>
                 <div class="flex items-center gap-3">
                   <div
-                    class="w-10 h-10 rounded-full bg-surface-container-high group-hover:bg-primary group-hover:text-on-primary transition-all duration-300 flex items-center justify-center font-headline-md font-bold text-primary shadow-xs"
+                    class="w-10 h-10 rounded-full bg-surface-container-high group-hover:bg-primary group-hover:text-on-primary transition-colors duration-200 flex items-center justify-center font-headline-md font-bold text-primary shadow-xs"
                   >
                     M
                   </div>
@@ -1256,7 +1534,7 @@
               </div>
 
               <div
-                class="p-6 rounded-xl bg-surface-container-low hover:bg-surface-container flex flex-col justify-between transition-all duration-300 hover:translate-y-[-4px] hover:shadow-lg border border-outline-variant/30 group"
+                class="p-6 rounded-xl bg-surface-container-low hover:bg-surface-container flex flex-col justify-between transition-[background-color,box-shadow,transform] duration-200 hover:translate-y-[-2px] hover:shadow-lg border border-outline-variant/30 group"
                 data-reveal
                 style="--reveal-delay: 70ms"
               >
@@ -1270,7 +1548,7 @@
                 </p>
                 <div class="flex items-center gap-3">
                   <div
-                    class="w-10 h-10 rounded-full bg-surface-container-high group-hover:bg-primary group-hover:text-on-primary transition-all duration-300 flex items-center justify-center font-headline-md font-bold text-primary shadow-xs"
+                    class="w-10 h-10 rounded-full bg-surface-container-high group-hover:bg-primary group-hover:text-on-primary transition-colors duration-200 flex items-center justify-center font-headline-md font-bold text-primary shadow-xs"
                   >
                     E
                   </div>
@@ -1290,7 +1568,7 @@
               </div>
 
               <div
-                class="p-6 rounded-xl bg-surface-container-low hover:bg-surface-container flex flex-col justify-between transition-all duration-300 hover:translate-y-[-4px] hover:shadow-lg border border-outline-variant/30 group"
+                class="p-6 rounded-xl bg-surface-container-low hover:bg-surface-container flex flex-col justify-between transition-[background-color,box-shadow,transform] duration-200 hover:translate-y-[-2px] hover:shadow-lg border border-outline-variant/30 group"
                 data-reveal
                 style="--reveal-delay: 140ms"
               >
@@ -1304,7 +1582,7 @@
                 </p>
                 <div class="flex items-center gap-3">
                   <div
-                    class="w-10 h-10 rounded-full bg-surface-container-high group-hover:bg-primary group-hover:text-on-primary transition-all duration-300 flex items-center justify-center font-headline-md font-bold text-primary shadow-xs"
+                    class="w-10 h-10 rounded-full bg-surface-container-high group-hover:bg-primary group-hover:text-on-primary transition-colors duration-200 flex items-center justify-center font-headline-md font-bold text-primary shadow-xs"
                   >
                     D
                   </div>
@@ -1362,13 +1640,13 @@
                 </p>
                 <div class="flex flex-wrap items-center justify-center gap-4">
                   <a
-                    class="btn-shimmer px-7 py-3.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-body-md text-body-md font-semibold transition-all duration-200 shadow-md hover:shadow-lg hover:translate-y-[-2px] active:scale-95"
+                    class="btn-shimmer px-7 py-3.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-body-md text-body-md font-semibold transition-[background-color,box-shadow,transform] duration-150 shadow-md hover:shadow-lg hover:translate-y-[-2px] active:translate-y-[1px]"
                     href="./docs.html"
                   >
                     Start Building Now
                   </a>
                   <a
-                    class="px-6 py-3.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container-high text-on-surface font-body-md text-body-md font-medium transition-all duration-200 shadow-sm hover:shadow hover:translate-y-[-2px] active:scale-95 flex items-center gap-2 border border-outline-variant/20"
+                    class="px-6 py-3.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container-high text-on-surface font-body-md text-body-md font-medium transition-[background-color,box-shadow,transform] duration-150 shadow-sm hover:shadow hover:translate-y-[-2px] active:translate-y-[1px] flex items-center gap-2 border border-outline-variant/20"
                     href="./docs.html"
                   >
                     <span
