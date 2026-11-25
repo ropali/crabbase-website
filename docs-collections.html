@@ -1,121 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-type="software" data-radius="soft" data-buttons="arrow">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Collections &amp; Records — Crabbase Documentation</title>
-    <meta name="description" content="Collections are the heart of Crabbase. A collection is a real PostgreSQL table that you define at runtime — and the moment it exists, a full REST CRUD surface is generated for it at /api/collections/{name}/records. This is how you build a backend without writing any API code." />
-    <meta name="theme-color" content="#fff8f6" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Collections &amp; records — Crabbase documentation</title>
+    <meta name="description" content="Collections are the heart of Crabbase. A collection is a real PostgreSQL table that you define at runtime — and the moment it exists, a full REST CRUD surface is generated for it at /api/collections/{name}/records . This is how you build a backend without writing any API code." />
+    <meta name="site-kind" content="software" />
+    <meta name="page-type" content="software" />
+    <meta name="theme-color" content="#efe9e1" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Crabbase" />
+    <meta property="og:title" content="Collections &amp; records — Crabbase documentation" />
+    <meta property="og:description" content="Collections are the heart of Crabbase. A collection is a real PostgreSQL table that you define at runtime — and the moment it exists, a full REST CRUD surface is generated for it at /api/collections/{name}/records . This is how you build a backend without writing any API code." />
+    <meta property="og:image" content="./share.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/system.css" />
+    <link rel="stylesheet" href="./assets/css/site.css" />
+    <link rel="stylesheet" href="./assets/css/docs.css" />
   </head>
-  <body class="bg-surface font-body-md text-on-surface antialiased" data-page="collections">
-    <a class="skip-link" href="#main">Skip to content</a>
+  <body class="docs" data-page="collections">
+    <a class="skip-link" href="#doc-main">Skip to content</a>
 
-    <header id="docs-header" class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl border-b border-outline-variant">
-      <div class="h-16 w-full px-4 sm:px-6 flex items-center justify-between gap-3">
-        <div class="flex items-center gap-3 xl:gap-6 min-w-0">
-          <button id="docs-menu-toggle" type="button" class="lg:hidden inline-flex items-center justify-center w-9 h-9 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors shrink-0" aria-expanded="false" aria-controls="docs-sidebar" aria-label="Open documentation menu">
-            <span class="material-symbols-outlined text-[22px]" aria-hidden="true">menu</span>
+    <header class="docs-header">
+      <div class="wrap docs-header__bar">
+        <button id="docs-menu-toggle" class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-sidebar" aria-label="Open documentation menu">
+          <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14"/></svg>
+        </button>
+        <a class="nav__logo" href="./index.html" aria-label="Crabbase home">
+          <img src="./assets/images/logo.png" alt="" width="24" height="24" />
+          Crabbase
+        </a>
+        <nav class="docs-header__nav" aria-label="Documentation">
+          <a href="./docs.html">Getting started</a>
+          <a href="./docs-collections.html" aria-current="page">Collections &amp; records</a>
+          <a href="./docs-authentication.html">Authentication</a>
+          <a href="./docs-files.html">Files &amp; uploads</a>
+          <a href="./docs-settings.html">Settings &amp; email</a>
+        </nav>
+        <div class="docs-header__actions">
+          <button id="docs-search-open" class="docs-search-btn" type="button" aria-label="Search documentation">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg>
+            <span>Search docs</span>
+            <kbd>⌘K</kbd>
           </button>
-          <a class="group flex items-center gap-2.5 text-on-surface hover:text-primary transition-colors shrink-0" href="./index.html" aria-label="Crabbase home">
-            <img src="./assets/images/logo.png" alt="" width="32" height="32" class="w-8 h-8 object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-300" />
-            <div class="flex items-center gap-2">
-              <span class="font-headline-md text-headline-md tracking-tight leading-none">Crabbase</span>
-              <span class="hidden sm:inline font-code-md text-label-xs bg-surface-container-high text-primary px-2 py-0.5 rounded border border-outline-variant font-medium" data-app-version>v0.1.0</span>
-            </div>
+          <a class="nav__link nav__gh" href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank">
+            <span class="gh-stars"><svg class="gh-stars__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.4l2 4.1 4.5.7-3.3 3.2.8 4.5L8 11.8l-4 2.1.8-4.5L1.5 6.2l4.5-.7z"/></svg><span data-github-stars>0</span><span class="sr-only">stars</span></span>
+            GitHub
           </a>
-          <nav class="hidden xl:flex items-center gap-6" aria-label="Primary navigation">
-            <a class="text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors py-5" href="./index.html">Landing</a>
-            <a class="transition-colors py-5 text-primary font-semibold border-b-2 border-primary font-body-sm text-body-sm" href="./docs.html" aria-current="page">Docs</a>
-            <a class="text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors py-5" href="./index.html#architecture">Architecture</a>
-            <a class="text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors py-5" href="./docs-collections.html#endpoints">API Reference</a>
-            <a class="text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors py-5" href="./index.html#benchmarks">Benchmarks</a>
-          </nav>
-        </div>
-        <div class="flex items-center gap-2 sm:gap-3 flex-1 max-w-md justify-end">
-          <button id="docs-search-open" type="button" class="group flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-surface-container-low border border-outline-variant text-on-surface-variant hover:border-outline hover:bg-surface-container text-left transition-colors w-full max-w-[13rem] sm:max-w-xs" aria-label="Search documentation">
-            <span class="material-symbols-outlined text-[18px] text-tertiary" aria-hidden="true">search</span>
-            <span class="hidden sm:inline text-body-sm font-body-sm truncate">Search docs...</span>
-            <kbd class="ml-auto hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface border border-outline-variant font-code-md text-label-xs text-tertiary">⌘K</kbd>
-          </button>
-          <a class="hidden md:flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface transition-colors" href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank" aria-label="View the Crabbase repository on GitHub">
-            <svg viewBox="0 0 16 16" class="h-4 w-4 fill-current" aria-hidden="true">
-              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
-            </svg>
-            <span class="flex items-center gap-1 font-code-md text-label-xs">
-              <span class="material-symbols-outlined text-[14px]" aria-hidden="true">star</span>
-              <span data-github-stars>Star</span>
-            </span>
-          </a>
-          <a class="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-body-sm text-body-sm font-medium transition-colors shadow-sm whitespace-nowrap" href="./index.html#admin">
-            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">terminal</span>
-            <span class="hidden md:inline">Launch Demo</span>
-          </a>
+          <button class="btn btn--secondary btn--demo" type="button" disabled aria-disabled="true" title="The hosted demo is not online yet">Live demo <span class="btn--demo__soon">soon</span></button>
         </div>
       </div>
     </header>
 
-    <div id="docs-sidebar-overlay" class="fixed inset-0 top-16 bg-on-surface/30 backdrop-blur-[1px] z-30 hidden lg:hidden" aria-hidden="true"></div>
+    <div id="docs-sidebar-overlay" class="docs-overlay" hidden></div>
 
-    <aside id="docs-sidebar" class="fixed left-0 top-16 bottom-0 w-64 bg-surface-container-lowest border-r border-outline-variant overflow-y-auto p-4 z-40 -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-out" aria-label="Documentation navigation">
-      <div class="lg:hidden mb-6">
-        <div class="font-label-xs text-label-xs uppercase tracking-wider text-outline px-3 mb-2 font-semibold">Navigation</div>
-        <nav class="space-y-1">
-          <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./index.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">home</span><span>Landing</span></a>
-          <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./index.html#architecture"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">account_tree</span><span>Architecture</span></a>
-          <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./index.html#benchmarks"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">speed</span><span>Benchmarks</span></a>
-        </nav>
-      </div>
+    <div class="docs-shell">
+      <aside id="docs-sidebar" class="docs-side" aria-label="Documentation navigation">
+        <div class="docs-side__group">
+          <p class="t-label">Documentation</p>
+          <nav>
+            <a href="./docs.html">Getting started</a>
+        <a href="./docs-collections.html" aria-current="page">Collections &amp; records</a>
+        <a href="./docs-authentication.html">Authentication</a>
+        <a href="./docs-files.html">Files &amp; uploads</a>
+        <a href="./docs-settings.html">Settings &amp; email</a>
+        <a href="./docs-backups.html">Backups &amp; cron jobs</a>
+          </nav>
+        </div>
+        <div class="docs-side__group">
+          <p class="t-label">Project</p>
+          <nav>
+            <a href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank">Repository</a>
+            <a href="https://github.com/ropali/crabbase/discussions" rel="noopener noreferrer" target="_blank">Discussions</a>
+            <a href="https://github.com/ropali/crabbase/releases" rel="noopener noreferrer" target="_blank">Releases</a>
+            <a href="https://github.com/ropali/crabbase/blob/main/LICENSE" rel="noopener noreferrer" target="_blank">License</a>
+          </nav>
+        </div>
+      </aside>
 
-      <div class="font-label-xs text-label-xs uppercase tracking-wider text-outline px-3 mb-2 font-semibold">Documentation</div>
-      <nav class="space-y-1 mb-6" aria-label="Documentation">
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">play_arrow</span><span>Getting Started</span></a>
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg transition-colors bg-surface-container-high text-primary font-semibold border-l-2 border-primary font-body-sm text-body-sm" href="./docs-collections.html" aria-current="page"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">table_rows</span><span>Collections &amp; Records</span></a>
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs-authentication.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">shield</span><span>Authentication</span></a>
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs-files.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">cloud_upload</span><span>Files &amp; Uploads</span></a>
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs-settings.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">settings</span><span>Settings &amp; Email</span></a>
-      </nav>
-
-      <div class="font-label-xs text-label-xs uppercase tracking-wider text-outline px-3 mb-2 font-semibold">References</div>
-      <nav class="space-y-1" aria-label="References">
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs-collections.html#endpoints"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">code</span><span>API Reference</span></a>
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs.html#makefile-reference"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">terminal</span><span>Makefile Reference</span></a>
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs.html#troubleshooting"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">build</span><span>Troubleshooting</span></a>
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 16 16" class="h-4 w-4 fill-current" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" /></svg><span>GitHub Repository</span></a>
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="https://github.com/ropali/crabbase/discussions" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">forum</span><span>Community &amp; Support</span></a>
-      </nav>
-    </aside>
-
-    <div class="lg:pl-64">
-      <main id="main" class="pt-16 min-h-screen bg-surface w-full">
-        <div class="w-full flex">
-          <div class="flex-1 min-w-0 px-5 sm:px-8 py-8 lg:px-12 max-w-4xl mx-auto">
-            <div class="flex flex-col w-full">
-              <nav class="flex flex-wrap items-center gap-2 mb-6 text-on-surface-variant font-label-xs text-label-xs" aria-label="Breadcrumb">
-                <a class="hover:text-primary transition-colors" href="./docs.html">Documentation</a>
-                <span class="material-symbols-outlined text-[14px] text-tertiary" aria-hidden="true">chevron_right</span>
-                <span class="hover:text-primary transition-colors">Collections &amp; Records</span>
-                <span class="material-symbols-outlined text-[14px] text-tertiary" aria-hidden="true">chevron_right</span>
-                <span class="text-primary font-semibold px-2 py-0.5 rounded-full bg-surface-container-high" data-app-version>v0.1.0</span>
-              </nav>
-
-              <div class="space-y-4 mb-8">
-                <div class="flex flex-wrap items-center gap-3">
-                  <span class="px-2.5 py-1 rounded bg-surface-container text-primary font-code-md text-label-xs font-semibold uppercase tracking-wider">Reference</span>
-                  <span class="text-tertiary font-code-md text-label-xs">Estimated read: 18 mins</span>
-                </div>
-                <h1 class="font-headline-lg text-headline-lg sm:text-4xl text-on-surface tracking-tight">Collections &amp; Records</h1>
-                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed max-w-3xl">Collections are the heart of Crabbase. A collection is a real PostgreSQL table that you define at runtime — and the moment it exists, a full REST CRUD surface is generated for it at <code>/api/collections/{name}/records</code>. This is how you build a backend without writing any API code.</p>
-              </div>
-
-              <div class="doc-prose"><h2 id="the-easy-way-the-admin-dashboard">The easy way: the admin dashboard</h2>
+      <main id="doc-main" class="docs-main">
+        <div class="docs-grid">
+          <article class="doc">
+            <nav class="doc-crumb" aria-label="Breadcrumb">
+              <a href="./docs.html">Docs</a>
+              <span aria-hidden="true">/</span>
+              <span>Collections &amp; records</span>
+            </nav>
+            <p class="doc-meta">
+              <span class="doc-badge">Reference</span>
+              <span>18 min read</span>
+              <span data-app-version>v0.1.0</span>
+            </p>
+            <h1>Collections &amp; records</h1>
+            <p class="doc-intro">Collections are the heart of Crabbase. A collection is a real PostgreSQL table that you define at runtime — and the moment it exists, a full REST CRUD surface is generated for it at <code>/api/collections/{name}/records</code>. This is how you build a backend without writing any API code.</p>
+            <div class="doc-body"><h2 id="the-easy-way-the-admin-dashboard">The easy way: the admin dashboard</h2>
 <p>Everything in this document can be done from the admin dashboard (<code>crabbase admin</code>, default <code>http://localhost:9898</code>) — no curl required:</p>
-<div class="doc-table-wrap"><table class="docs-table">
+<div class="doc-table-wrap"><table>
 <thead>
 <tr>
 <th>Task</th>
@@ -150,7 +134,7 @@
 <p>The dashboard talks to the exact same REST endpoints documented below — use whichever fits your workflow (clicks for day-to-day work, API for automation/CI).</p>
 <p>Collection management requires a <strong>superuser</strong> login (dashboard) or superuser JWT (API). Record access is controlled per operation by API rules: with no rule set, only superusers are allowed. Set list/view to <code>&quot;&quot;</code> (public) after creating a collection if you want unauthenticated reads.</p>
 <h2 id="endpoints">Endpoints</h2>
-<div class="doc-table-wrap"><table class="docs-table">
+<div class="doc-table-wrap"><table>
 <thead>
 <tr>
 <th>Method</th>
@@ -228,10 +212,10 @@
 </tbody></table></div>
 <p>* Record endpoints enforce collection rules: <code>list_rule</code> on list, <code>view_rule</code> on single-record fetch and relation expansion, <code>create_rule</code> on create/upload, and <code>delete_rule</code> on delete. <code>update_rule</code> rejects non-admins when it is null, but expressions are not applied to rows yet (an empty string allows all non-admins). See <a href="#api-rules">API rules</a>.</p>
 <h2 id="creating-a-collection">Creating a collection</h2>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-1"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-1">curl -X POST http://localhost:8989/api/collections \
-  -H &quot;Authorization: Bearer $TOKEN&quot; \
-  -H &#39;Content-Type: application/json&#39; \
-  -d &#39;{
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-1"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-1" class="hljs language-sh">curl -X POST http://localhost:8989/api/collections \
+  -H <span class="hljs-string">&quot;Authorization: Bearer <span class="hljs-variable">$TOKEN</span>&quot;</span> \
+  -H <span class="hljs-string">&#x27;Content-Type: application/json&#x27;</span> \
+  -d <span class="hljs-string">&#x27;{
     &quot;name&quot;: &quot;products&quot;,
     &quot;collection_type&quot;: &quot;base&quot;,
     &quot;columns&quot;: [
@@ -250,11 +234,11 @@
     &quot;list_rule&quot;: &quot;&quot;,
     &quot;view_rule&quot;: &quot;&quot;,
     &quot;create_rule&quot;: &quot;&quot;
-  }&#39;
+  }&#x27;</span>
 </code></pre></div>
 <p>The <code>Relation</code> field requires the <code>categories</code> collection to exist first; create it before running this example, or drop that field.</p>
-<h3 id="field-types-data-type">Field types (<code>data_type</code>)</h3>
-<div class="doc-table-wrap"><table class="docs-table">
+<h3 id="field-types-datatype">Field types (<code>data_type</code>)</h3>
+<div class="doc-table-wrap"><table>
 <thead>
 <tr>
 <th>Type</th>
@@ -305,7 +289,7 @@
 <tr>
 <td><code>File</code></td>
 <td><code>TEXT</code></td>
-<td>Stores the uploaded record ID or storage key from <code>/api/collections/{name}/records/upload</code>. See <a href="docs-files.html">Files &amp; uploads</a></td>
+<td>Stores the uploaded record ID or storage key from <code>/api/collections/{name}/records/upload</code>. See <a href="./docs-files.html">Files &amp; uploads</a></td>
 </tr>
 <tr>
 <td><code>Relation</code></td>
@@ -330,7 +314,7 @@
 </tbody></table></div>
 <p>Legacy aliases are accepted for compatibility: <code>text</code>, <code>richtext</code>/<code>editor</code>, <code>int</code>/<code>integer</code>, <code>bool</code>/<code>boolean</code>, <code>date</code>, <code>autodate</code>, etc. (case-insensitive).</p>
 <h3 id="column-options">Column options</h3>
-<div class="doc-table-wrap"><table class="docs-table">
+<div class="doc-table-wrap"><table>
 <thead>
 <tr>
 <th>Option</th>
@@ -356,7 +340,7 @@
 <tr>
 <td><code>min</code> / <code>max</code></td>
 <td>—</td>
-<td>Size constraints; for <code>File</code>, the number of files (see <a href="docs-files.html#defining-file-columns">Files &amp; uploads</a>)</td>
+<td>Size constraints; for <code>File</code>, the number of files (see <a href="./docs-files.html#defining-file-columns">Files &amp; uploads</a>)</td>
 </tr>
 <tr>
 <td><code>pattern</code></td>
@@ -385,76 +369,76 @@
 <h3 id="collection-types">Collection types</h3>
 <ul>
 <li><code>base</code> — regular data collection</li>
-<li><code>auth</code> — records can log in; see <a href="docs-authentication.html">Authentication</a></li>
+<li><code>auth</code> — records can log in; see <a href="./docs-authentication.html">Authentication</a></li>
 <li><code>view</code> — reserved</li>
 </ul>
 <h2 id="updating-schema-live-migration">Updating schema (live migration)</h2>
 <p><code>PATCH /api/collections/{name}</code> performs an online schema change: renames the table if you pass <code>name</code>, adds/drops/retypes columns per the new <code>columns</code> list, rebuilds indexes, and updates API rules.</p>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-2"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-2">curl -X PATCH http://localhost:8989/api/collections/products \
-  -H &quot;Authorization: Bearer $TOKEN&quot; \
-  -H &#39;Content-Type: application/json&#39; \
-  -d &#39;{ &quot;columns&quot;: [ { &quot;name&quot;: &quot;title&quot;, &quot;data_type&quot;: &quot;PlainText&quot; }, { &quot;name&quot;: &quot;sku&quot;, &quot;data_type&quot;: &quot;PlainText&quot;, &quot;index&quot;: true } ] }&#39;
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-2"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-2" class="hljs language-sh">curl -X PATCH http://localhost:8989/api/collections/products \
+  -H <span class="hljs-string">&quot;Authorization: Bearer <span class="hljs-variable">$TOKEN</span>&quot;</span> \
+  -H <span class="hljs-string">&#x27;Content-Type: application/json&#x27;</span> \
+  -d <span class="hljs-string">&#x27;{ &quot;columns&quot;: [ { &quot;name&quot;: &quot;title&quot;, &quot;data_type&quot;: &quot;PlainText&quot; }, { &quot;name&quot;: &quot;sku&quot;, &quot;data_type&quot;: &quot;PlainText&quot;, &quot;index&quot;: true } ] }&#x27;</span>
 </code></pre></div>
 <blockquote>
 <p>Schema changes are applied immediately against live data. Dropping a column discards its data.</p>
 </blockquote>
 <h2 id="working-with-records">Working with records</h2>
 <p>Records are addressed through the auto-generated endpoints. Payloads use a <code>data</code> envelope; <code>id</code>, <code>created</code>, and <code>updated</code> are managed by the system and returned on every record.</p>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-3"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-3"># Create
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-3"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-3" class="hljs language-sh"><span class="hljs-comment"># Create</span>
 curl -X POST http://localhost:8989/api/collections/products/records \
-  -H &#39;Content-Type: application/json&#39; \
-  -d &#39;{&quot;data&quot;: {&quot;title&quot;: &quot;Widget&quot;, &quot;price&quot;: 999, &quot;active&quot;: true}}&#39;
+  -H <span class="hljs-string">&#x27;Content-Type: application/json&#x27;</span> \
+  -d <span class="hljs-string">&#x27;{&quot;data&quot;: {&quot;title&quot;: &quot;Widget&quot;, &quot;price&quot;: 999, &quot;active&quot;: true}}&#x27;</span>
 
-# Response
+<span class="hljs-comment"># Response</span>
 {
-  &quot;id&quot;: &quot;5f0c...&quot;,
-  &quot;data&quot;: {&quot;title&quot;: &quot;Widget&quot;, &quot;price&quot;: 999, &quot;active&quot;: true},
-  &quot;created&quot;: &quot;2026-08-25T10:00:00Z&quot;,
-  &quot;updated&quot;: &quot;2026-08-25T10:00:00Z&quot;
+  <span class="hljs-string">&quot;id&quot;</span>: <span class="hljs-string">&quot;5f0c...&quot;</span>,
+  <span class="hljs-string">&quot;data&quot;</span>: {<span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">&quot;Widget&quot;</span>, <span class="hljs-string">&quot;price&quot;</span>: 999, <span class="hljs-string">&quot;active&quot;</span>: <span class="hljs-literal">true</span>},
+  <span class="hljs-string">&quot;created&quot;</span>: <span class="hljs-string">&quot;2026-08-25T10:00:00Z&quot;</span>,
+  <span class="hljs-string">&quot;updated&quot;</span>: <span class="hljs-string">&quot;2026-08-25T10:00:00Z&quot;</span>
 }
 
-# List (pagination)
-curl &#39;http://localhost:8989/api/collections/products/records?page=1&amp;per_page=20&#39;
-# -&gt; { &quot;items&quot;: [...], &quot;total&quot;: 42, &quot;page&quot;: 1, &quot;per_page&quot;: 20 }
+<span class="hljs-comment"># List (pagination)</span>
+curl <span class="hljs-string">&#x27;http://localhost:8989/api/collections/products/records?page=1&amp;per_page=20&#x27;</span>
+<span class="hljs-comment"># -&gt; { &quot;items&quot;: [...], &quot;total&quot;: 42, &quot;page&quot;: 1, &quot;per_page&quot;: 20 }</span>
 
-# List with dynamic filter
-curl -G &#39;http://localhost:8989/api/collections/products/records&#39; \
-  --data-urlencode &quot;filter=active=true &amp;&amp; price &lt; 1500&quot;
+<span class="hljs-comment"># List with dynamic filter</span>
+curl -G <span class="hljs-string">&#x27;http://localhost:8989/api/collections/products/records&#x27;</span> \
+  --data-urlencode <span class="hljs-string">&quot;filter=active=true &amp;&amp; price &lt; 1500&quot;</span>
 
-# List with expanded relations (no N+1 queries)
-curl &#39;http://localhost:8989/api/collections/books/records?expand=author&#39;
+<span class="hljs-comment"># List with expanded relations (no N+1 queries)</span>
+curl <span class="hljs-string">&#x27;http://localhost:8989/api/collections/books/records?expand=author&#x27;</span>
 
-# Get one
-curl http://localhost:8989/api/collections/products/records/&lt;id&gt;
+<span class="hljs-comment"># Get one</span>
+curl http://localhost:8989/api/collections/products/records/&lt;<span class="hljs-built_in">id</span>&gt;
 
-# Get one with expanded relations
-curl &#39;http://localhost:8989/api/collections/books/records/&lt;id&gt;?expand=author&#39;
+<span class="hljs-comment"># Get one with expanded relations</span>
+curl <span class="hljs-string">&#x27;http://localhost:8989/api/collections/books/records/&lt;id&gt;?expand=author&#x27;</span>
 
-# Update (admin token, unless update_rule allows the caller)
-curl -X PATCH http://localhost:8989/api/collections/products/records/&lt;id&gt; \
-  -H &quot;Authorization: Bearer $TOKEN&quot; \
-  -H &#39;Content-Type: application/json&#39; \
-  -d &#39;{&quot;data&quot;: {&quot;price&quot;: 1299}}&#39;
+<span class="hljs-comment"># Update (admin token, unless update_rule allows the caller)</span>
+curl -X PATCH http://localhost:8989/api/collections/products/records/&lt;<span class="hljs-built_in">id</span>&gt; \
+  -H <span class="hljs-string">&quot;Authorization: Bearer <span class="hljs-variable">$TOKEN</span>&quot;</span> \
+  -H <span class="hljs-string">&#x27;Content-Type: application/json&#x27;</span> \
+  -d <span class="hljs-string">&#x27;{&quot;data&quot;: {&quot;price&quot;: 1299}}&#x27;</span>
 
-# Delete (admin token, unless delete_rule allows the caller)
-curl -X DELETE http://localhost:8989/api/collections/products/records/&lt;id&gt; \
-  -H &quot;Authorization: Bearer $TOKEN&quot;
+<span class="hljs-comment"># Delete (admin token, unless delete_rule allows the caller)</span>
+curl -X DELETE http://localhost:8989/api/collections/products/records/&lt;<span class="hljs-built_in">id</span>&gt; \
+  -H <span class="hljs-string">&quot;Authorization: Bearer <span class="hljs-variable">$TOKEN</span>&quot;</span>
 </code></pre></div>
 <p>Pagination defaults: <code>page=1</code>, <code>per_page=20</code> (clamped to 1–100).</p>
 <h2 id="file-storage-attachments">File Storage &amp; Attachments</h2>
-<p>Collections support <code>File</code> field types for storing file references (images, documents, archives). The file management workflow is integrated with collections. For the full reference — protected downloads, file tokens, storage backends, and client examples — see <a href="docs-files.html">Files &amp; uploads</a>.</p>
+<p>Collections support <code>File</code> field types for storing file references (images, documents, archives). The file management workflow is integrated with collections. For the full reference — protected downloads, file tokens, storage backends, and client examples — see <a href="./docs-files.html">Files &amp; uploads</a>.</p>
 <h3 id="1-uploading-files-for-a-collection">1. Uploading Files for a Collection</h3>
 <p>Upload one or multiple files using multipart form data to <code>/api/collections/{name}/records/upload</code> (the only upload endpoint; <code>POST /api/collections/{name}/files</code> does not exist):</p>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-4"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-4"># Single file upload
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-4"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-4" class="hljs language-sh"><span class="hljs-comment"># Single file upload</span>
 curl -X POST http://localhost:8989/api/collections/articles/records/upload \
-  -H &quot;Authorization: Bearer $TOKEN&quot; \
-  -F &#39;file=@photo.png;type=image/png&#39;
+  -H <span class="hljs-string">&quot;Authorization: Bearer <span class="hljs-variable">$TOKEN</span>&quot;</span> \
+  -F <span class="hljs-string">&#x27;file=@photo.png;type=image/png&#x27;</span>
 
-# Multiple files at one go
+<span class="hljs-comment"># Multiple files at one go</span>
 curl -X POST http://localhost:8989/api/collections/articles/records/upload \
-  -H &quot;Authorization: Bearer $TOKEN&quot; \
-  -F &#39;files=@photo1.png;type=image/png&#39; \
-  -F &#39;files=@photo2.png;type=image/png&#39;
+  -H <span class="hljs-string">&quot;Authorization: Bearer <span class="hljs-variable">$TOKEN</span>&quot;</span> \
+  -F <span class="hljs-string">&#x27;files=@photo1.png;type=image/png&#x27;</span> \
+  -F <span class="hljs-string">&#x27;files=@photo2.png;type=image/png&#x27;</span>
 </code></pre></div>
 <ul>
 <li><strong>Access Rules</strong>: Governed by the collection&#39;s <code>create_rule</code>. Callers without create permission receive <code>403 Forbidden</code>.</li>
@@ -462,37 +446,37 @@ curl -X POST http://localhost:8989/api/collections/articles/records/upload \
 <li><strong>Collection Linkage</strong>: Uploads record the <code>collection_name</code> in the <code>_files</code> metadata table, allowing multiple files to be tracked and retrieved per collection.</li>
 <li><strong>Field-aware uploads</strong>: When a multipart part is named after a <code>File</code> column of the collection (e.g. <code>-F &#39;cover=@photo.png&#39;</code>), the column&#39;s <code>max_size</code> (bytes), <code>mime_types</code> (supports wildcards like <code>image/*</code> or <code>*/*</code>), and <code>pattern</code> (regex matched against the original file name, e.g. <code>\.(png|jpe?g)$</code>) are enforced. A single-file column (<code>max</code> unset or <code>max: 1</code>) rejects more than one part for the same field name; a multi-file column (<code>max &gt; 1</code> or <code>min &gt; 1</code>) accepts up to <code>max</code> parts. Parts that do not match a column name are stored without field-level constraints.</li>
 <li><strong>Request size limit</strong>: multipart bodies are capped at 100 MB per request.</li>
-<li><strong>Response</strong>: the <code>files</code> array mirrors the stored <code>_files</code> metadata rows:<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-5"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-5">{
-  &quot;files&quot;: [
-    {
-      &quot;id&quot;: &quot;e97669ba-...&quot;,
-      &quot;key&quot;: &quot;uploads/.../photo1.png&quot;,
-      &quot;backend&quot;: &quot;local&quot;,
-      &quot;container&quot;: &quot;$HOME/crabbase/files/&quot;,
-      &quot;originalName&quot;: &quot;photo1.png&quot;,
-      &quot;contentType&quot;: &quot;image/png&quot;,
-      &quot;sizeBytes&quot;: 10240,
-      &quot;checksum&quot;: &quot;9f86d081884c7d65...&quot;,
-      &quot;collectionName&quot;: &quot;articles&quot;,
-      &quot;created&quot;: &quot;2026-10-18T15:42:32.888198Z&quot;,
-      &quot;updated&quot;: &quot;2026-10-18T15:42:32.888198Z&quot;
-    }
-  ]
-}
+<li><strong>Response</strong>: the <code>files</code> array mirrors the stored <code>_files</code> metadata rows:<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-5"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-5" class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;files&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;e97669ba-...&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;key&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;uploads/.../photo1.png&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;backend&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;local&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;container&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$HOME/crabbase/files/&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;originalName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;photo1.png&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;contentType&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;image/png&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;sizeBytes&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">10240</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;checksum&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;9f86d081884c7d65...&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;collectionName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;articles&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;created&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2026-10-18T15:42:32.888198Z&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;updated&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2026-10-18T15:42:32.888198Z&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
 </code></pre></div>
 Use the returned <code>id</code> (or <code>key</code>) when linking files to records.</li>
 </ul>
 <h3 id="2-creating-or-updating-records-with-files">2. Creating or Updating Records with Files</h3>
 <p>Use the returned file ID or storage key when creating or updating records:</p>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-6"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-6"># Single file
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-6"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-6" class="hljs language-sh"><span class="hljs-comment"># Single file</span>
 curl -X POST http://localhost:8989/api/collections/articles/records \
-  -H &#39;Content-Type: application/json&#39; \
-  -d &#39;{&quot;data&quot;: {&quot;title&quot;: &quot;My Article&quot;, &quot;cover&quot;: &quot;e97669ba-...&quot;}}&#39;
+  -H <span class="hljs-string">&#x27;Content-Type: application/json&#x27;</span> \
+  -d <span class="hljs-string">&#x27;{&quot;data&quot;: {&quot;title&quot;: &quot;My Article&quot;, &quot;cover&quot;: &quot;e97669ba-...&quot;}}&#x27;</span>
 
-# Multiple files (the &quot;photos&quot; field must declare &quot;max&quot;: &gt;1, e.g. &quot;max&quot;: 10)
+<span class="hljs-comment"># Multiple files (the &quot;photos&quot; field must declare &quot;max&quot;: &gt;1, e.g. &quot;max&quot;: 10)</span>
 curl -X POST http://localhost:8989/api/collections/articles/records \
-  -H &#39;Content-Type: application/json&#39; \
-  -d &#39;{&quot;data&quot;: {&quot;title&quot;: &quot;Gallery Post&quot;, &quot;photos&quot;: [&quot;e97669ba-...&quot;, &quot;f1284abc-...&quot;]}}&#39;
+  -H <span class="hljs-string">&#x27;Content-Type: application/json&#x27;</span> \
+  -d <span class="hljs-string">&#x27;{&quot;data&quot;: {&quot;title&quot;: &quot;Gallery Post&quot;, &quot;photos&quot;: [&quot;e97669ba-...&quot;, &quot;f1284abc-...&quot;]}}&#x27;</span>
 </code></pre></div>
 <p>Single-file columns (<code>max</code> unset or <code>max: 1</code>) accept only a string (an array is rejected with <code>400</code>), while multi-file columns (<code>max &gt; 1</code> or <code>min &gt; 1</code>) require an array of file IDs/keys and enforce <code>min</code>/<code>max</code> item counts on save. In API responses, each stored ID/key is replaced by its <code>_files</code> record (<code>id</code>, <code>key</code>, <code>originalName</code>, <code>contentType</code>, <code>sizeBytes</code>, …); multi-file fields return an array of such records. IDs/keys without a metadata row are left as-is, and removing an item on update deletes the corresponding file.</p>
 <h3 id="3-automatic-cleanup">3. Automatic Cleanup</h3>
@@ -502,54 +486,54 @@ curl -X POST http://localhost:8989/api/collections/articles/records \
 </ul>
 <h3 id="4-listing-files-in-a-collection">4. Listing Files in a Collection</h3>
 <p>Retrieve all files belonging to a collection:</p>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-7"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-7">curl http://localhost:8989/api/collections/articles/files
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-7"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-7" class="hljs language-sh">curl http://localhost:8989/api/collections/articles/files
 </code></pre></div>
 <p>Governed by the collection&#39;s <code>list_rule</code>.</p>
 <h3 id="5-downloading-viewing-collection-files">5. Downloading / Viewing Collection Files</h3>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-8"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-8">curl http://localhost:8989/api/collections/articles/files/&lt;file_id&gt;
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-8"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-8" class="hljs language-sh">curl http://localhost:8989/api/collections/articles/files/&lt;file_id&gt;
 </code></pre></div>
 <p>Governed by the collection&#39;s <code>view_rule</code>. Files can also be fetched from
 <code>/api/files/&lt;file_id&gt;</code>, where the file&#39;s own collection supplies the rule. For
 non-public collections, exchange a Bearer token for a short-lived file token at
 <code>POST /api/files/token</code> and append <code>?token=...</code>; see
-<a href="docs-files.html#protected-files">Protected files</a>. Add <code>?download=1</code> to
+<a href="./docs-files.html#protected-files">Protected files</a>. Add <code>?download=1</code> to
 force an attachment.</p>
 <h2 id="dynamic-record-filtering-filter">Dynamic record filtering (<code>?filter</code>)</h2>
 <p>Crabbase supports client-side dynamic record filtering on <code>GET /api/collections/{name}/records</code> with full PocketBase compatibility. Clients can filter records by passing an expression in the <code>filter</code> query parameter. The expression is parsed into a safe AST and compiled to parameterized PostgreSQL SQL.</p>
 <h3 id="quick-examples">Quick Examples</h3>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-9"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-9"># Exact equality
-curl -G &#39;http://localhost:8989/api/collections/posts/records&#39; \
-  --data-urlencode &quot;filter=status=&#39;published&#39;&quot;
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-9"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-9" class="hljs language-sh"><span class="hljs-comment"># Exact equality</span>
+curl -G <span class="hljs-string">&#x27;http://localhost:8989/api/collections/posts/records&#x27;</span> \
+  --data-urlencode <span class="hljs-string">&quot;filter=status=&#x27;published&#x27;&quot;</span>
 
-# Case-insensitive substring search (ILIKE &#39;%pocket%&#39;)
-curl -G &#39;http://localhost:8989/api/collections/products/records&#39; \
-  --data-urlencode &quot;filter=title ~ &#39;pocket&#39;&quot;
+<span class="hljs-comment"># Case-insensitive substring search (ILIKE &#x27;%pocket%&#x27;)</span>
+curl -G <span class="hljs-string">&#x27;http://localhost:8989/api/collections/products/records&#x27;</span> \
+  --data-urlencode <span class="hljs-string">&quot;filter=title ~ &#x27;pocket&#x27;&quot;</span>
 
-# Negated substring search
-curl -G &#39;http://localhost:8989/api/collections/users/records&#39; \
-  --data-urlencode &quot;filter=email !~ &#39;spam&#39;&quot;
+<span class="hljs-comment"># Negated substring search</span>
+curl -G <span class="hljs-string">&#x27;http://localhost:8989/api/collections/users/records&#x27;</span> \
+  --data-urlencode <span class="hljs-string">&quot;filter=email !~ &#x27;spam&#x27;&quot;</span>
 
-# Numeric and date range comparisons
-curl -G &#39;http://localhost:8989/api/collections/orders/records&#39; \
-  --data-urlencode &quot;filter=(total &gt;= 100 &amp;&amp; created &gt; &#39;2024-01-01 00:00:00Z&#39;)&quot;
+<span class="hljs-comment"># Numeric and date range comparisons</span>
+curl -G <span class="hljs-string">&#x27;http://localhost:8989/api/collections/orders/records&#x27;</span> \
+  --data-urlencode <span class="hljs-string">&quot;filter=(total &gt;= 100 &amp;&amp; created &gt; &#x27;2024-01-01 00:00:00Z&#x27;)&quot;</span>
 
-# Logical grouping with AND (&amp;&amp;), OR (||), and parentheses
-curl -G &#39;http://localhost:8989/api/collections/tickets/records&#39; \
-  --data-urlencode &quot;filter=(priority=&#39;urgent&#39; || priority=&#39;high&#39;) &amp;&amp; status!=&#39;resolved&#39;&quot;
+<span class="hljs-comment"># Logical grouping with AND (&amp;&amp;), OR (||), and parentheses</span>
+curl -G <span class="hljs-string">&#x27;http://localhost:8989/api/collections/tickets/records&#x27;</span> \
+  --data-urlencode <span class="hljs-string">&quot;filter=(priority=&#x27;urgent&#x27; || priority=&#x27;high&#x27;) &amp;&amp; status!=&#x27;resolved&#x27;&quot;</span>
 
-# NULL and NOT NULL checks
-curl -G &#39;http://localhost:8989/api/collections/tasks/records&#39; \
-  --data-urlencode &quot;filter=completed_at = null&quot;
-curl -G &#39;http://localhost:8989/api/collections/tasks/records&#39; \
-  --data-urlencode &quot;filter=assigned_to != null&quot;
+<span class="hljs-comment"># NULL and NOT NULL checks</span>
+curl -G <span class="hljs-string">&#x27;http://localhost:8989/api/collections/tasks/records&#x27;</span> \
+  --data-urlencode <span class="hljs-string">&quot;filter=completed_at = null&quot;</span>
+curl -G <span class="hljs-string">&#x27;http://localhost:8989/api/collections/tasks/records&#x27;</span> \
+  --data-urlencode <span class="hljs-string">&quot;filter=assigned_to != null&quot;</span>
 
-# Dynamic macro context (match current authenticated user)
-curl -G &#39;http://localhost:8989/api/collections/posts/records&#39; \
-  -H &quot;Authorization: Bearer $USER_TOKEN&quot; \
-  --data-urlencode &quot;filter=author = @request.auth.id&quot;
+<span class="hljs-comment"># Dynamic macro context (match current authenticated user)</span>
+curl -G <span class="hljs-string">&#x27;http://localhost:8989/api/collections/posts/records&#x27;</span> \
+  -H <span class="hljs-string">&quot;Authorization: Bearer <span class="hljs-variable">$USER_TOKEN</span>&quot;</span> \
+  --data-urlencode <span class="hljs-string">&quot;filter=author = @request.auth.id&quot;</span>
 </code></pre></div>
 <h3 id="supported-operators">Supported Operators</h3>
-<div class="doc-table-wrap"><table class="docs-table">
+<div class="doc-table-wrap"><table>
 <thead>
 <tr>
 <th>Operator</th>
@@ -657,25 +641,25 @@ curl -G &#39;http://localhost:8989/api/collections/posts/records&#39; \
 <li><strong>Superuser (Admin)</strong>: Superusers bypass the collection&#39;s <code>list_rule</code>, and the client <code>filter</code> expression is applied directly.</li>
 </ul>
 <h3 id="client-library-javascript-usage">Client Library / JavaScript Usage</h3>
-<div class="docs-code"><div class="docs-code-head"><span>JAVASCRIPT</span><button class="docs-copy" type="button" data-copy-target="doc-code-10"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-10">// Fetch filtered records with JavaScript / TypeScript fetch
-async function fetchProducts({ search = &#39;&#39;, minPrice = 0, page = 1 } = {}) {
-  const filters = [];
-  if (search) filters.push(`title ~ &#39;${search.replace(/&#39;/g, &quot;\\&#39;&quot;)}&#39;`);
+<div class="docs-code"><div class="docs-code-head"><span>JAVASCRIPT</span><button class="docs-copy" type="button" data-copy-target="doc-code-10"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-10" class="hljs language-javascript"><span class="hljs-comment">// Fetch filtered records with JavaScript / TypeScript fetch</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">fetchProducts</span>(<span class="hljs-params">{ search = <span class="hljs-string">&#x27;&#x27;</span>, minPrice = <span class="hljs-number">0</span>, page = <span class="hljs-number">1</span> } = {}</span>) {
+  <span class="hljs-keyword">const</span> filters = [];
+  <span class="hljs-keyword">if</span> (search) filters.<span class="hljs-title function_">push</span>(<span class="hljs-string">`title ~ &#x27;<span class="hljs-subst">${search.replace(/<span class="hljs-string">&#x27;/g, &quot;\\&#x27;</span><span class="hljs-string">&quot;)}&#x27;`);
   if (minPrice &gt; 0) filters.push(`price &gt;= ${minPrice}`);
 
   const params = new URLSearchParams({
     page: page.toString(),
-    per_page: &#39;20&#39;,
+    per_page: &#x27;20&#x27;,
   });
 
   if (filters.length &gt; 0) {
-    params.set(&#39;filter&#39;, filters.join(&#39; &amp;&amp; &#39;));
+    params.set(&#x27;filter&#x27;, filters.join(&#x27; &amp;&amp; &#x27;));
   }
 
   const res = await fetch(`http://localhost:8989/api/collections/products/records?${params.toString()}`);
   return res.json();
 }
-</code></pre></div>
+</span></span></span></code></pre></div>
 <h3 id="searching-filtering-in-the-admin-dashboard">Searching &amp; Filtering in the Admin Dashboard</h3>
 <p>In the Crabbase Admin Dashboard (<code>crabbase admin</code>):</p>
 <ol>
@@ -687,7 +671,7 @@ async function fetchProducts({ search = &#39;&#39;, minPrice = 0, page = 1 } = {
 </ol>
 <h2 id="relations">Relations</h2>
 <p>Define them at creation time; Crabbase creates a real foreign key:</p>
-<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-11"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-11">{ &quot;name&quot;: &quot;category_id&quot;, &quot;data_type&quot;: &quot;Relation&quot;, &quot;related_to&quot;: &quot;categories&quot; }
+<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-11"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-11" class="hljs language-json"><span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;category_id&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;data_type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Relation&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;related_to&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;categories&quot;</span> <span class="hljs-punctuation">}</span>
 </code></pre></div>
 <p>Store the related record&#39;s UUID in the field value. The referenced collection must exist before you can relate to it.</p>
 <p>To fetch related records inline in the same API request instead of making separate queries, use the <code>?expand</code> query parameter (see <a href="#expanding-relations-expand">Expanding relations (<code>?expand</code>)</a> below).</p>
@@ -695,44 +679,44 @@ async function fetchProducts({ search = &#39;&#39;, minPrice = 0, page = 1 } = {
 <p>Crabbase supports expanding relation fields inline on both list (<code>GET /api/collections/{name}/records</code>) and single-record (<code>GET /api/collections/{name}/records/{id}</code>) endpoints, matching PocketBase&#39;s <code>?expand</code> API contract.</p>
 <p>Normally, relation fields store only the foreign-key UUID of the related record in <code>record.data.&lt;field_name&gt;</code>. Passing <code>?expand</code> resolves those foreign keys and embeds the full referenced record(s) inside a top-level <code>expand</code> map on each record in a single HTTP request.</p>
 <h3 id="quick-examples-2">Quick Examples</h3>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-12"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-12"># Single relation expansion on list endpoint
-curl &#39;http://localhost:8989/api/collections/books/records?expand=author&#39;
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-12"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-12" class="hljs language-sh"><span class="hljs-comment"># Single relation expansion on list endpoint</span>
+curl <span class="hljs-string">&#x27;http://localhost:8989/api/collections/books/records?expand=author&#x27;</span>
 
-# Multiple relation expansions (comma-separated)
-curl &#39;http://localhost:8989/api/collections/articles/records?expand=author,category&#39;
+<span class="hljs-comment"># Multiple relation expansions (comma-separated)</span>
+curl <span class="hljs-string">&#x27;http://localhost:8989/api/collections/articles/records?expand=author,category&#x27;</span>
 
-# Expanding a single record by ID
-curl &#39;http://localhost:8989/api/collections/books/records/a988d3e2-8d7b-410a-b32d-209a896d8e21?expand=author&#39;
+<span class="hljs-comment"># Expanding a single record by ID</span>
+curl <span class="hljs-string">&#x27;http://localhost:8989/api/collections/books/records/a988d3e2-8d7b-410a-b32d-209a896d8e21?expand=author&#x27;</span>
 
-# Combining ?filter, pagination, and ?expand
-curl -G &#39;http://localhost:8989/api/collections/books/records&#39; \
-  --data-urlencode &quot;filter=published_year &gt;= 1950&quot; \
-  --data-urlencode &quot;expand=author,category&quot; \
-  -d &quot;page=1&quot; -d &quot;per_page=20&quot;
+<span class="hljs-comment"># Combining ?filter, pagination, and ?expand</span>
+curl -G <span class="hljs-string">&#x27;http://localhost:8989/api/collections/books/records&#x27;</span> \
+  --data-urlencode <span class="hljs-string">&quot;filter=published_year &gt;= 1950&quot;</span> \
+  --data-urlencode <span class="hljs-string">&quot;expand=author,category&quot;</span> \
+  -d <span class="hljs-string">&quot;page=1&quot;</span> -d <span class="hljs-string">&quot;per_page=20&quot;</span>
 </code></pre></div>
 <h3 id="response-payload-structure">Response Payload Structure</h3>
 <p>When <code>?expand</code> is specified, each expanded relation is embedded into a top-level <code>expand</code> object on the record, keyed by the relation field name:</p>
-<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-13"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-13">{
-  &quot;id&quot;: &quot;a988d3e2-8d7b-410a-b32d-209a896d8e21&quot;,
-  &quot;data&quot;: {
-    &quot;title&quot;: &quot;1984&quot;,
-    &quot;author&quot;: &quot;7d91d79a-1153-4cf0-9ec8-6cf455bb3f91&quot;,
-    &quot;isbn&quot;: &quot;9780451524935&quot;
-  },
-  &quot;expand&quot;: {
-    &quot;author&quot;: {
-      &quot;id&quot;: &quot;7d91d79a-1153-4cf0-9ec8-6cf455bb3f91&quot;,
-      &quot;data&quot;: {
-        &quot;name&quot;: &quot;George Orwell&quot;,
-        &quot;bio&quot;: &quot;English novelist, essayist, journalist, and critic.&quot;
-      },
-      &quot;created&quot;: &quot;2026-09-09T14:30:00Z&quot;,
-      &quot;updated&quot;: &quot;2026-09-09T14:30:00Z&quot;
-    }
-  },
-  &quot;created&quot;: &quot;2026-09-09T14:30:00Z&quot;,
-  &quot;updated&quot;: &quot;2026-09-09T14:30:00Z&quot;
-}
+<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-13"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-13" class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;a988d3e2-8d7b-410a-b32d-209a896d8e21&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1984&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;author&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;7d91d79a-1153-4cf0-9ec8-6cf455bb3f91&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;isbn&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;9780451524935&quot;</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;expand&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;author&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;7d91d79a-1153-4cf0-9ec8-6cf455bb3f91&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;George Orwell&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;bio&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;English novelist, essayist, journalist, and critic.&quot;</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;created&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2026-09-09T14:30:00Z&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;updated&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2026-09-09T14:30:00Z&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;created&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2026-09-09T14:30:00Z&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;updated&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2026-09-09T14:30:00Z&quot;</span>
+<span class="hljs-punctuation">}</span>
 </code></pre></div>
 <blockquote>
 <p><strong>Zero Payload Bloat:</strong> When <code>?expand</code> is omitted or no relations are resolved, the <code>&quot;expand&quot;</code> field is completely omitted from the JSON payload (<code>Option::None</code>), keeping standard query responses lightweight.</p>
@@ -746,7 +730,7 @@ Every expand query compiles and executes the target collection&#39;s <code>view_
 <li><strong>Admin / Superuser</strong>: Bypasses <code>view_rule</code>.</li>
 <li><strong>Non-Admin / Public</strong>:<ul>
 <li>If the target collection has <code>view_rule = null</code> (admin-only), non-admins cannot expand this collection. The relation is silently omitted from <code>record.expand</code>.</li>
-<li>If the target collection has a <code>view_rule</code> expression (e.g. <code>public = true || owner = @request.auth.id</code>), the rule is compiled to SQL and appended:<div class="docs-code"><div class="docs-code-head"><span>SQL</span><button class="docs-copy" type="button" data-copy-target="doc-code-14"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-14">SELECT * FROM &quot;authors&quot; WHERE id = ANY($1) AND (&lt;target_view_rule&gt;)
+<li>If the target collection has a <code>view_rule</code> expression (e.g. <code>public = true || owner = @request.auth.id</code>), the rule is compiled to SQL and appended:<div class="docs-code"><div class="docs-code-head"><span>SQL</span><button class="docs-copy" type="button" data-copy-target="doc-code-14"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-14" class="hljs language-sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> &quot;authors&quot; <span class="hljs-keyword">WHERE</span> id <span class="hljs-operator">=</span> <span class="hljs-keyword">ANY</span>($<span class="hljs-number">1</span>) <span class="hljs-keyword">AND</span> (<span class="hljs-operator">&lt;</span>target_view_rule<span class="hljs-operator">&gt;</span>)
 </code></pre></div>
 </li>
 </ul>
@@ -760,7 +744,7 @@ Before attaching target records into <code>record.expand</code>, all fields in t
 </ol>
 <h3 id="performance-database-architecture">Performance &amp; Database Architecture</h3>
 <p>Crabbase implements relation expansion with connection-pool friendliness and zero $N+1$ query overhead:</p>
-<div class="doc-table-wrap"><table class="docs-table">
+<div class="doc-table-wrap"><table>
 <thead>
 <tr>
 <th>Feature</th>
@@ -801,68 +785,68 @@ Before attaching target records into <code>record.expand</code>, all fields in t
 </tbody></table></div>
 <h3 id="client-integration-examples">Client Integration Examples</h3>
 <h4 id="typescript-javascript-fetch">TypeScript / JavaScript Fetch</h4>
-<div class="docs-code"><div class="docs-code-head"><span>TYPESCRIPT</span><button class="docs-copy" type="button" data-copy-target="doc-code-15"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-15">interface Author {
-  id: string;
-  data: {
-    name: string;
-    bio?: string;
+<div class="docs-code"><div class="docs-code-head"><span>TYPESCRIPT</span><button class="docs-copy" type="button" data-copy-target="doc-code-15"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-15" class="hljs language-typescript"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">Author</span> {
+  <span class="hljs-attr">id</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">data</span>: {
+    <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>;
+    <span class="hljs-attr">bio</span>?: <span class="hljs-built_in">string</span>;
   };
-  created: string;
-  updated: string;
+  <span class="hljs-attr">created</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">updated</span>: <span class="hljs-built_in">string</span>;
 }
 
-interface Book {
-  id: string;
-  data: {
-    title: string;
-    author: string; // Foreign key UUID
-    isbn?: string;
+<span class="hljs-keyword">interface</span> <span class="hljs-title class_">Book</span> {
+  <span class="hljs-attr">id</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">data</span>: {
+    <span class="hljs-attr">title</span>: <span class="hljs-built_in">string</span>;
+    <span class="hljs-attr">author</span>: <span class="hljs-built_in">string</span>; <span class="hljs-comment">// Foreign key UUID</span>
+    <span class="hljs-attr">isbn</span>?: <span class="hljs-built_in">string</span>;
   };
-  expand?: {
-    author?: Author;
+  <span class="hljs-attr">expand</span>?: {
+    <span class="hljs-attr">author</span>?: <span class="hljs-title class_">Author</span>;
   };
-  created: string;
-  updated: string;
+  <span class="hljs-attr">created</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">updated</span>: <span class="hljs-built_in">string</span>;
 }
 
-// Fetch books with expanded author relation
-async function fetchBooks(): Promise&lt;Book[]&gt; {
-  const params = new URLSearchParams({
-    page: &#39;1&#39;,
-    per_page: &#39;20&#39;,
-    expand: &#39;author&#39;,
+<span class="hljs-comment">// Fetch books with expanded author relation</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">fetchBooks</span>(<span class="hljs-params"></span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">Book</span>[]&gt; {
+  <span class="hljs-keyword">const</span> params = <span class="hljs-keyword">new</span> <span class="hljs-title class_">URLSearchParams</span>({
+    <span class="hljs-attr">page</span>: <span class="hljs-string">&#x27;1&#x27;</span>,
+    <span class="hljs-attr">per_page</span>: <span class="hljs-string">&#x27;20&#x27;</span>,
+    <span class="hljs-attr">expand</span>: <span class="hljs-string">&#x27;author&#x27;</span>,
   });
 
-  const res = await fetch(`http://localhost:8989/api/collections/books/records?${params}`);
-  if (!res.ok) {
-    throw new Error(`Failed to fetch books: ${res.statusText}`);
+  <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetch</span>(<span class="hljs-string">`http://localhost:8989/api/collections/books/records?<span class="hljs-subst">${params}</span>`</span>);
+  <span class="hljs-keyword">if</span> (!res.<span class="hljs-property">ok</span>) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">`Failed to fetch books: <span class="hljs-subst">${res.statusText}</span>`</span>);
   }
 
-  const json = await res.json();
-  return json.items;
+  <span class="hljs-keyword">const</span> json = <span class="hljs-keyword">await</span> res.<span class="hljs-title function_">json</span>();
+  <span class="hljs-keyword">return</span> json.<span class="hljs-property">items</span>;
 }
 
-// Example usage:
-const books = await fetchBooks();
-for (const book of books) {
-  const authorName = book.expand?.author?.data.name ?? &#39;Unknown Author&#39;;
-  console.log(`&quot;${book.data.title}&quot; by ${authorName}`);
+<span class="hljs-comment">// Example usage:</span>
+<span class="hljs-keyword">const</span> books = <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetchBooks</span>();
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> book <span class="hljs-keyword">of</span> books) {
+  <span class="hljs-keyword">const</span> authorName = book.<span class="hljs-property">expand</span>?.<span class="hljs-property">author</span>?.<span class="hljs-property">data</span>.<span class="hljs-property">name</span> ?? <span class="hljs-string">&#x27;Unknown Author&#x27;</span>;
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`&quot;<span class="hljs-subst">${book.data.title}</span>&quot; by <span class="hljs-subst">${authorName}</span>`</span>);
 }
 </code></pre></div>
 <h4 id="python-requests-httpx">Python (Requests / HTTPX)</h4>
-<div class="docs-code"><div class="docs-code-head"><span>PYTHON</span><button class="docs-copy" type="button" data-copy-target="doc-code-16"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-16">import requests
+<div class="docs-code"><div class="docs-code-head"><span>PYTHON</span><button class="docs-copy" type="button" data-copy-target="doc-code-16"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-16" class="hljs language-python"><span class="hljs-keyword">import</span> requests
 
-# Fetch single book with author expanded
+<span class="hljs-comment"># Fetch single book with author expanded</span>
 response = requests.get(
-    &quot;http://localhost:8989/api/collections/books/records/a988d3e2-8d7b-410a-b32d-209a896d8e21&quot;,
-    params={&quot;expand&quot;: &quot;author&quot;}
+    <span class="hljs-string">&quot;http://localhost:8989/api/collections/books/records/a988d3e2-8d7b-410a-b32d-209a896d8e21&quot;</span>,
+    params={<span class="hljs-string">&quot;expand&quot;</span>: <span class="hljs-string">&quot;author&quot;</span>}
 )
 response.raise_for_status()
 book = response.json()
 
-title = book[&quot;data&quot;][&quot;title&quot;]
-author_name = book.get(&quot;expand&quot;, {}).get(&quot;author&quot;, {}).get(&quot;data&quot;, {}).get(&quot;name&quot;, &quot;Unknown&quot;)
-print(f&quot;Book: {title}, Author: {author_name}&quot;)
+title = book[<span class="hljs-string">&quot;data&quot;</span>][<span class="hljs-string">&quot;title&quot;</span>]
+author_name = book.get(<span class="hljs-string">&quot;expand&quot;</span>, {}).get(<span class="hljs-string">&quot;author&quot;</span>, {}).get(<span class="hljs-string">&quot;data&quot;</span>, {}).get(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;Unknown&quot;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Book: <span class="hljs-subst">{title}</span>, Author: <span class="hljs-subst">{author_name}</span>&quot;</span>)
 </code></pre></div>
 <h2 id="api-rules">API rules</h2>
 <p>Each collection stores rule strings — <code>list_rule</code>, <code>view_rule</code>, <code>create_rule</code>, <code>update_rule</code>, <code>delete_rule</code> — written in a PocketBase-style filter language, compiled to parameterized SQL (no string injection of user values).</p>
@@ -878,84 +862,66 @@ print(f&quot;Book: {title}, Author: {author_name}&quot;)
 </li>
 </ul>
 <p>Examples:</p>
-<div class="docs-code"><div class="docs-code-head"><span>TEXT</span><button class="docs-copy" type="button" data-copy-target="doc-code-17"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-17">owner = @request.auth.id
-status = &#39;active&#39;
-(owner = @request.auth.id) &amp;&amp; status = &#39;active&#39;
+<div class="docs-code"><div class="docs-code-head"><span>TEXT</span><button class="docs-copy" type="button" data-copy-target="doc-code-17"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-17" class="hljs">owner = @request.auth.id
+status = 'active'
+(owner = @request.auth.id) &amp;&amp; status = 'active'
 title ~ @request.query.search
 </code></pre></div>
 <p>Set rules when creating or updating a collection:</p>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-18"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-18">curl -X PATCH http://localhost:8989/api/collections/tasks \
-  -H &quot;Authorization: Bearer $TOKEN&quot; -H &#39;Content-Type: application/json&#39; \
-  -d &#39;{ &quot;list_rule&quot;: &quot;owner = @request.auth.id &amp;&amp; done = false&quot; }&#39;
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-18"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-18" class="hljs language-sh">curl -X PATCH http://localhost:8989/api/collections/tasks \
+  -H <span class="hljs-string">&quot;Authorization: Bearer <span class="hljs-variable">$TOKEN</span>&quot;</span> -H <span class="hljs-string">&#x27;Content-Type: application/json&#x27;</span> \
+  -d <span class="hljs-string">&#x27;{ &quot;list_rule&quot;: &quot;owner = @request.auth.id &amp;&amp; done = false&quot; }&#x27;</span>
 </code></pre></div>
 <blockquote>
 <p><strong>Rule Enforcement Status:</strong> <code>list_rule</code> (list), <code>view_rule</code> (single-record fetch and <code>?expand</code> targets), <code>create_rule</code> (create/upload), and <code>delete_rule</code> (delete) are enforced. <code>update_rule</code> rejects non-admins when it is null, but expressions are not applied to update rows yet (an empty string allows all non-admins).</p>
 </blockquote>
 </div>
+            <nav class="doc-pager" aria-label="Documentation pages">
+              <a href="./docs.html"><span>Previous</span>Getting started</a>
+              <a href="./docs-authentication.html"><span>Next</span>Authentication</a>
+            </nav>
+            <p class="doc-help">Stuck? Ask in <a href="https://github.com/ropali/crabbase/discussions" rel="noopener noreferrer" target="_blank">GitHub Discussions</a>.</p>
+          </article>
 
-              <div class="mt-12 pt-8 border-t border-surface-variant flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
-                  <span class="material-symbols-outlined text-[18px] text-tertiary" aria-hidden="true">help_outline</span>
-                  <span>Stuck? Reach our community on <a class="text-primary hover:underline font-medium" href="https://github.com/ropali/crabbase/discussions" rel="noopener noreferrer" target="_blank">GitHub Discussions</a>.</span>
-                </div>
-                <div class="flex flex-wrap items-center gap-3"><a class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container text-primary font-body-sm text-body-sm font-semibold transition-colors group" href="./docs.html"><span class="material-symbols-outlined text-[18px] group-hover:-translate-x-0.5 transition-transform" aria-hidden="true">arrow_back</span><span>Previous: Getting Started</span></a><a class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container text-primary font-body-sm text-body-sm font-semibold transition-colors group" href="./docs-authentication.html"><span>Next: Authentication</span><span class="material-symbols-outlined text-[18px] group-hover:translate-x-0.5 transition-transform" aria-hidden="true">arrow_forward</span></a></div>
-              </div>
-
-              <div class="mt-10 pt-6 border-t border-outline-variant/40 flex flex-col sm:flex-row items-center justify-between gap-2 font-body-sm text-label-xs text-on-surface-variant">
-                <span>Dual-licensed under MIT and Apache 2.0. Built for the Rust community.</span>
-                <span>© <span data-year>2026</span> Crabbase Engine Maintainers.</span>
-              </div>
-            </div>
-          </div>
-
-          <aside class="hidden 2xl:block w-72 shrink-0 py-8 pr-8" aria-label="On this page">
-            <div class="sticky top-24 space-y-6">
-              <div class="border-l border-outline-variant pl-4 space-y-3">
-                <div class="font-label-xs text-label-xs uppercase tracking-wider text-outline font-semibold">On this page</div>
-                <nav class="space-y-2 text-body-sm font-body-sm text-on-surface-variant" id="docs-toc">
-                  <a class="block transition-colors hover:text-primary" data-toc href="#the-easy-way-the-admin-dashboard">The easy way: the admin dashboard</a>
-                  <a class="block transition-colors hover:text-primary" data-toc href="#endpoints">Endpoints</a>
-                  <a class="block transition-colors hover:text-primary" data-toc href="#creating-a-collection">Creating a collection</a>
-                  <a class="block transition-colors hover:text-primary" data-toc href="#updating-schema-live-migration">Updating schema (live migration)</a>
-                  <a class="block transition-colors hover:text-primary" data-toc href="#working-with-records">Working with records</a>
-                  <a class="block transition-colors hover:text-primary" data-toc href="#file-storage-attachments">File Storage &amp; Attachments</a>
-                  <a class="block transition-colors hover:text-primary" data-toc href="#dynamic-record-filtering-filter">Dynamic record filtering (?filter)</a>
-                  <a class="block transition-colors hover:text-primary" data-toc href="#relations">Relations</a>
-                  <a class="block transition-colors hover:text-primary" data-toc href="#expanding-relations-expand">Expanding relations (?expand)</a>
-                  <a class="block transition-colors hover:text-primary" data-toc href="#api-rules">API rules</a>
-                </nav>
-              </div>
-              <div class="border-t border-outline-variant pt-4 pl-4 space-y-2 text-body-sm font-body-sm">
-                <a class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors" href="https://github.com/ropali/crabbase/edit/main/docs/collections-and-records.md" rel="noopener noreferrer" target="_blank">
-                  <span class="material-symbols-outlined text-[16px]" aria-hidden="true">edit_document</span>
-                  <span>Edit this page on GitHub</span>
-                </a>
-                <a class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors" href="https://github.com/ropali/crabbase/issues/new" rel="noopener noreferrer" target="_blank">
-                  <span class="material-symbols-outlined text-[16px]" aria-hidden="true">forum</span>
-                  <span>Submit Feedback</span>
-                </a>
-              </div>
+          <aside class="docs-toc" aria-label="On this page">
+            <div class="docs-toc__inner">
+              <p class="t-label">On this page</p>
+              <nav id="docs-toc">
+                <a data-toc href="#the-easy-way-the-admin-dashboard">The easy way: the admin dashboard</a>
+            <a data-toc href="#endpoints">Endpoints</a>
+            <a data-toc href="#creating-a-collection">Creating a collection</a>
+            <a data-toc href="#updating-schema-live-migration">Updating schema (live migration)</a>
+            <a data-toc href="#working-with-records">Working with records</a>
+            <a data-toc href="#file-storage-attachments">File Storage &amp; Attachments</a>
+            <a data-toc href="#dynamic-record-filtering-filter">Dynamic record filtering ( ?filter )</a>
+            <a data-toc href="#relations">Relations</a>
+            <a data-toc href="#expanding-relations-expand">Expanding relations ( ?expand )</a>
+            <a data-toc href="#api-rules">API rules</a>
+              </nav>
+              <a class="docs-edit" href="https://github.com/ropali/crabbase/edit/main/docs/collections-and-records.md" rel="noopener noreferrer" target="_blank">Edit this page on GitHub</a>
             </div>
           </aside>
         </div>
+
+        <footer class="docs-footer">
+          <div class="docs-footer__inner">
+            <span>© <span data-year>2026</span> Crabbase · <span data-app-version>v0.1.0</span>, pre-1.0</span>
+            <span><a href="./index.html">Home</a> · <a href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank">Repository</a> · <a href="https://github.com/ropali/crabbase/blob/main/LICENSE" rel="noopener noreferrer" target="_blank">PolyForm Shield 1.0.0</a></span>
+          </div>
+        </footer>
       </main>
     </div>
 
-    <div id="docs-search-modal" class="fixed inset-0 z-[60] hidden items-start justify-center bg-on-surface/40 backdrop-blur-sm px-4 pt-[12vh]" role="dialog" aria-modal="true" aria-labelledby="docs-search-title">
-      <div class="w-full max-w-xl rounded-xl bg-surface-container-lowest shadow-2xl border border-outline-variant overflow-hidden">
+    <div id="docs-search-modal" class="docs-modal" role="dialog" aria-modal="true" aria-labelledby="docs-search-title" hidden>
+      <div class="docs-modal__panel">
         <h2 id="docs-search-title" class="sr-only">Search documentation</h2>
-        <div class="flex items-center gap-3 px-4 py-3 border-b border-outline-variant">
-          <span class="material-symbols-outlined text-[20px] text-tertiary" aria-hidden="true">search</span>
-          <input id="docs-search-input" type="search" class="w-full bg-transparent font-body-md text-body-md text-on-surface placeholder:text-tertiary focus:outline-none" placeholder="Search docs, crates, APIs..." autocomplete="off" />
-          <button id="docs-search-close" type="button" class="inline-flex items-center justify-center w-7 h-7 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" aria-label="Close search">
-            <span class="material-symbols-outlined text-[18px]" aria-hidden="true">close</span>
-          </button>
+        <div class="docs-modal__bar">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg>
+          <input id="docs-search-input" type="search" placeholder="Search docs, endpoints, settings…" autocomplete="off" />
+          <button id="docs-search-close" type="button">Close</button>
         </div>
-        <div id="docs-search-results" class="max-h-[55vh] overflow-y-auto p-2"></div>
-        <div class="flex items-center justify-between gap-3 border-t border-outline-variant px-4 py-2 font-code-md text-label-xs text-tertiary">
-          <span>Type to filter documentation</span>
-          <span>Esc to close</span>
-        </div>
+        <div id="docs-search-results" class="docs-modal__results"></div>
+        <p class="docs-modal__hint"><span>Type to filter documentation</span><span>Esc to close</span></p>
       </div>
     </div>
 

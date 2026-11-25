@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en" data-type="software" data-radius="soft" data-buttons="arrow">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Backups &amp; cron jobs — Crabbase documentation</title>
+    <meta name="description" content="Crabbase runs one durable Postgres job queue. Crons are producers that enqueue jobs; a backup is one job handler. There is no Redis and no external cron." />
+    <meta name="site-kind" content="software" />
+    <meta name="page-type" content="software" />
+    <meta name="theme-color" content="#efe9e1" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Crabbase" />
+    <meta property="og:title" content="Backups &amp; cron jobs — Crabbase documentation" />
+    <meta property="og:description" content="Crabbase runs one durable Postgres job queue. Crons are producers that enqueue jobs; a backup is one job handler. There is no Redis and no external cron." />
+    <meta property="og:image" content="./share.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="./favicon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/system.css" />
+    <link rel="stylesheet" href="./assets/css/site.css" />
+    <link rel="stylesheet" href="./assets/css/docs.css" />
+  </head>
+  <body class="docs" data-page="backups">
+    <a class="skip-link" href="#doc-main">Skip to content</a>
+
+    <header class="docs-header">
+      <div class="wrap docs-header__bar">
+        <button id="docs-menu-toggle" class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-sidebar" aria-label="Open documentation menu">
+          <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14"/></svg>
+        </button>
+        <a class="nav__logo" href="./index.html" aria-label="Crabbase home">
+          <img src="./assets/images/logo.png" alt="" width="24" height="24" />
+          Crabbase
+        </a>
+        <nav class="docs-header__nav" aria-label="Documentation">
+          <a href="./docs.html">Getting started</a>
+          <a href="./docs-collections.html">Collections &amp; records</a>
+          <a href="./docs-authentication.html">Authentication</a>
+          <a href="./docs-files.html">Files &amp; uploads</a>
+          <a href="./docs-settings.html">Settings &amp; email</a>
+        </nav>
+        <div class="docs-header__actions">
+          <button id="docs-search-open" class="docs-search-btn" type="button" aria-label="Search documentation">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg>
+            <span>Search docs</span>
+            <kbd>⌘K</kbd>
+          </button>
+          <a class="nav__link nav__gh" href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank">
+            <span class="gh-stars"><svg class="gh-stars__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.4l2 4.1 4.5.7-3.3 3.2.8 4.5L8 11.8l-4 2.1.8-4.5L1.5 6.2l4.5-.7z"/></svg><span data-github-stars>0</span><span class="sr-only">stars</span></span>
+            GitHub
+          </a>
+          <button class="btn btn--secondary btn--demo" type="button" disabled aria-disabled="true" title="The hosted demo is not online yet">Live demo <span class="btn--demo__soon">soon</span></button>
+        </div>
+      </div>
+    </header>
+
+    <div id="docs-sidebar-overlay" class="docs-overlay" hidden></div>
+
+    <div class="docs-shell">
+      <aside id="docs-sidebar" class="docs-side" aria-label="Documentation navigation">
+        <div class="docs-side__group">
+          <p class="t-label">Documentation</p>
+          <nav>
+            <a href="./docs.html">Getting started</a>
+        <a href="./docs-collections.html">Collections &amp; records</a>
+        <a href="./docs-authentication.html">Authentication</a>
+        <a href="./docs-files.html">Files &amp; uploads</a>
+        <a href="./docs-settings.html">Settings &amp; email</a>
+        <a href="./docs-backups.html" aria-current="page">Backups &amp; cron jobs</a>
+          </nav>
+        </div>
+        <div class="docs-side__group">
+          <p class="t-label">Project</p>
+          <nav>
+            <a href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank">Repository</a>
+            <a href="https://github.com/ropali/crabbase/discussions" rel="noopener noreferrer" target="_blank">Discussions</a>
+            <a href="https://github.com/ropali/crabbase/releases" rel="noopener noreferrer" target="_blank">Releases</a>
+            <a href="https://github.com/ropali/crabbase/blob/main/LICENSE" rel="noopener noreferrer" target="_blank">License</a>
+          </nav>
+        </div>
+      </aside>
+
+      <main id="doc-main" class="docs-main">
+        <div class="docs-grid">
+          <article class="doc">
+            <nav class="doc-crumb" aria-label="Breadcrumb">
+              <a href="./docs.html">Docs</a>
+              <span aria-hidden="true">/</span>
+              <span>Backups &amp; cron jobs</span>
+            </nav>
+            <p class="doc-meta">
+              <span class="doc-badge">Guide</span>
+              <span>4 min read</span>
+              <span data-app-version>v0.1.0</span>
+            </p>
+            <h1>Backups &amp; cron jobs</h1>
+            <p class="doc-intro">Crabbase runs one durable Postgres job queue. Crons are producers that enqueue
+jobs; a backup is one job handler. There is no Redis and no external cron.</p>
+            <div class="doc-body"><h2 id="how-it-fits-together">How it fits together</h2>
+<div class="docs-code"><div class="docs-code-head"><span>TEXT</span><button class="docs-copy" type="button" data-copy-target="doc-code-1"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-1" class="hljs">_crons ──dispatch──▶ _jobs ──claim──▶ worker (registry) ──▶ handler
+  ▲                                                          │
+  └──────────────── last_status / next_run ◀─────────────────┘
+</code></pre></div>
+<ul>
+<li>Schedules live in <code>_crons</code> and are seeded by migration <code>00006</code>.</li>
+<li>Work lives in <code>_jobs</code>, claimed with <code>FOR UPDATE SKIP LOCKED</code> and a lease.</li>
+<li>Backup artifacts are catalogued in <code>_backups</code>.</li>
+<li>The scheduler and worker run inside the binary by default. <code>crabbase worker</code>
+runs only the runtime, no HTTP server.</li>
+</ul>
+<p>Built-in handlers: <code>backup.create</code>, <code>backups.prune</code>, <code>logs.cleanup</code>,
+<code>otp.cleanup</code>, <code>db.vacuum</code>.</p>
+<h2 id="configuration">Configuration</h2>
+<p>Backup and job runtime settings live in the <code>_settings</code> table as JSON, not in
+<code>crabbase.toml</code>. They can be read and updated from the admin API:</p>
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-2"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-2" class="hljs language-sh"><span class="hljs-comment"># Read</span>
+curl http://localhost:8989/api/settings/backups -H <span class="hljs-string">&quot;Authorization: Bearer <span class="hljs-variable">$TOKEN</span>&quot;</span>
+curl http://localhost:8989/api/settings/jobs    -H <span class="hljs-string">&quot;Authorization: Bearer <span class="hljs-variable">$TOKEN</span>&quot;</span>
+
+<span class="hljs-comment"># Update (admin only)</span>
+curl -X POST http://localhost:8989/api/settings/backups \
+  -H <span class="hljs-string">&quot;Authorization: Bearer <span class="hljs-variable">$TOKEN</span>&quot;</span> -H <span class="hljs-string">&#x27;Content-Type: application/json&#x27;</span> \
+  -d <span class="hljs-string">&#x27;{
+    &quot;enabled&quot;: true,
+    &quot;dir&quot;: &quot;./backups&quot;,
+    &quot;pgDumpPath&quot;: &quot;pg_dump&quot;,
+    &quot;retentionDays&quot;: 14,
+    &quot;maxConcurrent&quot;: 1,
+    &quot;dumpSchema&quot;: false,
+    &quot;schema&quot;: &quot;crabbase&quot;
+  }&#x27;</span>
+
+curl -X POST http://localhost:8989/api/settings/jobs \
+  -H <span class="hljs-string">&quot;Authorization: Bearer <span class="hljs-variable">$TOKEN</span>&quot;</span> -H <span class="hljs-string">&#x27;Content-Type: application/json&#x27;</span> \
+  -d <span class="hljs-string">&#x27;{
+    &quot;enabled&quot;: true,
+    &quot;worker&quot;: true,
+    &quot;scheduler&quot;: true,
+    &quot;tickSeconds&quot;: 30,
+    &quot;leaseSeconds&quot;: 900,
+    &quot;concurrency&quot;: 1
+  }&#x27;</span>
+</code></pre></div>
+<p>Missing keys fall back to the defaults shown above, so a partial JSON object is
+valid. <code>pg_dump</code> is required for backups; install <code>postgresql-client</code> matching
+the server major version. Startup preflight fails with an actionable message if
+the binary is missing or too old.</p>
+<p><code>backups</code> settings are read at the start of every backup/prune job, so changes
+take effect on the next run. <code>jobs</code> settings (enabled, worker, scheduler, tick,
+lease, concurrency) are read at process start; restart the process to apply
+changes to those.</p>
+<p>On API-only replicas set <code>worker</code> and <code>scheduler</code> to <code>false</code> in the <code>jobs</code>
+setting. On a dedicated worker set both to <code>true</code> and raise <code>concurrency</code> as
+needed.</p>
+<h2 id="schedule-semantics">Schedule semantics</h2>
+<ul>
+<li>All times are UTC. <code>next_run</code> is computed from database time.</li>
+<li>Missed runs collapse: a process down at 02:00 starts with the next 02:00, not
+a burst of catch-up backups.</li>
+<li>Overlap is skipped. The partial unique index <code>uq_jobs_active_cron</code> allows one
+queued/running job per cron. A manual &quot;run now&quot; while a run is active returns
+<code>409 Conflict</code>.</li>
+<li><code>db.backup</code> is seeded disabled. Enable it from <strong>Settings → Backups</strong> or
+<strong>Settings → Crons</strong>.</li>
+</ul>
+<h2 id="api">API</h2>
+<p>All routes are admin-only (<code>_superusers</code>).</p>
+<div class="doc-table-wrap"><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>GET</code></td>
+<td><code>/api/backups</code></td>
+<td>paginated catalog</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/backups</code></td>
+<td><code>202</code>, enqueues <code>backup.create</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/backups/{id}/download</code></td>
+<td>streamed; <code>409</code> until completed</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/backups/{id}</code></td>
+<td>deletes row, then artifact</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/crons</code></td>
+<td>schedules + <code>nextRun</code> / <code>lastStatus</code></td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td><code>/api/crons/{id}</code></td>
+<td>validates expression, recomputes <code>nextRun</code></td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/crons/{id}/run</code></td>
+<td><code>409</code> if already queued/running</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/jobs</code></td>
+<td>filters: <code>status</code>, <code>kind</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/jobs/{id}</code></td>
+<td>includes <code>lastError</code></td>
+</tr>
+</tbody></table></div>
+<h2 id="retention-policy">Retention policy</h2>
+<p><code>backups.prune</code> runs daily at 04:00 UTC with <code>{&quot;keepDays&quot;: 14}</code>. It deletes
+completed backups older than the window <strong>except the newest successful one</strong>.
+Rows are deleted before files. An orphan file is recoverable; a row pointing at
+a missing file is not.</p>
+<p>For a stricter policy (grandfather-father-son), implement it in SQL over
+<code>_backups</code> using <code>created</code> buckets and always keep the newest completed backup.</p>
+<h2 id="restore-runbook-manual-never-in-place">Restore runbook (manual, never in place)</h2>
+<p>Restoring over a live database from the dashboard is deliberately unsupported.</p>
+<div class="docs-code"><div class="docs-code-head"><span>BASH</span><button class="docs-copy" type="button" data-copy-target="doc-code-3"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-3" class="hljs language-bash"><span class="hljs-comment"># 1. Inspect the archive.</span>
+pg_restore --list backups/crabbase-20261030T020000Z-&lt;<span class="hljs-built_in">id</span>&gt;.dump
+
+<span class="hljs-comment"># 2. Restore into a scratch database.</span>
+createdb -h localhost -U postgres crabbase_restore
+pg_restore -h localhost -U postgres -d crabbase_restore \
+  --no-owner --no-privileges --exit-on-error \
+  backups/crabbase-20261030T020000Z-&lt;<span class="hljs-built_in">id</span>&gt;.dump
+
+<span class="hljs-comment"># 3. Validate.</span>
+psql -h localhost -U postgres -d crabbase_restore -c \
+  <span class="hljs-string">&quot;SELECT max(version) FROM _sqlx_migrations;&quot;</span>
+psql -h localhost -U postgres -d crabbase_restore -c \
+  <span class="hljs-string">&quot;SELECT count(*) FROM _collections;&quot;</span>
+psql -h localhost -U postgres -d crabbase_restore -c \
+  <span class="hljs-string">&quot;SELECT count(*) FROM _superusers;&quot;</span>
+
+<span class="hljs-comment"># 4. Stop Crabbase, point DATABASE_URL at crabbase_restore (or rename the</span>
+<span class="hljs-comment">#    databases), then start Crabbase. Never pg_restore --clean over a live DB.</span>
+</code></pre></div>
+<p>If the dump was schema-scoped (<code>dump_schema = true</code>), add <code>--schema=crabbase</code>
+to <code>pg_restore</code>.</p>
+<h2 id="operations">Operations</h2>
+<p>Stuck job:</p>
+<div class="docs-code"><div class="docs-code-head"><span>SQL</span><button class="docs-copy" type="button" data-copy-target="doc-code-4"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-4" class="hljs language-sql"><span class="hljs-keyword">SELECT</span> id, kind, status, attempts, locked_by, locked_until, last_error
+<span class="hljs-keyword">FROM</span> _jobs
+<span class="hljs-keyword">WHERE</span> status <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;running&#x27;</span> <span class="hljs-keyword">AND</span> locked_until <span class="hljs-operator">&lt;</span> now();
+</code></pre></div>
+<p>The reaper will requeue it after the lease expires. To force it:</p>
+<div class="docs-code"><div class="docs-code-head"><span>SQL</span><button class="docs-copy" type="button" data-copy-target="doc-code-5"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-5" class="hljs language-sql"><span class="hljs-keyword">UPDATE</span> _jobs
+<span class="hljs-keyword">SET</span> status <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;queued&#x27;</span>, locked_by <span class="hljs-operator">=</span> <span class="hljs-keyword">NULL</span>, locked_until <span class="hljs-operator">=</span> <span class="hljs-keyword">NULL</span>, run_at <span class="hljs-operator">=</span> now()
+<span class="hljs-keyword">WHERE</span> id <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;&lt;uuid&gt;&#x27;</span>;
+</code></pre></div>
+<p>Queue health:</p>
+<div class="docs-code"><div class="docs-code-head"><span>SQL</span><button class="docs-copy" type="button" data-copy-target="doc-code-6"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-6" class="hljs language-sql"><span class="hljs-keyword">SELECT</span>
+    <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FILTER</span> (<span class="hljs-keyword">WHERE</span> status <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;queued&#x27;</span>)    <span class="hljs-keyword">AS</span> queued,
+    <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FILTER</span> (<span class="hljs-keyword">WHERE</span> status <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;running&#x27;</span>)   <span class="hljs-keyword">AS</span> <span class="hljs-keyword">running</span>,
+    <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FILTER</span> (<span class="hljs-keyword">WHERE</span> status <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;failed&#x27;</span>)    <span class="hljs-keyword">AS</span> failed,
+    <span class="hljs-built_in">min</span>(run_at) <span class="hljs-keyword">FILTER</span> (<span class="hljs-keyword">WHERE</span> status <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;queued&#x27;</span>) <span class="hljs-keyword">AS</span> oldest_queued
+<span class="hljs-keyword">FROM</span> _jobs;
+</code></pre></div>
+<p>Alert when <code>oldest_queued</code> is older than 5 minutes, failed jobs are increasing,
+or the last successful backup is older than twice the backup interval.</p>
+<h2 id="scaling-notes">Scaling notes</h2>
+<ul>
+<li>Run multiple schedulers and workers safely: row locks, a unique <code>dedupe_key</code>,
+and the <code>locked_by</code> fencing token prevent duplicate execution.</li>
+<li><code>pg_dump</code> is I/O heavy. Move the worker to its own process/deployment before
+raising concurrency.</li>
+<li>Backup downloads are local-disk only in the MVP. With multiple replicas, use a
+shared volume or implement S3 streaming uploads before relying on downloads
+from an arbitrary node.</li>
+</ul>
+</div>
+            <nav class="doc-pager" aria-label="Documentation pages">
+              <a href="./docs-settings.html"><span>Previous</span>Settings &amp; email</a>
+            </nav>
+            <p class="doc-help">Stuck? Ask in <a href="https://github.com/ropali/crabbase/discussions" rel="noopener noreferrer" target="_blank">GitHub Discussions</a>.</p>
+          </article>
+
+          <aside class="docs-toc" aria-label="On this page">
+            <div class="docs-toc__inner">
+              <p class="t-label">On this page</p>
+              <nav id="docs-toc">
+                <a data-toc href="#how-it-fits-together">How it fits together</a>
+            <a data-toc href="#configuration">Configuration</a>
+            <a data-toc href="#schedule-semantics">Schedule semantics</a>
+            <a data-toc href="#api">API</a>
+            <a data-toc href="#retention-policy">Retention policy</a>
+            <a data-toc href="#restore-runbook-manual-never-in-place">Restore runbook (manual, never in place)</a>
+            <a data-toc href="#operations">Operations</a>
+            <a data-toc href="#scaling-notes">Scaling notes</a>
+              </nav>
+              <a class="docs-edit" href="https://github.com/ropali/crabbase/edit/main/docs/backups-and-jobs.md" rel="noopener noreferrer" target="_blank">Edit this page on GitHub</a>
+            </div>
+          </aside>
+        </div>
+
+        <footer class="docs-footer">
+          <div class="docs-footer__inner">
+            <span>© <span data-year>2026</span> Crabbase · <span data-app-version>v0.1.0</span>, pre-1.0</span>
+            <span><a href="./index.html">Home</a> · <a href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank">Repository</a> · <a href="https://github.com/ropali/crabbase/blob/main/LICENSE" rel="noopener noreferrer" target="_blank">PolyForm Shield 1.0.0</a></span>
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <div id="docs-search-modal" class="docs-modal" role="dialog" aria-modal="true" aria-labelledby="docs-search-title" hidden>
+      <div class="docs-modal__panel">
+        <h2 id="docs-search-title" class="sr-only">Search documentation</h2>
+        <div class="docs-modal__bar">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg>
+          <input id="docs-search-input" type="search" placeholder="Search docs, endpoints, settings…" autocomplete="off" />
+          <button id="docs-search-close" type="button">Close</button>
+        </div>
+        <div id="docs-search-results" class="docs-modal__results"></div>
+        <p class="docs-modal__hint"><span>Type to filter documentation</span><span>Esc to close</span></p>
+      </div>
+    </div>
+
+    <script src="./assets/js/github-stars.js" defer></script>
+    <script src="./assets/js/docs-search-index.js" defer></script>
+    <script src="./assets/js/docs.js" defer></script>
+  </body>
+</html>

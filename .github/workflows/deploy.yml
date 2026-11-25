@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # docs are pulled from ropali/crabbase@main at build time: rebuild daily to pick up doc changes
+  schedule:
+    - cron: "17 4 * * *"
 
 permissions:
   contents: read
@@ -32,6 +35,8 @@ jobs:
 
       - name: Build site
         run: npm run build
+        env:
+          DOCS_STRICT: "1"
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

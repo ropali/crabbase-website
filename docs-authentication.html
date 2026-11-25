@@ -1,130 +1,114 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-type="software" data-radius="soft" data-buttons="arrow">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Authentication — Crabbase Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Authentication — Crabbase documentation</title>
     <meta name="description" content="Crabbase ships a complete JWT auth system that works per collection — no code required. Any collection marked as type auth becomes login-capable; the built-in _superusers collection is used for admin access." />
-    <meta name="theme-color" content="#fff8f6" />
+    <meta name="site-kind" content="software" />
+    <meta name="page-type" content="software" />
+    <meta name="theme-color" content="#efe9e1" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Crabbase" />
+    <meta property="og:title" content="Authentication — Crabbase documentation" />
+    <meta property="og:description" content="Crabbase ships a complete JWT auth system that works per collection — no code required. Any collection marked as type auth becomes login-capable; the built-in _superusers collection is used for admin access." />
+    <meta property="og:image" content="./share.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="./favicon.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/system.css" />
+    <link rel="stylesheet" href="./assets/css/site.css" />
+    <link rel="stylesheet" href="./assets/css/docs.css" />
   </head>
-  <body class="bg-surface font-body-md text-on-surface antialiased" data-page="authentication">
-    <a class="skip-link" href="#main">Skip to content</a>
+  <body class="docs" data-page="authentication">
+    <a class="skip-link" href="#doc-main">Skip to content</a>
 
-    <header id="docs-header" class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl border-b border-outline-variant">
-      <div class="h-16 w-full px-4 sm:px-6 flex items-center justify-between gap-3">
-        <div class="flex items-center gap-3 xl:gap-6 min-w-0">
-          <button id="docs-menu-toggle" type="button" class="lg:hidden inline-flex items-center justify-center w-9 h-9 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors shrink-0" aria-expanded="false" aria-controls="docs-sidebar" aria-label="Open documentation menu">
-            <span class="material-symbols-outlined text-[22px]" aria-hidden="true">menu</span>
+    <header class="docs-header">
+      <div class="wrap docs-header__bar">
+        <button id="docs-menu-toggle" class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-sidebar" aria-label="Open documentation menu">
+          <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14"/></svg>
+        </button>
+        <a class="nav__logo" href="./index.html" aria-label="Crabbase home">
+          <img src="./assets/images/logo.png" alt="" width="24" height="24" />
+          Crabbase
+        </a>
+        <nav class="docs-header__nav" aria-label="Documentation">
+          <a href="./docs.html">Getting started</a>
+          <a href="./docs-collections.html">Collections &amp; records</a>
+          <a href="./docs-authentication.html" aria-current="page">Authentication</a>
+          <a href="./docs-files.html">Files &amp; uploads</a>
+          <a href="./docs-settings.html">Settings &amp; email</a>
+        </nav>
+        <div class="docs-header__actions">
+          <button id="docs-search-open" class="docs-search-btn" type="button" aria-label="Search documentation">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg>
+            <span>Search docs</span>
+            <kbd>⌘K</kbd>
           </button>
-          <a class="group flex items-center gap-2.5 text-on-surface hover:text-primary transition-colors shrink-0" href="./index.html" aria-label="Crabbase home">
-            <img src="./assets/images/logo.png" alt="" width="32" height="32" class="w-8 h-8 object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-300" />
-            <div class="flex items-center gap-2">
-              <span class="font-headline-md text-headline-md tracking-tight leading-none">Crabbase</span>
-              <span class="hidden sm:inline font-code-md text-label-xs bg-surface-container-high text-primary px-2 py-0.5 rounded border border-outline-variant font-medium" data-app-version>v0.1.0</span>
-            </div>
+          <a class="nav__link nav__gh" href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank">
+            <span class="gh-stars"><svg class="gh-stars__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.4l2 4.1 4.5.7-3.3 3.2.8 4.5L8 11.8l-4 2.1.8-4.5L1.5 6.2l4.5-.7z"/></svg><span data-github-stars>0</span><span class="sr-only">stars</span></span>
+            GitHub
           </a>
-          <nav class="hidden xl:flex items-center gap-6" aria-label="Primary navigation">
-            <a class="text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors py-5" href="./index.html">Landing</a>
-            <a class="transition-colors py-5 text-primary font-semibold border-b-2 border-primary font-body-sm text-body-sm" href="./docs.html" aria-current="page">Docs</a>
-            <a class="text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors py-5" href="./index.html#architecture">Architecture</a>
-            <a class="text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors py-5" href="./docs-collections.html#endpoints">API Reference</a>
-            <a class="text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors py-5" href="./index.html#benchmarks">Benchmarks</a>
-          </nav>
-        </div>
-        <div class="flex items-center gap-2 sm:gap-3 flex-1 max-w-md justify-end">
-          <button id="docs-search-open" type="button" class="group flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-surface-container-low border border-outline-variant text-on-surface-variant hover:border-outline hover:bg-surface-container text-left transition-colors w-full max-w-[13rem] sm:max-w-xs" aria-label="Search documentation">
-            <span class="material-symbols-outlined text-[18px] text-tertiary" aria-hidden="true">search</span>
-            <span class="hidden sm:inline text-body-sm font-body-sm truncate">Search docs...</span>
-            <kbd class="ml-auto hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface border border-outline-variant font-code-md text-label-xs text-tertiary">⌘K</kbd>
-          </button>
-          <a class="hidden md:flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface transition-colors" href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank" aria-label="View the Crabbase repository on GitHub">
-            <svg viewBox="0 0 16 16" class="h-4 w-4 fill-current" aria-hidden="true">
-              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
-            </svg>
-            <span class="flex items-center gap-1 font-code-md text-label-xs">
-              <span class="material-symbols-outlined text-[14px]" aria-hidden="true">star</span>
-              <span data-github-stars>Star</span>
-            </span>
-          </a>
-          <a class="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-body-sm text-body-sm font-medium transition-colors shadow-sm whitespace-nowrap" href="./index.html#admin">
-            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">terminal</span>
-            <span class="hidden md:inline">Launch Demo</span>
-          </a>
+          <button class="btn btn--secondary btn--demo" type="button" disabled aria-disabled="true" title="The hosted demo is not online yet">Live demo <span class="btn--demo__soon">soon</span></button>
         </div>
       </div>
     </header>
 
-    <div id="docs-sidebar-overlay" class="fixed inset-0 top-16 bg-on-surface/30 backdrop-blur-[1px] z-30 hidden lg:hidden" aria-hidden="true"></div>
+    <div id="docs-sidebar-overlay" class="docs-overlay" hidden></div>
 
-    <aside id="docs-sidebar" class="fixed left-0 top-16 bottom-0 w-64 bg-surface-container-lowest border-r border-outline-variant overflow-y-auto p-4 z-40 -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-out" aria-label="Documentation navigation">
-      <div class="lg:hidden mb-6">
-        <div class="font-label-xs text-label-xs uppercase tracking-wider text-outline px-3 mb-2 font-semibold">Navigation</div>
-        <nav class="space-y-1">
-          <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./index.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">home</span><span>Landing</span></a>
-          <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./index.html#architecture"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">account_tree</span><span>Architecture</span></a>
-          <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./index.html#benchmarks"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">speed</span><span>Benchmarks</span></a>
-        </nav>
-      </div>
+    <div class="docs-shell">
+      <aside id="docs-sidebar" class="docs-side" aria-label="Documentation navigation">
+        <div class="docs-side__group">
+          <p class="t-label">Documentation</p>
+          <nav>
+            <a href="./docs.html">Getting started</a>
+        <a href="./docs-collections.html">Collections &amp; records</a>
+        <a href="./docs-authentication.html" aria-current="page">Authentication</a>
+        <a href="./docs-files.html">Files &amp; uploads</a>
+        <a href="./docs-settings.html">Settings &amp; email</a>
+        <a href="./docs-backups.html">Backups &amp; cron jobs</a>
+          </nav>
+        </div>
+        <div class="docs-side__group">
+          <p class="t-label">Project</p>
+          <nav>
+            <a href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank">Repository</a>
+            <a href="https://github.com/ropali/crabbase/discussions" rel="noopener noreferrer" target="_blank">Discussions</a>
+            <a href="https://github.com/ropali/crabbase/releases" rel="noopener noreferrer" target="_blank">Releases</a>
+            <a href="https://github.com/ropali/crabbase/blob/main/LICENSE" rel="noopener noreferrer" target="_blank">License</a>
+          </nav>
+        </div>
+      </aside>
 
-      <div class="font-label-xs text-label-xs uppercase tracking-wider text-outline px-3 mb-2 font-semibold">Documentation</div>
-      <nav class="space-y-1 mb-6" aria-label="Documentation">
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">play_arrow</span><span>Getting Started</span></a>
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs-collections.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">table_rows</span><span>Collections &amp; Records</span></a>
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg transition-colors bg-surface-container-high text-primary font-semibold border-l-2 border-primary font-body-sm text-body-sm" href="./docs-authentication.html" aria-current="page"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">shield</span><span>Authentication</span></a>
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs-files.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">cloud_upload</span><span>Files &amp; Uploads</span></a>
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs-settings.html"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">settings</span><span>Settings &amp; Email</span></a>
-      </nav>
-
-      <div class="font-label-xs text-label-xs uppercase tracking-wider text-outline px-3 mb-2 font-semibold">References</div>
-      <nav class="space-y-1" aria-label="References">
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs-collections.html#endpoints"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">code</span><span>API Reference</span></a>
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs.html#makefile-reference"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">terminal</span><span>Makefile Reference</span></a>
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="./docs.html#troubleshooting"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">build</span><span>Troubleshooting</span></a>
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 16 16" class="h-4 w-4 fill-current" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" /></svg><span>GitHub Repository</span></a>
-        <a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-sm text-body-sm transition-colors" href="https://github.com/ropali/crabbase/discussions" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">forum</span><span>Community &amp; Support</span></a>
-      </nav>
-    </aside>
-
-    <div class="lg:pl-64">
-      <main id="main" class="pt-16 min-h-screen bg-surface w-full">
-        <div class="w-full flex">
-          <div class="flex-1 min-w-0 px-5 sm:px-8 py-8 lg:px-12 max-w-4xl mx-auto">
-            <div class="flex flex-col w-full">
-              <nav class="flex flex-wrap items-center gap-2 mb-6 text-on-surface-variant font-label-xs text-label-xs" aria-label="Breadcrumb">
-                <a class="hover:text-primary transition-colors" href="./docs.html">Documentation</a>
-                <span class="material-symbols-outlined text-[14px] text-tertiary" aria-hidden="true">chevron_right</span>
-                <span class="hover:text-primary transition-colors">Authentication</span>
-                <span class="material-symbols-outlined text-[14px] text-tertiary" aria-hidden="true">chevron_right</span>
-                <span class="text-primary font-semibold px-2 py-0.5 rounded-full bg-surface-container-high" data-app-version>v0.1.0</span>
-              </nav>
-
-              <div class="space-y-4 mb-8">
-                <div class="flex flex-wrap items-center gap-3">
-                  <span class="px-2.5 py-1 rounded bg-surface-container text-primary font-code-md text-label-xs font-semibold uppercase tracking-wider">Reference</span>
-                  <span class="text-tertiary font-code-md text-label-xs">Estimated read: 5 mins</span>
-                </div>
-                <h1 class="font-headline-lg text-headline-lg sm:text-4xl text-on-surface tracking-tight">Authentication</h1>
-                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed max-w-3xl">Crabbase ships a complete JWT auth system that works per collection — no code required. Any collection marked as type <code>auth</code> becomes login-capable; the built-in <code>_superusers</code> collection is used for admin access.</p>
-              </div>
-
-              <div class="doc-prose"><h2 id="auth-collections">Auth collections</h2>
+      <main id="doc-main" class="docs-main">
+        <div class="docs-grid">
+          <article class="doc">
+            <nav class="doc-crumb" aria-label="Breadcrumb">
+              <a href="./docs.html">Docs</a>
+              <span aria-hidden="true">/</span>
+              <span>Authentication</span>
+            </nav>
+            <p class="doc-meta">
+              <span class="doc-badge">Reference</span>
+              <span>5 min read</span>
+              <span data-app-version>v0.1.0</span>
+            </p>
+            <h1>Authentication</h1>
+            <p class="doc-intro">Crabbase ships a complete JWT auth system that works per collection — no code required. Any collection marked as type <code>auth</code> becomes login-capable; the built-in <code>_superusers</code> collection is used for admin access.</p>
+            <div class="doc-body"><h2 id="auth-collections">Auth collections</h2>
 <p>Create an <code>auth</code> collection — in the dashboard&#39;s Create Collection drawer, pick type <strong>Auth</strong>; or via API:</p>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-1"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-1">curl -X POST http://localhost:8989/api/collections \
-  -H &quot;Authorization: Bearer $TOKEN&quot; -H &#39;Content-Type: application/json&#39; \
-  -d &#39;{
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-1"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-1" class="hljs language-sh">curl -X POST http://localhost:8989/api/collections \
+  -H <span class="hljs-string">&quot;Authorization: Bearer <span class="hljs-variable">$TOKEN</span>&quot;</span> -H <span class="hljs-string">&#x27;Content-Type: application/json&#x27;</span> \
+  -d <span class="hljs-string">&#x27;{
     &quot;name&quot;: &quot;users&quot;,
     &quot;collection_type&quot;: &quot;auth&quot;,
     &quot;columns&quot;: [
       { &quot;name&quot;: &quot;name&quot;, &quot;data_type&quot;: &quot;PlainText&quot; }
     ],
     &quot;create_rule&quot;: &quot;&quot;
-  }&#39;
+  }&#x27;</span>
 </code></pre></div>
 <p>Setting <code>create_rule</code> to <code>&quot;&quot;</code> makes signup public; leave it unset to keep user creation admin-only. The server injects the system columns (<code>email</code>, <code>password</code>, <code>token_key</code>, <code>verified</code>) automatically for auth collections.</p>
 <p>Auth collections get these system-managed columns automatically (the seeded <code>_superusers</code> collection has them too):</p>
@@ -138,14 +122,14 @@
 <h2 id="registering-users">Registering users</h2>
 <p>There is no dedicated registration endpoint yet. The easiest way to create users is <strong>through the admin dashboard</strong>: open the auth collection in the sidebar and use its create-record drawer — enter an email, password, and any custom fields, and toggle <strong>Verified</strong> on. Passwords are hashed automatically on save; unverified users cannot log in.</p>
 <p>Via API, create users by POSTing records to the auth collection (as a superuser, or publicly if <code>create_rule</code> is <code>&quot;&quot;</code>):</p>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-2"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-2">curl -X POST http://localhost:8989/api/collections/users/records \
-  -H &quot;Authorization: Bearer $TOKEN&quot; \
-  -H &#39;Content-Type: application/json&#39; \
-  -d &#39;{&quot;data&quot;: {&quot;email&quot;: &quot;jane@example.com&quot;, &quot;password&quot;: &quot;secret123&quot;, &quot;name&quot;: &quot;Jane&quot;, &quot;verified&quot;: true}}&#39;
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-2"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-2" class="hljs language-sh">curl -X POST http://localhost:8989/api/collections/users/records \
+  -H <span class="hljs-string">&quot;Authorization: Bearer <span class="hljs-variable">$TOKEN</span>&quot;</span> \
+  -H <span class="hljs-string">&#x27;Content-Type: application/json&#x27;</span> \
+  -d <span class="hljs-string">&#x27;{&quot;data&quot;: {&quot;email&quot;: &quot;jane@example.com&quot;, &quot;password&quot;: &quot;secret123&quot;, &quot;name&quot;: &quot;Jane&quot;, &quot;verified&quot;: true}}&#x27;</span>
 </code></pre></div>
 <p>The plaintext <code>password</code> you send is hashed before storage; never returned afterwards. For public signup, set the auth collection&#39;s <code>create_rule</code> to <code>&quot;&quot;</code> and omit the <code>Authorization</code> header and <code>verified</code> flag; the account starts unverified. There is no verification flow yet, so an admin must review the account. (<code>verified</code> is not yet write-protected for non-admin callers, and <code>AppSettings.allowPublicUserRegistration</code> exists but is not enforced.)</p>
 <h2 id="endpoints">Endpoints</h2>
-<div class="doc-table-wrap"><table class="docs-table">
+<div class="doc-table-wrap"><table>
 <thead>
 <tr>
 <th>Method</th>
@@ -185,26 +169,26 @@
 </tr>
 </tbody></table></div>
 <h3 id="login">Login</h3>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-3"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-3">curl -X POST http://localhost:8989/api/auth/users/login \
-  -H &#39;Content-Type: application/json&#39; \
-  -d &#39;{&quot;email&quot;: &quot;jane@example.com&quot;, &quot;password&quot;: &quot;secret123&quot;}&#39;
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-3"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-3" class="hljs language-sh">curl -X POST http://localhost:8989/api/auth/users/login \
+  -H <span class="hljs-string">&#x27;Content-Type: application/json&#x27;</span> \
+  -d <span class="hljs-string">&#x27;{&quot;email&quot;: &quot;jane@example.com&quot;, &quot;password&quot;: &quot;secret123&quot;}&#x27;</span>
 </code></pre></div>
 <p>Response:</p>
-<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-4"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-4">{
-  &quot;tokens&quot;: {
-    &quot;accessToken&quot;: &quot;eyJ...&quot;,
-    &quot;refreshToken&quot;: &quot;eyJ...&quot;
-  }
-}
+<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-4"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-4" class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;tokens&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;accessToken&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;eyJ...&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;refreshToken&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;eyJ...&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
 </code></pre></div>
 <p>Access tokens default to 1 hour; collections created through the API get a 5-day <code>duration</code> in their options (the seeded <code>_superusers</code> collection uses the 1-hour default). Refresh tokens last 7 days.</p>
 <p>Login returns <code>403 Forbidden</code> if the user&#39;s <code>verified</code> flag is false.</p>
 <h3 id="calling-authenticated-endpoints">Calling authenticated endpoints</h3>
 <p>Send the access token as a bearer token:</p>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-5"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-5">curl http://localhost:8989/api/auth/profile \
-  -H &quot;Authorization: Bearer &lt;accessToken&gt;&quot;
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-5"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-5" class="hljs language-sh">curl http://localhost:8989/api/auth/profile \
+  -H <span class="hljs-string">&quot;Authorization: Bearer &lt;accessToken&gt;&quot;</span>
 </code></pre></div>
-<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-6"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-6">{ &quot;id&quot;: &quot;5f0c...&quot;, &quot;email&quot;: &quot;jane@example.com&quot; }
+<div class="docs-code"><div class="docs-code-head"><span>JSON</span><button class="docs-copy" type="button" data-copy-target="doc-code-6"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-6" class="hljs language-json"><span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;5f0c...&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;email&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;jane@example.com&quot;</span> <span class="hljs-punctuation">}</span>
 </code></pre></div>
 <p>The middleware resolves the collection&#39;s secret plus your per-user <code>token_key</code>, validates the JWT, and loads your full record so API rules can reference it via <code>@request.auth.*</code>. Superuser-only endpoints (collections management, settings) reject any token whose claims are not from <code>_superusers</code>.</p>
 <h3 id="file-tokens">File tokens</h3>
@@ -212,42 +196,42 @@
 set an <code>Authorization</code> header. Exchange the access token for a short-lived file
 token (<code>POST /api/files/token</code>, valid 180 seconds) and pass it as <code>?token=...</code> on
 the file URL:</p>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-7"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-7">curl -X POST http://localhost:8989/api/files/token \
-  -H &quot;Authorization: Bearer &lt;accessToken&gt;&quot;
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-7"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-7" class="hljs language-sh">curl -X POST http://localhost:8989/api/files/token \
+  -H <span class="hljs-string">&quot;Authorization: Bearer &lt;accessToken&gt;&quot;</span>
 </code></pre></div>
 <p>File tokens only unlock file downloads — they cannot authenticate normal API
-requests. See <a href="docs-files.html#protected-files">Files &amp; uploads</a>.</p>
+requests. See <a href="./docs-files.html#protected-files">Files &amp; uploads</a>.</p>
 <h3 id="refreshing-tokens">Refreshing tokens</h3>
 <p>Refresh uses <strong>rotation with reuse detection</strong>: every refresh invalidates the old token and issues a new pair; reusing an already-rotated token revokes the whole session family. A short grace window tolerates concurrent refreshes.</p>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-8"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-8">curl -X POST http://localhost:8989/api/auth/users/auth-refresh \
-  -H &quot;Authorization: Bearer &lt;accessToken&gt;&quot; \
-  -H &#39;Content-Type: application/json&#39; \
-  -d &#39;{&quot;refreshToken&quot;: &quot;&lt;refreshToken&gt;&quot;}&#39;
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-8"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-8" class="hljs language-sh">curl -X POST http://localhost:8989/api/auth/users/auth-refresh \
+  -H <span class="hljs-string">&quot;Authorization: Bearer &lt;accessToken&gt;&quot;</span> \
+  -H <span class="hljs-string">&#x27;Content-Type: application/json&#x27;</span> \
+  -d <span class="hljs-string">&#x27;{&quot;refreshToken&quot;: &quot;&lt;refreshToken&gt;&quot;}&#x27;</span>
 </code></pre></div>
 <p>Response: a fresh <code>{ &quot;tokens&quot;: { &quot;accessToken&quot;, &quot;refreshToken&quot; } }</code>.</p>
 <h3 id="logout">Logout</h3>
 <p>Revokes the entire refresh-token family for that session:</p>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-9"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-9">curl -X POST http://localhost:8989/api/auth/users/logout \
-  -H &#39;Content-Type: application/json&#39; \
-  -d &#39;{&quot;email&quot;: &quot;jane@example.com&quot;, &quot;refreshToken&quot;: &quot;&lt;refreshToken&gt;&quot;}&#39;
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-9"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-9" class="hljs language-sh">curl -X POST http://localhost:8989/api/auth/users/logout \
+  -H <span class="hljs-string">&#x27;Content-Type: application/json&#x27;</span> \
+  -d <span class="hljs-string">&#x27;{&quot;email&quot;: &quot;jane@example.com&quot;, &quot;refreshToken&quot;: &quot;&lt;refreshToken&gt;&quot;}&#x27;</span>
 </code></pre></div>
 <h2 id="password-reset-email-otp">Password reset (email OTP)</h2>
-<p>Requires SMTP to be configured first — see <a href="docs-settings.html">Settings &amp; email</a>.</p>
+<p>Requires SMTP to be configured first — see <a href="./docs-settings.html">Settings &amp; email</a>.</p>
 <ol>
 <li><p>Request a reset — sends a templated email containing a 6-digit one-time code (valid 5 minutes):</p>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-10"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-10">curl -X POST http://localhost:8989/api/auth/users/forget-password \
-  -H &#39;Content-Type: application/json&#39; \
-  -d &#39;{&quot;email&quot;: &quot;jane@example.com&quot;}&#39;
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-10"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-10" class="hljs language-sh">curl -X POST http://localhost:8989/api/auth/users/forget-password \
+  -H <span class="hljs-string">&#x27;Content-Type: application/json&#x27;</span> \
+  -d <span class="hljs-string">&#x27;{&quot;email&quot;: &quot;jane@example.com&quot;}&#x27;</span>
 </code></pre></div>
 </li>
 <li><p>Reset with the OTP:</p>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-11"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-11">curl -X POST http://localhost:8989/api/auth/users/reset-password \
-  -H &#39;Content-Type: application/json&#39; \
-  -d &#39;{&quot;email&quot;: &quot;jane@example.com&quot;, &quot;otp&quot;: 123456, &quot;new_pwd&quot;: &quot;new-secret&quot;}&#39;
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-11"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-11" class="hljs language-sh">curl -X POST http://localhost:8989/api/auth/users/reset-password \
+  -H <span class="hljs-string">&#x27;Content-Type: application/json&#x27;</span> \
+  -d <span class="hljs-string">&#x27;{&quot;email&quot;: &quot;jane@example.com&quot;, &quot;otp&quot;: 123456, &quot;new_pwd&quot;: &quot;new-secret&quot;}&#x27;</span>
 </code></pre></div>
 </li>
 </ol>
-<p>OTPs are stored HMAC-hashed server-side. Templates for these emails are editable under <code>/api/settings/email-templates</code> with variables like <code>{{otp}}</code>, <code>{{link}}</code>, <code>{{name}}</code>, <code>{{app_name}}</code> (see <a href="docs-settings.html">Settings &amp; email</a>).</p>
+<p>OTPs are stored HMAC-hashed server-side. Templates for these emails are editable under <code>/api/settings/email-templates</code> with variables like <code>{{otp}}</code>, <code>{{link}}</code>, <code>{{name}}</code>, <code>{{app_name}}</code> (see <a href="./docs-settings.html">Settings &amp; email</a>).</p>
 <h2 id="superusers">Superusers</h2>
 <ul>
 <li><p>The <code>_superusers</code> collection is created by migrations; missing <code>[[initial_users]]</code> entries are created at boot (existing emails are left untouched).</p>
@@ -255,9 +239,9 @@ requests. See <a href="docs-files.html#protected-files">Files &amp; uploads</a>.
 <li><p>Its credentials come from <code>[[initial_users]]</code> in <code>crabbase.toml</code>; passwords can reference environment variables with <code>$</code>, e.g. <code>$ADMIN_PASSWORD</code>.</p>
 </li>
 <li><p>Log in against it like any auth collection (this is exactly what the dashboard&#39;s login page does):</p>
-<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-12"><span class="material-symbols-outlined text-[16px]" data-copy-icon aria-hidden="true">content_copy</span><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-12">curl -X POST http://localhost:8989/api/auth/_superusers/login \
-  -H &#39;Content-Type: application/json&#39; \
-  -d &#39;{&quot;email&quot;: &quot;admin@crabbase.local&quot;, &quot;password&quot;: &quot;...&quot;}&#39;
+<div class="docs-code"><div class="docs-code-head"><span>SH</span><button class="docs-copy" type="button" data-copy-target="doc-code-12"><span data-copy-label>Copy</span></button></div><pre><code id="doc-code-12" class="hljs language-sh">curl -X POST http://localhost:8989/api/auth/_superusers/login \
+  -H <span class="hljs-string">&#x27;Content-Type: application/json&#x27;</span> \
+  -d <span class="hljs-string">&#x27;{&quot;email&quot;: &quot;admin@crabbase.local&quot;, &quot;password&quot;: &quot;...&quot;}&#x27;</span>
 </code></pre></div>
 </li>
 <li><p>Only <code>_superusers</code> tokens pass the admin guard on <code>/api/collections*</code> and <code>/api/settings*</code>.</p>
@@ -273,66 +257,48 @@ requests. See <a href="docs-files.html#protected-files">Files &amp; uploads</a>.
 <li>While evolving, note: the seeded <code>_superusers</code> secret in migration <code>00001</code> is a hardcoded placeholder worth rotating in production.</li>
 </ul>
 </div>
+            <nav class="doc-pager" aria-label="Documentation pages">
+              <a href="./docs-collections.html"><span>Previous</span>Collections &amp; records</a>
+              <a href="./docs-files.html"><span>Next</span>Files &amp; uploads</a>
+            </nav>
+            <p class="doc-help">Stuck? Ask in <a href="https://github.com/ropali/crabbase/discussions" rel="noopener noreferrer" target="_blank">GitHub Discussions</a>.</p>
+          </article>
 
-              <div class="mt-12 pt-8 border-t border-surface-variant flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
-                  <span class="material-symbols-outlined text-[18px] text-tertiary" aria-hidden="true">help_outline</span>
-                  <span>Stuck? Reach our community on <a class="text-primary hover:underline font-medium" href="https://github.com/ropali/crabbase/discussions" rel="noopener noreferrer" target="_blank">GitHub Discussions</a>.</span>
-                </div>
-                <div class="flex flex-wrap items-center gap-3"><a class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container text-primary font-body-sm text-body-sm font-semibold transition-colors group" href="./docs-collections.html"><span class="material-symbols-outlined text-[18px] group-hover:-translate-x-0.5 transition-transform" aria-hidden="true">arrow_back</span><span>Previous: Collections &amp; Records</span></a><a class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container text-primary font-body-sm text-body-sm font-semibold transition-colors group" href="./docs-files.html"><span>Next: Files &amp; Uploads</span><span class="material-symbols-outlined text-[18px] group-hover:translate-x-0.5 transition-transform" aria-hidden="true">arrow_forward</span></a></div>
-              </div>
-
-              <div class="mt-10 pt-6 border-t border-outline-variant/40 flex flex-col sm:flex-row items-center justify-between gap-2 font-body-sm text-label-xs text-on-surface-variant">
-                <span>Dual-licensed under MIT and Apache 2.0. Built for the Rust community.</span>
-                <span>© <span data-year>2026</span> Crabbase Engine Maintainers.</span>
-              </div>
-            </div>
-          </div>
-
-          <aside class="hidden 2xl:block w-72 shrink-0 py-8 pr-8" aria-label="On this page">
-            <div class="sticky top-24 space-y-6">
-              <div class="border-l border-outline-variant pl-4 space-y-3">
-                <div class="font-label-xs text-label-xs uppercase tracking-wider text-outline font-semibold">On this page</div>
-                <nav class="space-y-2 text-body-sm font-body-sm text-on-surface-variant" id="docs-toc">
-                  <a class="block transition-colors hover:text-primary" data-toc href="#auth-collections">Auth collections</a>
-                  <a class="block transition-colors hover:text-primary" data-toc href="#registering-users">Registering users</a>
-                  <a class="block transition-colors hover:text-primary" data-toc href="#endpoints">Endpoints</a>
-                  <a class="block transition-colors hover:text-primary" data-toc href="#password-reset-email-otp">Password reset (email OTP)</a>
-                  <a class="block transition-colors hover:text-primary" data-toc href="#superusers">Superusers</a>
-                  <a class="block transition-colors hover:text-primary" data-toc href="#security-notes">Security notes</a>
-                </nav>
-              </div>
-              <div class="border-t border-outline-variant pt-4 pl-4 space-y-2 text-body-sm font-body-sm">
-                <a class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors" href="https://github.com/ropali/crabbase/edit/main/docs/authentication.md" rel="noopener noreferrer" target="_blank">
-                  <span class="material-symbols-outlined text-[16px]" aria-hidden="true">edit_document</span>
-                  <span>Edit this page on GitHub</span>
-                </a>
-                <a class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors" href="https://github.com/ropali/crabbase/issues/new" rel="noopener noreferrer" target="_blank">
-                  <span class="material-symbols-outlined text-[16px]" aria-hidden="true">forum</span>
-                  <span>Submit Feedback</span>
-                </a>
-              </div>
+          <aside class="docs-toc" aria-label="On this page">
+            <div class="docs-toc__inner">
+              <p class="t-label">On this page</p>
+              <nav id="docs-toc">
+                <a data-toc href="#auth-collections">Auth collections</a>
+            <a data-toc href="#registering-users">Registering users</a>
+            <a data-toc href="#endpoints">Endpoints</a>
+            <a data-toc href="#password-reset-email-otp">Password reset (email OTP)</a>
+            <a data-toc href="#superusers">Superusers</a>
+            <a data-toc href="#security-notes">Security notes</a>
+              </nav>
+              <a class="docs-edit" href="https://github.com/ropali/crabbase/edit/main/docs/authentication.md" rel="noopener noreferrer" target="_blank">Edit this page on GitHub</a>
             </div>
           </aside>
         </div>
+
+        <footer class="docs-footer">
+          <div class="docs-footer__inner">
+            <span>© <span data-year>2026</span> Crabbase · <span data-app-version>v0.1.0</span>, pre-1.0</span>
+            <span><a href="./index.html">Home</a> · <a href="https://github.com/ropali/crabbase" rel="noopener noreferrer" target="_blank">Repository</a> · <a href="https://github.com/ropali/crabbase/blob/main/LICENSE" rel="noopener noreferrer" target="_blank">PolyForm Shield 1.0.0</a></span>
+          </div>
+        </footer>
       </main>
     </div>
 
-    <div id="docs-search-modal" class="fixed inset-0 z-[60] hidden items-start justify-center bg-on-surface/40 backdrop-blur-sm px-4 pt-[12vh]" role="dialog" aria-modal="true" aria-labelledby="docs-search-title">
-      <div class="w-full max-w-xl rounded-xl bg-surface-container-lowest shadow-2xl border border-outline-variant overflow-hidden">
+    <div id="docs-search-modal" class="docs-modal" role="dialog" aria-modal="true" aria-labelledby="docs-search-title" hidden>
+      <div class="docs-modal__panel">
         <h2 id="docs-search-title" class="sr-only">Search documentation</h2>
-        <div class="flex items-center gap-3 px-4 py-3 border-b border-outline-variant">
-          <span class="material-symbols-outlined text-[20px] text-tertiary" aria-hidden="true">search</span>
-          <input id="docs-search-input" type="search" class="w-full bg-transparent font-body-md text-body-md text-on-surface placeholder:text-tertiary focus:outline-none" placeholder="Search docs, crates, APIs..." autocomplete="off" />
-          <button id="docs-search-close" type="button" class="inline-flex items-center justify-center w-7 h-7 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" aria-label="Close search">
-            <span class="material-symbols-outlined text-[18px]" aria-hidden="true">close</span>
-          </button>
+        <div class="docs-modal__bar">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg>
+          <input id="docs-search-input" type="search" placeholder="Search docs, endpoints, settings…" autocomplete="off" />
+          <button id="docs-search-close" type="button">Close</button>
         </div>
-        <div id="docs-search-results" class="max-h-[55vh] overflow-y-auto p-2"></div>
-        <div class="flex items-center justify-between gap-3 border-t border-outline-variant px-4 py-2 font-code-md text-label-xs text-tertiary">
-          <span>Type to filter documentation</span>
-          <span>Esc to close</span>
-        </div>
+        <div id="docs-search-results" class="docs-modal__results"></div>
+        <p class="docs-modal__hint"><span>Type to filter documentation</span><span>Esc to close</span></p>
       </div>
     </div>
 

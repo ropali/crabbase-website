@@ -9,11 +9,11 @@
 
   function setSidebar(open) {
     if (!sidebar || !menuToggle) return;
-    sidebar.classList.toggle("-translate-x-full", !open);
+    sidebar.classList.toggle("is-open", open);
     menuToggle.setAttribute("aria-expanded", String(open));
     menuToggle.setAttribute("aria-label", open ? "Close documentation menu" : "Open documentation menu");
-    if (overlay) overlay.classList.toggle("hidden", !open);
-    doc.body.classList.toggle("overflow-hidden", open);
+    if (overlay) overlay.hidden = !open;
+    doc.body.classList.toggle("docs-no-scroll", open);
     if (open) {
       var firstLink = sidebar.querySelector("a");
       if (firstLink) firstLink.focus({ preventScroll: true });
@@ -197,7 +197,7 @@
 
     if (!matches.length) {
       searchResults.innerHTML =
-        '<div class="px-3 py-8 text-center font-body-sm text-body-sm text-on-surface-variant">No documentation matches "' +
+        '<div class="docs-result--empty">No documentation matches "' +
         escapeHtml(query) +
         '".</div>';
       return;
@@ -206,17 +206,16 @@
     searchResults.innerHTML = matches
       .map(function (item) {
         var pageLabel = item.title || "Documentation";
-        var sectionLabel = item.section ? '<span class="text-tertiary"> / </span>' + escapeHtml(item.section) : "";
+        var sectionLabel = item.section ? ' <span>/ ' + escapeHtml(item.section) + "</span>" : "";
         var description = item.description
-          ? '<p class="mt-0.5 truncate font-body-sm text-label-xs text-on-surface-variant">' + escapeHtml(item.description) + "</p>"
+          ? '<span class="docs-result__desc">' + escapeHtml(item.description) + "</span>"
           : "";
         return (
-          '<a class="flex items-start gap-3 rounded-lg px-3 py-2.5 hover:bg-surface-container-low transition-colors" href="' +
+          '<a class="docs-result" href="' +
           escapeHtml(item.href) +
           '">' +
-          '<span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded bg-surface-container-high text-primary">' +
-          '<span class="material-symbols-outlined text-[16px]">article</span></span>' +
-          '<span class="min-w-0"><span class="block font-body-sm text-body-sm font-medium text-on-surface">' +
+          '<span class="docs-result__icon" aria-hidden="true">#</span>' +
+          '<span><span class="docs-result__title">' +
           escapeHtml(pageLabel) +
           sectionLabel +
           "</span>" +
@@ -229,9 +228,8 @@
 
   function openSearch() {
     if (!searchModal) return;
-    searchModal.classList.remove("hidden");
-    searchModal.classList.add("flex");
-    doc.body.classList.add("overflow-hidden");
+    searchModal.hidden = false;
+    doc.body.classList.add("docs-no-scroll");
     renderResults("");
     if (searchInput) {
       searchInput.value = "";
@@ -243,9 +241,8 @@
 
   function closeSearch() {
     if (!searchModal) return;
-    searchModal.classList.add("hidden");
-    searchModal.classList.remove("flex");
-    doc.body.classList.remove("overflow-hidden");
+    searchModal.hidden = true;
+    doc.body.classList.remove("docs-no-scroll");
     if (searchOpen) searchOpen.focus();
   }
 
@@ -270,10 +267,10 @@
   doc.addEventListener("keydown", function (event) {
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
       event.preventDefault();
-      if (searchModal && !searchModal.classList.contains("hidden")) closeSearch();
+      if (searchModal && !searchModal.hidden) closeSearch();
       else openSearch();
     }
-    if (event.key === "Escape" && searchModal && !searchModal.classList.contains("hidden")) {
+    if (event.key === "Escape" && searchModal && !searchModal.hidden) {
       closeSearch();
     }
   });
@@ -296,8 +293,7 @@
     });
     tocLinks.forEach(function (link) {
       var isActive = link === active.link;
-      link.classList.toggle("text-primary", isActive);
-      link.classList.toggle("font-semibold", isActive);
+      link.classList.toggle("is-active", isActive);
       if (isActive) link.setAttribute("aria-current", "location");
       else link.removeAttribute("aria-current");
     });
